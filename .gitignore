@@ -41,6 +41,7 @@
 *.su
 *.idb
 *.pdb
+cvibuild.EOMS/
 
 # Kernel Module Compile Results
 *.mod*
