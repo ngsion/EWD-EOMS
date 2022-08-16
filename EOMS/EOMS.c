@@ -14,10 +14,10 @@
 #include <ansi_c.h>
 #include <cvirte.h>		
 #include <userint.h>
-#include <time.h>
 #include "EOMS.h"
 #include "toolbox.h"
-#include "logger/log.h"
+#include "EOMSystem.h"
+
 
 //==============================================================================
 // Constants
@@ -38,41 +38,14 @@ static int panelHandle = 0;
 
 //==============================================================================
 // Global functions
-void setupLogger()
-{  
-	time_t now;//time_t
-	time(&now);  
-    
-	struct tm *tblock;
-    tblock = localtime(&now);
-	
-	char buf[64]={0};
-    strftime(buf, 64, "log/EOMSlog_%Y%m%d_%H%M%S.txt", tblock);
-  
 
-    
-	FILE * fp = fopen(buf,"a+");
-	if	(NULL != fp)
-	{
-		 int result = log_add_fp(fp,LOG_DEBUG);
-		 if	(result < 0)
-		 {
-			 log_fatal("log_add_fp failed");  
-		 }
-	}
-	else
-	{
-		perror("error fopen");
-	}
-	//log_set_quiet(true);	
-}
 
 /// HIFN The main entry-point function.
 int main (int argc, char *argv[])
 {
 	int error = 0;
 	
-	setupLogger();
+	System.Init(0);
 	
 	/* initialize and load resources */
 	nullChk (InitCVIRTE (0, argv, 0));
@@ -86,6 +59,8 @@ Error:
 	/* clean up */
 	if (panelHandle > 0)
 		DiscardPanel (panelHandle);
+
+	System.Shutdown(0);
 	return 0;
 }
 
@@ -97,7 +72,11 @@ int CVICALLBACK panelCB (int panel, int event, void *callbackData,
 		int eventData1, int eventData2)
 {
 	if (event == EVENT_CLOSE)
+	{
 		QuitUserInterface (0);
+		System.Shutdown(0);
+	}
+	
 	return 0;
 }
 
