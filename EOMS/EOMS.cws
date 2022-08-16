@@ -12,11 +12,15 @@ VXIplug&play Framework 64-bit Dir = "/C/Program Files/IVI Foundation/VISA/win64"
 Number of Projects = 1
 Active Project = 1
 Project 0001 = "EOMS.prj"
+Project 0001 Folder User Interface Files Collapsed = True
+Project 0001 FolderId 0 Collapsed = True
+Project 0001 Folder Source Files/logger Collapsed = True
+Project 0001 FolderId 3 Collapsed = True
 Drag Bar Left = 217
-Window Top = 147
-Window Left = 103
-Window Bottom = 834
-Window Right = 1327
+Window Top = 95
+Window Left = 426
+Window Bottom = 782
+Window Right = 1650
 Maximized = False
 Maximized Children = True
 Max32 Number Of Errors = 20
@@ -30,7 +34,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 5
+Number of Opened Files = 7
 Window Confinement Region Enabled = True
 MainColumnWidth = 200
 FileDateColumnWidth = 70
@@ -54,7 +58,6 @@ Window Top = 126
 Window Left = 58
 Window Height = 311
 Window Width = 541
-Window Z-Order = 4
 
 [File 0002]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
@@ -63,8 +66,8 @@ Disk Date = 3743467662
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 2
-Source Window State = "1,77,78,77,4,29,4,0,0,80,0,0,0,0,0,25,65,0,78,23,323,541,1,0,"
+Window Z-Order = 4
+Source Window State = "1,77,78,77,4,29,4,0,0,80,0,0,0,0,0,25,43,0,55,4,323,541,1,0,"
 
 [File 0003]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.c"
@@ -73,7 +76,8 @@ Disk Date = 3675498167
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,125,125,125,4,14,14,0,3,80,0,0,0,0,0,24,111,0,125,4,311,541,1,0,"
+Window Z-Order = 6
+Source Window State = "1,114,114,114,41,46,46,0,3,80,0,0,0,0,0,24,71,0,114,41,311,541,1,0,"
 
 [File 0004]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
@@ -82,37 +86,84 @@ Disk Date = 3675498167
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 5
-Source Window State = "1,30,30,30,29,37,37,0,3,80,0,0,0,0,0,24,21,0,30,29,311,541,1,0,"
+Source Window State = "1,25,25,25,2,11,11,0,3,80,0,0,0,0,0,24,15,0,25,2,311,541,1,0,"
 
 [File 0005]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.c"
 File Type = "CSource"
-Disk Date = 3743467720
+Disk Date = 3743488845
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 3
-Source Window State = "1,58,58,58,17,18,17,0,0,80,0,0,0,0,0,25,55,0,72,0,323,541,1,0,"
-Breakpoint 0001 = "70,0,enabled,"
-Tracepoint 0001 = "0,0,71,1,"
+Window Z-Order = 1
+Source Window State = "1,69,70,69,0,0,0,0,0,158,0,0,0,0,0,29,51,0,69,8,323,541,1,0,"
 
 [File 0006]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.h"
 File Type = "Include"
-Disk Date = 3743467163
+Disk Date = 3743478813
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 1
-Source Window State = "1,36,36,36,7,16,16,0,0,158,0,0,0,0,0,29,23,0,40,27,323,541,1,0,"
+Source Window State = "1,36,36,36,7,16,16,0,0,80,0,0,0,0,0,25,18,0,33,23,323,541,1,0,"
+
+[File 0007]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
+File Type = "CSource"
+Disk Date = 3743479627
+In Projects = "1,"
+Window Top = 95
+Window Left = 42
+Source Window State = "1,0,0,0,0,0,0,0,0,80,0,0,0,0,0,18,12,0,0,0,239,541,1,0,"
+
+[File 0008]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.h"
+File Type = "Include"
+Disk Date = 3743488794
+In Projects = "1,"
+Window Top = 126
+Window Left = 58
+Window Z-Order = 3
+Source Window State = "1,38,38,38,4,11,11,0,0,80,0,0,0,0,0,18,12,0,31,4,239,541,1,0,"
+
+[File 0009]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.c"
+File Type = "CSource"
+Disk Date = 3743486026
+In Projects = "1,"
+Window Top = 33
+Window Left = 10
+Window Z-Order = 2
+Source Window State = "1,50,50,50,13,23,23,0,0,80,0,0,0,0,0,18,70,0,82,15,239,541,1,0,"
+
+[File 0010]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.h"
+File Type = "Include"
+Disk Date = 3743482396
+In Projects = "1,"
+Window Top = 64
+Window Left = 26
+Window Z-Order = 7
+Source Window State = "1,0,0,0,0,0,0,0,0,80,0,0,0,0,0,18,21,0,38,56,239,541,1,0,"
+
+[File 0011]
+Path = "/c/Program Files (x86)/National Instruments/Shared/CVI/Include/visatype.h"
+File Type = "Include"
+Disk Date = 3635391378
+In Projects = ""
+Window Top = 126
+Window Left = 58
+Window Z-Order = 5
+Source Window State = "1,176,176,176,8,16,16,0,3,80,0,0,0,0,0,18,165,0,176,8,239,541,1,0,"
 
 [Tab Order]
-Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
-Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.h"
-Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.c"
-Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.uir"
-Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
+Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.h"
+Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.c"
+Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.c"
+Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
+Tab 0005 = "/c/Program Files (x86)/National Instruments/Shared/CVI/Include/visatype.h"
+Tab 0006 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.c"
+Tab 0007 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.h"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

@@ -24,8 +24,7 @@
 // Static global variables
 static FILE * fp = NULL;
 
-//==============================================================================
-// Global functions
+
 void setupLogger()
 {  
 	time_t now;//time_t
@@ -61,14 +60,16 @@ void setupLogger()
 static int sInit(int x)
 {
 	 setupLogger();
+	 InstrMgr.Init(x);
 	 return 0;
 }
 static int sShutdown(int x)
 {
      if(NULL != fp)
 	  {
-		fclose(fp);
+		//fclose(fp);
 	  }
+	  InstrMgr.Shutdown(x);
 	  return 0;
 }
 
@@ -81,3 +82,5 @@ EOMSystem System = {
 };
 
 
+//==============================================================================
+// Global functions
