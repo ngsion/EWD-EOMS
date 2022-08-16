@@ -14,6 +14,7 @@
 #include <ansi_c.h>
 #include <cvirte.h>		
 #include <userint.h>
+#include <time.h>
 #include "EOMS.h"
 #include "toolbox.h"
 #include "logger/log.h"
@@ -38,8 +39,19 @@ static int panelHandle = 0;
 //==============================================================================
 // Global functions
 void setupLogger()
-{
-	FILE * fp = fopen("EOMS-log.txt","a");
+{  
+	time_t now;//time_t
+	time(&now);  
+    
+	struct tm *tblock;
+    tblock = localtime(&now);
+	
+	char buf[64]={0};
+    strftime(buf, 64, "log/EOMSlog_%Y%m%d_%H%M%S.txt", tblock);
+  
+
+    
+	FILE * fp = fopen(buf,"a+");
 	if	(NULL != fp)
 	{
 		 int result = log_add_fp(fp,LOG_DEBUG);
@@ -47,6 +59,10 @@ void setupLogger()
 		 {
 			 log_fatal("log_add_fp failed");  
 		 }
+	}
+	else
+	{
+		perror("error fopen");
 	}
 	//log_set_quiet(true);	
 }

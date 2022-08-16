@@ -41,7 +41,7 @@
 *.su
 *.idb
 *.pdb
-cvibuild.EOMS/
+
 
 # Kernel Module Compile Results
 *.mod*
@@ -52,4 +52,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-EOMS-log.txt
+cvibuild.EOMS/
+log/
+.vscode/

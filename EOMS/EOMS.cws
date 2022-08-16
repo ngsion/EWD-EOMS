@@ -13,10 +13,10 @@ Number of Projects = 1
 Active Project = 1
 Project 0001 = "EOMS.prj"
 Drag Bar Left = 217
-Window Top = 145
-Window Left = 413
-Window Bottom = 932
-Window Right = 1638
+Window Top = 240
+Window Left = 405
+Window Bottom = 927
+Window Right = 1629
 Maximized = False
 Maximized Children = True
 Max32 Number Of Errors = 20
@@ -59,14 +59,12 @@ Window Z-Order = 5
 [File 0002]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
 File Type = "CSource"
-Disk Date = 3743138039
+Disk Date = 3743463129
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
 Window Z-Order = 1
-Source Window State = "1,44,44,44,36,45,45,0,0,158,0,0,0,0,0,38,40,0,48,50,323,541,1,0,"
-Breakpoint 0001 = "48,0,enabled,"
-Tracepoint 0001 = "0,0,49,1,"
+Source Window State = "1,49,49,49,30,47,30,0,0,158,0,0,0,0,0,29,68,0,78,63,323,541,1,0,"
 
 [File 0003]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.c"
@@ -75,8 +73,8 @@ Disk Date = 3675498167
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 4
-Source Window State = "1,109,109,109,19,23,23,0,3,80,0,0,0,0,0,24,97,0,109,19,311,541,1,0,"
+Window Z-Order = 3
+Source Window State = "1,125,125,125,4,14,14,0,3,80,0,0,0,0,0,24,111,0,125,4,311,541,1,0,"
 
 [File 0004]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
@@ -86,7 +84,7 @@ In Projects = "1,"
 Window Top = 95
 Window Left = 42
 Window Z-Order = 2
-Source Window State = "1,30,30,30,29,37,37,0,3,80,0,0,0,0,0,24,12,0,30,29,311,541,1,0,"
+Source Window State = "1,30,30,30,29,37,37,0,3,80,0,0,0,0,0,24,21,0,30,29,311,541,1,0,"
 
 [File 0005]
 Path = "/c/Program Files (x86)/National Instruments/CVI2017/include/clang/3.3/stdbool.h"
@@ -95,15 +93,15 @@ Disk Date = 3573565200
 In Projects = ""
 Window Top = 126
 Window Left = 58
-Window Z-Order = 3
+Window Z-Order = 4
 Source Window State = "1,31,31,31,8,12,12,0,3,80,0,0,0,0,0,24,18,0,31,8,311,541,1,0,"
 
 [Tab Order]
 Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
 Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.uir"
-Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.c"
-Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
-Tab 0005 = "/c/Program Files (x86)/National Instruments/CVI2017/include/clang/3.3/stdbool.h"
+Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
+Tab 0004 = "/c/Program Files (x86)/National Instruments/CVI2017/include/clang/3.3/stdbool.h"
+Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
