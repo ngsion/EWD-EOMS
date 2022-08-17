@@ -19,15 +19,17 @@
 // Include files
 
 #include "cvidef.h"
+#include "InstrumentList.h"
 
 //==============================================================================
 // Constants
 
 //==============================================================================
 // Types
-typedef struct 
+typedef struct InstrumentMgr
 {
-	
+	InstrumentListNode ** plist;
+
 	int (*Init)(int x);
 	int (*Shutdown)(int x);
 	

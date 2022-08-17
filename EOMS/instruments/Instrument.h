@@ -29,19 +29,38 @@ extern "C"
 
     //==============================================================================
     // Types
-    typedef  enum
+    typedef enum
     {
-        Instrument_Status_Disconnected,
+        Instrument_Status_Disconnected = 0,
         Instrument_Status_Connected,
         Instrument_Status_Open
     } Instrument_Status;
 
-    typedef struct
+    typedef enum
+    {
+        Instrument_Type_UNKNOWN = 0,
+        Instrument_Type_GPIB,
+        Instrument_Type_VXI,
+        Instrument_Type_GPIB_VXI,
+        Instrument_Type_ASRL,
+        Instrument_Type_PXI,
+        Instrument_Type_TCPIP,
+        Instrument_Type_USB,
+
+    }Instrument_Type;
+
+    typedef struct Instrument
     {
         Instrument_Status status;
+        Instrument_Type type;
         uint32_t resouceMgr;
+        uint32_t session;
         char address[INSTRUMENT_ADDRESS_LENGTH];
         char id[INSTRUMENT_ID_LENGTH];
+
+        int (*Open)(struct Instrument *pInstr);
+        int (*QueryID)(struct Instrument *pInstr);
+        int (*Close)(struct Instrument *pInstr);
 
     } Instrument;
 
@@ -50,6 +69,8 @@ extern "C"
 
     //==============================================================================
     // Global functions
+    Instrument * InstrumentAllocInit();
+    void InstrumentDelloc(Instrument * pInstr);
 
 #ifdef __cplusplus
 }

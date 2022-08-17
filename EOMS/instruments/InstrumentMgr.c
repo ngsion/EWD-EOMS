@@ -11,6 +11,8 @@
 //==============================================================================
 // Include files
 
+#include <ansi_c.h>
+#include <string.h>
 #include "InstrumentMgr.h"
 #include "visa.h"
 #include "../logger/log.h"
@@ -23,13 +25,14 @@
 
 //==============================================================================
 // Static global variables
-static ViSession defaultRM = NULL;
+static ViSession defaultRM = 0;
+static InstrumentListNode *defaultInstrList = NULL;
 
 //==============================================================================
 // Static functions
 static int sFindResource()
 {
-	 ViStatus status;
+	ViStatus status;
 	/*
 	 * First we must call viOpenDefaultRM to get the manager
 	 * handle.  We will store this handle in defaultRM.
@@ -41,10 +44,9 @@ static int sFindResource()
 		return -1;
 	}
 
-	
-     ViUInt32 numInstrs;
-     ViFindList findList;
-     char instrResourceString[VI_FIND_BUFLEN];
+	ViUInt32 numInstrs;
+	ViFindList findList;
+	char instrResourceString[VI_FIND_BUFLEN];
 
 	/* Find all the  resources in our system and store the  */
 	/* number of resources in the system in numInstrs.                  */
@@ -56,13 +58,36 @@ static int sFindResource()
 		viClose(defaultRM);
 		return -1;
 	}
+	log_info(" %d instruments are detected.\n", numInstrs);
 
+	unsigned short intfType;
+	unsigned short intfNum;
 	int i = numInstrs;
-	while (i >= 0)
+	while (i > 0)
 	{
-		log_info("instrResourceString is %s.\n", instrResourceString);
-		if (VI_SUCCESS != viFindNext(findList, instrResourceString))
-			break;
+
+		status = viParseRsrc(defaultRM, instrResourceString, &intfType, &intfNum);
+
+		log_info("instrument %s is connected, intfType is %d,intfNum is %d.\n", instrResourceString, intfType, intfNum);
+
+		Instrument *pInstr = InstrumentAllocInit();
+		pInstr->resouceMgr = defaultRM;
+		pInstr->type = intfType;
+		pInstr->status = Instrument_Status_Connected;
+		memcpy(pInstr->address, instrResourceString, VI_FIND_BUFLEN);
+
+		InstrumentListPushBack(InstrMgr.plist, pInstr);
+
+		if (i > 1)
+		{
+			status = viFindNext(findList, instrResourceString);
+			if (status < VI_SUCCESS)
+			{
+				log_error("Error viFindNext %d.\n", status);
+				break;
+			}
+		}
+
 		--i;
 	}
 
@@ -85,7 +110,9 @@ static int sShutdown(int x)
 
 //==============================================================================
 // Global variables
+
 InstrumentMgr InstrMgr = {
+	.plist = &defaultInstrList,
 	.Init = sInit,
 	.Shutdown = sShutdown
 

@@ -61,6 +61,18 @@ static int sInit(int x)
 {
 	 setupLogger();
 	 InstrMgr.Init(x);
+
+	 InstrumentListNode * pHead = * InstrMgr.plist;
+	 while (pHead != NULL)
+	 {
+		InstrumentListNode * pNode = pHead;
+		log_info("sInit one instrument is %s",pNode->pInstr->address);
+		pNode->pInstr->Open(pNode->pInstr);
+		pNode->pInstr->QueryID(pNode->pInstr);
+		pNode->pInstr->Close(pNode->pInstr);
+		pHead = pNode->next;
+	 }
+	 
 	 return 0;
 }
 static int sShutdown(int x)
