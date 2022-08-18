@@ -93,3 +93,15 @@ int CVICALLBACK onOKBtb (int panel, int control, int event,
 }
 
 
+int CVICALLBACK onStopBtn (int panel, int control, int event,
+						   void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+
+			System.Stop(0);
+			break;
+	}
+	return 0;
+}

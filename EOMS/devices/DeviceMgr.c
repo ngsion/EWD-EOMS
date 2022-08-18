@@ -63,6 +63,13 @@ static int Start(int x)
 }
 static int Stop(int x)
 {
+		for (int i = 0; i < DEVICE_MAX_NUM; i++)
+	{
+		if(	NULL != defaultDeviceArray[i] ){
+			defaultDeviceArray[i] ->Stop(defaultDeviceArray[i] );     
+		}
+    	
+	}
 
 	return 0;
 }

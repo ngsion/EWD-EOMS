@@ -13,6 +13,7 @@
 
 #include "EOMSystem.h"
 #include "DeviceMgr.h"
+#include "MeasurementMgr.h"
 
 //==============================================================================
 // Constants
@@ -68,6 +69,7 @@ static int Init(int x)
 		if( Instrument_Type_ASRL ==  pNode->pInstr->type){
 			
 		    ((Device*) (DevMgr.pDevArray[0]))->pInstr = pNode->pInstr;
+			MeasureMgr.pMeasure->pInstr = pNode->pInstr; 
 		}
 		pHead = pNode->next;
 	}
@@ -96,11 +98,13 @@ static int Shutdown(int x)
 static int Start(int x)
 {
 	DevMgr.Start(x);
+    MeasureMgr.Start(x);
 	return 0;
 }
 static int Stop(int x)
 {
 	DevMgr.Stop(x);
+	MeasureMgr.Stop(x);
 	return 0;
 }
 
