@@ -70,6 +70,11 @@ static int sFindResource()
 
 		log_info("instrument %s is connected, intfType is %d,intfNum is %d.\n", instrResourceString, intfType, intfNum);
 
+		if( intfType != VI_INTF_ASRL && intfType != VI_INTF_USB){
+			--i;
+			continue;
+		}
+
 		Instrument *pInstr = InstrumentAllocInit();
 		pInstr->resouceMgr = defaultRM;
 		pInstr->type = intfType;
@@ -105,6 +110,7 @@ static int sShutdown(int x)
 	{
 		viClose(defaultRM);
 	}
+	InstrumentListClear(&defaultInstrList);
 	return 0;
 }
 

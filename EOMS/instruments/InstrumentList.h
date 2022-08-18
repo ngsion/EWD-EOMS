@@ -39,11 +39,9 @@ typedef struct InstrumentListNode
 //==============================================================================
 // Global functions
 
-void InstrumentListAllocInit(InstrumentListNode ** plist,Instrument *pInstr);
+void InstrumentListPushBack(InstrumentListNode ** pList, Instrument *pInstr);
 
-void InstrumentListPushBack(InstrumentListNode ** plist, Instrument *pInstr);
-
-void InstrumentListDelloc(InstrumentListNode ** plist);
+void InstrumentListClear(InstrumentListNode ** pList);
 
 #ifdef __cplusplus
     }

@@ -31,33 +31,34 @@
 
 //==============================================================================
 // Global functions
-void InstrumentListAllocInit(InstrumentListNode ** plist,Instrument * pInstr)
+InstrumentListNode * CreateInstrumentListNode(Instrument * pInstr)
 {
-	*plist = (InstrumentListNode*) malloc(sizeof(InstrumentListNode));
-	(*plist)->pInstr = pInstr;
-	(*plist)->next = NULL;
+	InstrumentListNode *newNode = (InstrumentListNode*) malloc(sizeof(InstrumentListNode));
+	newNode->pInstr = pInstr;
+	newNode->next = NULL;
+	return newNode;
 }
 
-void InstrumentListPushBack(InstrumentListNode ** plist, Instrument * pInstr)
+void InstrumentListPushBack(InstrumentListNode ** pList, Instrument * pInstr)
 {
-	if (NULL == *plist)
+	if (NULL == *pList)
 	{
-		InstrumentListAllocInit(plist,pInstr);
+		*pList = CreateInstrumentListNode(pInstr);
 	}
 	else
 	{
-		InstrumentListNode * ptr = *plist;
-		while(ptr->next){
-			ptr = ptr->next;
+		InstrumentListNode * tail = *pList;
+		while(tail->next){
+			tail = tail->next;
 		}
-		InstrumentListAllocInit(&(ptr->next),pInstr);
+		tail->next = CreateInstrumentListNode(pInstr);
 	}
 	
 }
 
-void InstrumentListDelloc(InstrumentListNode ** plist)
+void InstrumentListClear(InstrumentListNode ** pList)
 {
-	InstrumentListNode * cur = *plist;
+	InstrumentListNode * cur = *pList;
 	InstrumentListNode * next = NULL;
 	while (NULL != cur)
 	{
@@ -66,5 +67,5 @@ void InstrumentListDelloc(InstrumentListNode ** plist)
 		free(cur);
 		cur = next;
 	}
-	*plist = NULL;
+	*pList = NULL;
 }

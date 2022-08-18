@@ -50,56 +50,75 @@ int Open(struct Instrument *pInstr)
 	}
 	else
 	{
-        log_info("instrument %s is open",pInstr->address);
+		log_info("instrument %s is open", pInstr->address);
 		pInstr->status = Instrument_Status_Open;
 	}
 
-	if (Instrument_Type_ASRL == pInstr->type)
+	if (Instrument_Type_USB == pInstr->type)
 	{
-		/* 
-    * At this point we now have a session open to the serial instrument. 
-    * Now we need to configure the serial port:
-    */                                      
-      
-   /* Set the timeout to 5 seconds (10000 milliseconds). */
-   status = viSetAttribute (pInstr->session, VI_ATTR_TMO_VALUE, 10000);
-  
-   /* Set the baud rate to 38400 (default is 9600). */
-   status = viSetAttribute (pInstr->session, VI_ATTR_ASRL_BAUD, 38400);
-  
-   /* Set the number of data bits contained in each frame (from 5 to 8). 
-    * The data bits for  each frame are located in the low-order bits of
-    * every byte stored in memory.    
-    */
-   status = viSetAttribute (pInstr->session, VI_ATTR_ASRL_DATA_BITS, 8);
-  
-   /* Specify parity. Options: 
-    * VI_ASRL_PAR_NONE  - No parity bit exists, 
-    * VI_ASRL_PAR_ODD   - Odd parity should be used, 
-    * VI_ASRL_PAR_EVEN  - Even parity should be used,
-    * VI_ASRL_PAR_MARK  - Parity bit exists and is always 1,
-    * VI_ASRL_PAR_SPACE - Parity bit exists and is always 0.
-    */
-   status = viSetAttribute (pInstr->session, VI_ATTR_ASRL_PARITY, VI_ASRL_PAR_NONE);
-  
-   /* Specify stop bit. Options:
-    * VI_ASRL_STOP_ONE   - 1 stop bit is used per frame,
-    * VI_ASRL_STOP_ONE_5 - 1.5 stop bits are used per frame,
-    * VI_ASRL_STOP_TWO   - 2 stop bits are used per frame.
-    */
-   status = viSetAttribute (pInstr->session, VI_ATTR_ASRL_STOP_BITS, VI_ASRL_STOP_ONE);
-  
-    /* Specify that the read operation should terminate when a termination 
-     * character is received.
-     */
-   status = viSetAttribute (pInstr->session, VI_ATTR_TERMCHAR_EN, VI_TRUE); 
- 
-    /* Set the termination character to 0xA , \n                           
-     */
-   status = viSetAttribute (pInstr->session, VI_ATTR_TERMCHAR, 0xA);
-   
+		
+	}
+	else if (Instrument_Type_ASRL != pInstr->type)
+	{
+		/*
+		 * At this point we now have a session open to the serial instrument.
+		 * Now we need to configure the serial port:
+		 */
+		/* Set the timeout to 5 seconds (10000 milliseconds). */
+		status = viSetAttribute(pInstr->session, VI_ATTR_TMO_VALUE, 10000);
 
-   
+		/* Set the baud rate to 38400 (default is 9600). */
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_BAUD, 38400);
+	
+		/* Set the number of data bits contained in each frame (from 5 to 8).
+		 * The data bits for  each frame are located in the low-order bits of
+		 * every byte stored in memory.
+		 */
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_DATA_BITS, 8);
+
+		/* Specify parity. Options:
+		 * VI_ASRL_PAR_NONE  - No parity bit exists,
+		 * VI_ASRL_PAR_ODD   - Odd parity should be used,
+		 * VI_ASRL_PAR_EVEN  - Even parity should be used,
+		 * VI_ASRL_PAR_MARK  - Parity bit exists and is always 1,
+		 * VI_ASRL_PAR_SPACE - Parity bit exists and is always 0.
+		 */
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_PARITY, VI_ASRL_PAR_NONE);
+
+		/* Specify stop bit. Options:
+		 * VI_ASRL_STOP_ONE   - 1 stop bit is used per frame,
+		 * VI_ASRL_STOP_ONE_5 - 1.5 stop bits are used per frame,
+		 * VI_ASRL_STOP_TWO   - 2 stop bits are used per frame.
+		 */
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_STOP_BITS, VI_ASRL_STOP_ONE);
+
+		/* Specify that the read operation should terminate when a termination
+		 * character is received.
+		 */
+		status = viSetAttribute(pInstr->session, VI_ATTR_TERMCHAR_EN, VI_TRUE);
+
+		/* Set the termination character to 0xA , \n
+		 */
+		status = viSetAttribute(pInstr->session, VI_ATTR_TERMCHAR, 0xA);
+		
+	}
+	else
+	{
+
+		status = viSetAttribute(pInstr->session, VI_ATTR_TMO_VALUE, 10000);
+
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_BAUD, 9600);
+
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_DATA_BITS, 8);
+
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_PARITY, VI_ASRL_PAR_NONE);
+
+		status = viSetAttribute(pInstr->session, VI_ATTR_ASRL_STOP_BITS, VI_ASRL_STOP_ONE);
+
+		status = viSetAttribute(pInstr->session, VI_ATTR_TERMCHAR_EN, VI_TRUE);
+
+		status = viSetAttribute(pInstr->session, VI_ATTR_TERMCHAR, 0x0D);
+	
 	}
 
 	return 0;
@@ -113,7 +132,7 @@ int QueryID(struct Instrument *pInstr)
 	}
 
 	unsigned char buffer[INSTRUMENT_ID_LENGTH];
-	memset(buffer,0,INSTRUMENT_ID_LENGTH);
+	memset(buffer, 0, INSTRUMENT_ID_LENGTH);
 	char stringinput[64];
 	ViUInt32 retCount;
 	ViUInt32 writeCount;
@@ -163,7 +182,7 @@ int Close(struct Instrument *pInstr)
 	}
 
 	ViStatus status = viClose(pInstr->session);
-    if ( VI_SUCCESS ==  status)
+	if (VI_SUCCESS == status)
 	{
 		pInstr->status = Instrument_Status_Connected;
 	}
