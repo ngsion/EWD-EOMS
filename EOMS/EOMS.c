@@ -86,8 +86,7 @@ int CVICALLBACK onOKBtb (int panel, int control, int event,
 	switch (event)
 	{
 		case EVENT_COMMIT:
-			   log_trace("Hello %s", "world");
-			   log_info("Hello %s", "world"); 
+			    System.Start(0);
 			break;
 	}
 	return 0;

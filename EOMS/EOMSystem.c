@@ -12,7 +12,7 @@
 // Include files
 
 #include "EOMSystem.h"
- 
+#include "DeviceMgr.h"
 
 //==============================================================================
 // Constants
@@ -22,77 +22,96 @@
 
 //==============================================================================
 // Static global variables
-static FILE * fp = NULL;
-
+static FILE *fp = NULL;
 
 void setupLogger()
-{  
-	time_t now;//time_t
-	time(&now);  
-    
-	struct tm *tblock;
-    tblock = localtime(&now);
-	
-	char buf[64]={0};
-    strftime(buf, 64, "log/EOMSlog_%Y%m%d_%H%M%S.txt", tblock);
-  
+{
+	time_t now; // time_t
+	time(&now);
 
-    
-	fp = fopen(buf,"a+");
-	if	(NULL != fp)
+	struct tm *tblock;
+	tblock = localtime(&now);
+
+	char buf[64] = {0};
+	strftime(buf, 64, "log/EOMSlog_%Y%m%d_%H%M%S.txt", tblock);
+
+	fp = fopen(buf, "a+");
+	if (NULL != fp)
 	{
-		 int result = log_add_fp(fp,LOG_DEBUG);
-		 if	(result < 0)
-		 {
-			 log_fatal("log_add_fp failed");  
-		 }
+		int result = log_add_fp(fp, LOG_DEBUG);
+		if (result < 0)
+		{
+			log_fatal("log_add_fp failed");
+		}
 	}
 	else
 	{
 		perror("error fopen");
 	}
-	//log_set_quiet(true);	
+	// log_set_quiet(true);
 }
-
 
 //==============================================================================
 // Static functions
-static int sInit(int x)
+static int Init(int x)
 {
-	 setupLogger();
-	 InstrMgr.Init(x);
+	setupLogger();
+	InstrMgr.Init(x);
+	DevMgr.Init(x);
 
-	 InstrumentListNode * pHead = * InstrMgr.plist;
-	 while (pHead != NULL)
-	 {
-		InstrumentListNode * pNode = pHead;
-		log_info("sInit one instrument is %s",pNode->pInstr->address);
+	InstrumentListNode *pHead = *InstrMgr.plist;
+	while (pHead != NULL)
+	{
+		InstrumentListNode *pNode = pHead;
+		log_info("Init one instrument is %s", pNode->pInstr->address);
 		pNode->pInstr->Open(pNode->pInstr);
-		pNode->pInstr->QueryID(pNode->pInstr);
+		if( Instrument_Type_ASRL ==  pNode->pInstr->type){
+			
+		    ((Device*) (DevMgr.pDevArray[0]))->pInstr = pNode->pInstr;
+		}
+		pHead = pNode->next;
+	}
+    
+	DevMgr.AfterInit(x);
+	return 0;
+}
+static int Shutdown(int x)
+{
+	if (NULL != fp)
+	{
+		// fclose(fp);
+	}
+	InstrumentListNode *pHead = *InstrMgr.plist;
+	while (pHead != NULL)
+	{
+		InstrumentListNode *pNode = pHead;
+		log_info("Shutdown one instrument is %s", pNode->pInstr->address);
 		pNode->pInstr->Close(pNode->pInstr);
 		pHead = pNode->next;
-	 }
-	 
-	 return 0;
+	}
+	InstrMgr.Shutdown(x);
+	return 0;
 }
-static int sShutdown(int x)
+
+static int Start(int x)
 {
-     if(NULL != fp)
-	  {
-		//fclose(fp);
-	  }
-	  InstrMgr.Shutdown(x);
-	  return 0;
+	DevMgr.Start(x);
+	return 0;
+}
+static int Stop(int x)
+{
+	DevMgr.Stop(x);
+	return 0;
 }
 
 //==============================================================================
 // Global variables
 EOMSystem System = {
-	.Init = sInit,
-	.Shutdown = sShutdown
-	
-};
-
+	.Init = Init,
+	.Shutdown = Shutdown,
+	.Start = Start,
+	.Stop = Stop
+	};
 
 //==============================================================================
 // Global functions

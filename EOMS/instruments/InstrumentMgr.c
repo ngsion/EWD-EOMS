@@ -99,12 +99,12 @@ static int sFindResource()
 	return 0;
 }
 
-static int sInit(int x)
+static int Init(int x)
 {
 	sFindResource(x);
 	return 0;
 }
-static int sShutdown(int x)
+static int Shutdown(int x)
 {
 	if (NULL != defaultRM)
 	{
@@ -119,8 +119,8 @@ static int sShutdown(int x)
 
 InstrumentMgr InstrMgr = {
 	.plist = &defaultInstrList,
-	.Init = sInit,
-	.Shutdown = sShutdown
+	.Init = Init,
+	.Shutdown = Shutdown
 
 };
 
