@@ -34,7 +34,11 @@ static int Stop(Device * pDev){
    log_info("Device Stops");
    return 0;
 }
-
+static int DoFire(struct Device * pDev, void * inData, void * outData)
+{
+   log_info("Device DoFire");
+   return 0;
+}
 //==============================================================================
 // Global variables
 
@@ -51,6 +55,7 @@ void DeviceInit(Device * pDev)
 	pDev->pInstr = NULL;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
+	pDev->DoFire = DoFire;
 }
 void DeviceDeinit(Device * pDev)
 {

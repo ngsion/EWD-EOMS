@@ -28,16 +28,6 @@
 // Static functions
 static int Start(Measurement * pDev){
 
-	Measurement *pMeter = (Measurement *)pDev;
-
-	if (NULL != pMeter->pInstr && pMeter->pInstr->status >= Instrument_Status_Open)
-	{
-		ViStatus status;
-		 ViSession session = pMeter->pInstr->session;
-
-		status = viPrintf(session, "*RST\n");
-
-	}
    log_info("Measurement starts");
    return 0;
 }
@@ -46,7 +36,11 @@ static int Stop(Measurement * pDev){
    return 0;
 }
 
-
+ static int DoCollect(struct Measurement * pDev, void * inData, void * outData)
+ {
+	log_info("Measurement DoCollect");
+    return 0;
+ }
 //==============================================================================
 // Global variables
 
@@ -59,6 +53,7 @@ void MeasurementInit(Measurement * pDev)
     pDev->pInstr = NULL;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
+	pDev->DoCollect = DoCollect;
 }
 void MeasurementDeinit(Measurement * pDev)
 {

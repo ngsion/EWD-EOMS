@@ -40,7 +40,7 @@ static int sFindResource()
 	status = viOpenDefaultRM(&defaultRM);
 	if (status < VI_SUCCESS)
 	{
-		log_fatal("Could not open a session to the VISA Resource Manager!\n");
+		log_fatal("Could not open a session to the VISA Resource Manager!");
 		return -1;
 	}
 
@@ -54,11 +54,11 @@ static int sFindResource()
 
 	if (status < VI_SUCCESS)
 	{
-		log_fatal("An error occurred while finding resources.\n");
+		log_fatal("An error occurred while finding resources.");
 		viClose(defaultRM);
 		return -1;
 	}
-	log_info(" %d instruments are detected.\n", numInstrs);
+	log_info(" %d instruments are detected.", numInstrs);
 
 	unsigned short intfType;
 	unsigned short intfNum;
@@ -68,7 +68,7 @@ static int sFindResource()
 
 		status = viParseRsrc(defaultRM, instrResourceString, &intfType, &intfNum);
 
-		log_info("instrument %s is connected, intfType is %d,intfNum is %d.\n", instrResourceString, intfType, intfNum);
+		log_info("instrument %s is connected, intfType is %d,intfNum is %d.", instrResourceString, intfType, intfNum);
 
 		if( intfType != VI_INTF_ASRL && intfType != VI_INTF_USB){
 			--i;
@@ -88,7 +88,7 @@ static int sFindResource()
 			status = viFindNext(findList, instrResourceString);
 			if (status < VI_SUCCESS)
 			{
-				log_error("Error viFindNext %d.\n", status);
+				log_error("Error viFindNext %d.", status);
 				break;
 			}
 		}

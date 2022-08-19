@@ -34,6 +34,7 @@ typedef struct Device
      
     int (*Start)(struct Device * pDev);
     int (*Stop)(struct Device * pDev);
+    int (*DoFire)(struct Device * pDev, void * inData, void * outData);
 
 }Device;
 

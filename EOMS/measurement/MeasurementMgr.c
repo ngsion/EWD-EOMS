@@ -12,6 +12,7 @@
 // Include files
 
 #include "MeasurementMgr.h"
+#include "PicoammeterMeasure.h"
 
 //==============================================================================
 // Constants
@@ -21,18 +22,29 @@
 
 //==============================================================================
 // Static global variables
-static Measurement measure;
+static PicoammeterMeasure picoaMeasure;
 //==============================================================================
 // Static functions
 static int Start(int x)
 {
-
+   ((Measurement*) &picoaMeasure)->Start((Measurement*) &picoaMeasure);
     
 	return 0;
 }
 static int Stop(int x)
 {
+     ((Measurement*) &picoaMeasure)->Stop((Measurement*) &picoaMeasure);
+	return 0;
+}
+static int Init(int x)
+{
+    PicoammeterMeasureInit(&picoaMeasure);
+	return 0;
+}
 
+static int Shutdown(int x)
+{
+    PicoammeterMeasureDeinit(&picoaMeasure);
 	return 0;
 }
 
@@ -43,8 +55,9 @@ static int Stop(int x)
 // Global variables
 
 MeasurementMgr MeasureMgr = {
-	.pMeasure = &measure,
+	.pPicoammeterMeasure =(Measurement*)  &picoaMeasure,
+	.Init = Init,
 	.Start = Start,
-	.Stop = Stop
-
+	.Stop = Stop,
+    .Shutdown = Shutdown
 };

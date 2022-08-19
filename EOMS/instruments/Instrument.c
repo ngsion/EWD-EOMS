@@ -45,7 +45,7 @@ int Open(struct Instrument *pInstr)
 
 	if (status < VI_SUCCESS)
 	{
-		log_error("Cannot open a session to the device %s.\n", pInstr->address);
+		log_error("Cannot open a session to the device %s.", pInstr->address);
 		return -1;
 	}
 	else
@@ -147,7 +147,7 @@ int QueryID(struct Instrument *pInstr)
 	status = viWrite(pInstr->session, (ViBuf)stringinput, (ViUInt32)strlen(stringinput), &writeCount);
 	if (status < VI_SUCCESS)
 	{
-		log_error("Error writing to the device %s.\n", pInstr->address);
+		log_error("Error writing to the device %s.", pInstr->address);
 
 		return -1;
 	}
@@ -163,7 +163,7 @@ int QueryID(struct Instrument *pInstr)
 	status = viRead(pInstr->session, buffer, INSTRUMENT_ID_LENGTH, &retCount);
 	if (status < VI_SUCCESS)
 	{
-		log_error("Error reading a response from the device %s.\n", pInstr->address);
+		log_error("Error reading a response from the device %s.", pInstr->address);
 	}
 	else
 	{
@@ -194,7 +194,7 @@ Instrument *InstrumentAllocInit()
 	Instrument *pInstr = (Instrument *)malloc(sizeof(Instrument));
 	if (NULL == pInstr)
 	{
-		log_fatal("Error creating an Instrument.\n");
+		log_fatal("Error creating an Instrument.");
 	}
 	else
 	{

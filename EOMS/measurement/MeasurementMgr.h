@@ -27,11 +27,12 @@
 // Types
 typedef struct MeasurementMgr
 {
-    Measurement * pMeasure;
+    Measurement * pPicoammeterMeasure;
 
+    int (*Init)(int x);
 	int (*Start)(int x);
 	int (*Stop)(int x);
-	
+	int (*Shutdown)(int x);
 
 }MeasurementMgr;
 

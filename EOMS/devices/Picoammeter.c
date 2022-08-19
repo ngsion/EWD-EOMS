@@ -27,62 +27,52 @@
 //==============================================================================
 // Static global variables
 
+
 //==============================================================================
 // Static functions
-static int Start(Device *pDev)
+static int DoFire(struct Device *pDev, void *inData, void *outData)
 {
 	Picoammeter *pMeter = (Picoammeter *)pDev;
-
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
 
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
-		status = viPrintf(session, "*RST\n");
-	//	status = viPrintf(session, ":SENS1:CURR:RANG 2e-2\n");
-		status = viPrintf(session, ":FORM:ELEM CURR1\n");
-		status = viPrintf(session, ":SOUR1:VOLT:RANG 30\n");
-		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
+		int *pVolt = (int *)inData;
 
-		int max = 30;
-		int min = 0;
-		int step = 2;
-		for (int current = min; current <= max; current += step)
-		{
-
-			status = viPrintf(session, ":SOUR1:VOLT %d\n", current);
-			status = viPrintf(session, ":OUTP1 ON\n");
-
-			Delay(0.01);
-			
-			status = viPrintf(session, ":READ?\n");
-			unsigned char buffer[14];
-			memset(buffer, 0, 14);
-			ViUInt32 retCount;
-			status = viRead(session, buffer, 14, &retCount);
-			if (status < VI_SUCCESS)
-			{
-				log_error("Error reading a response from the device %d.\n", session);
-			}
-			else
-			{
-			
-				int num;
-			    double value;
-			
-			//	log_info("instrument %d return %d is: %*s\n", session, retCount,retCount, buffer);
-				num = Scan (buffer, "%s>%f", &value);
-			
-				log_info("instrument  %d volt %dV return is: %f nA\n", session,current, value*1000000000);
-			}
-
-			Delay(1);
-		}
+		status = viPrintf(session, ":SOUR1:VOLT %d\n", *pVolt);
+		
 	}
 	else
 	{
-		log_error("Picoammeter SetAttribute failed null %d ", NULL == pMeter->device.pInstr);
+		log_error("Picoammeter DoFire failed null %d ", NULL == pMeter->device.pInstr);
+	}
+
+	return 0;
+}
+
+static int Start(Device *pDev)
+{
+	if (!pDev)
+	{
+		log_error("error in Picoammeter start");
+		return -1;
+	}
+		Picoammeter *pMeter = (Picoammeter *)pDev; 
+	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
+	{
+        log_info("Picoammeter starts");
+		ViStatus status;
+		ViSession session = pMeter->device.pInstr->session;
+
+		status = viPrintf(session, "*RST\n");
+		status = viPrintf(session, ":SOUR1:VOLT:RANG 30\n");
+		status = viPrintf(session, ":OUTP1 ON\n");
+	}
+	else
+	{
+		log_error("Picoammeter Start failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -116,12 +106,12 @@ static int SetAttribute(struct Device *pDev)
 }
 static int Stop(Device *pDev)
 {
-	Picoammeter *pMeter = (Picoammeter *)pDev;
 
+	Picoammeter *pMeter = (Picoammeter *)pDev;
+	log_info("Picoammeter Stops");
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
 
-		log_info("Picoammeter Stops");
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 		status = viPrintf(session, ":OUTP1 OFF\n");
@@ -129,7 +119,7 @@ static int Stop(Device *pDev)
 	}
 	else
 	{
-		log_error("Picoammeter SetAttribute failed null %d ", NULL == pMeter->device.pInstr);
+		log_error("Picoammeter Stop failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -150,9 +140,10 @@ void PicoammeterInit(Picoammeter *pDev)
 	pDev->SetAttribute = SetAttribute;
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
+	pDev->device.DoFire = DoFire;
 }
 void PicoammeterDeinit(Picoammeter *pDev)
 {
 	memcpy(pDev->device.name, "Picoammeter", sizeof("Picoammeter"));
-	pDev->device.pInstr = NULL;
+	DeviceDeinit(&pDev->device);
 }

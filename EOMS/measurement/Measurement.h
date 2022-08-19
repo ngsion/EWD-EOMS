@@ -31,6 +31,7 @@ typedef struct Measurement
      
     int (*Start)(struct Measurement * pDev);
     int (*Stop)(struct Measurement * pDev);
+    int (*DoCollect)(struct Measurement * pDev, void * inData, void * outData);
 
 }Measurement;
 
