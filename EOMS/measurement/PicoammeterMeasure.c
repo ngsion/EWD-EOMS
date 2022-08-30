@@ -85,8 +85,8 @@ static int Start(Measurement *pDev)
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
 		//	status = viPrintf(session, ":SENS1:CURR:RANG 2e-2\n");
-		status = viPrintf(session, ":FORM:ELEM CURR1\n");
-		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
+		status = viPrintf(session, ":FORM:ELEM CURR2\n");
+		//status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
 	}
 	else
 	{

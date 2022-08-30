@@ -41,7 +41,7 @@ static int DoFire(struct Device *pDev, void *inData, void *outData)
 
 		int *pVolt = (int *)inData;
 
-		status = viPrintf(session, ":SOUR1:VOLT %d\n", *pVolt);
+		status = viPrintf(session, ":SOUR2:VOLT %d\n", *pVolt);
 		
 	}
 	else
@@ -67,8 +67,8 @@ static int Start(Device *pDev)
 		ViSession session = pMeter->device.pInstr->session;
 
 		status = viPrintf(session, "*RST\n");
-		status = viPrintf(session, ":SOUR1:VOLT:RANG 30\n");
-		status = viPrintf(session, ":OUTP1 ON\n");
+		status = viPrintf(session, ":SOUR2:VOLT:RANG 30\n");
+		status = viPrintf(session, ":OUTP2 ON\n");
 	}
 	else
 	{
@@ -114,7 +114,7 @@ static int Stop(Device *pDev)
 
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
-		status = viPrintf(session, ":OUTP1 OFF\n");
+		status = viPrintf(session, ":OUTP2 OFF\n");
 		status = viPrintf(session, "*RST\n");
 	}
 	else

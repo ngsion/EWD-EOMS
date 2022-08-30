@@ -112,22 +112,13 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	{
 
 		pDev->DoFire(pDev,&volt, NULL);
-		Delay(0.1);
+		Delay(0.01);
 		pMeasure->DoCollect(pMeasure,&volt, &current);
 
 	    log_info("instrument  %d set volt %dV get current %fnA ", pDev->pInstr->session, volt, current);
 		Delay(1);
 	}
-	for ( volt = max; volt >= min; volt -= step)
-	{
 
-		pDev->DoFire(pDev,&volt, NULL);
-		Delay(0.1);
-		pMeasure->DoCollect(pMeasure,&volt, &current);
-
-	    log_info("instrument  %d set volt %dV get current %fnA ", pDev->pInstr->session, volt, current);
-		Delay(1);
-	}
     
 
 	return 0;
@@ -138,9 +129,18 @@ static int Start(int x)
 	DevMgr.Start(x);
 	MeasureMgr.Start(x);
 
+	int threadFunctionId = 0;
+	
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
 								  ThreadFunction, NULL,
-								  NULL);
+								  &threadFunctionId);
+		/* Wait for the thread functions to finish executing */
+	CmtWaitForThreadPoolFunctionCompletion (DEFAULT_THREAD_POOL_HANDLE,
+											threadFunctionId,
+											0);
+	
+	/* Release thread functions */
+	CmtReleaseThreadPoolFunctionID (DEFAULT_THREAD_POOL_HANDLE, threadFunctionId);
 
 	return 0;
 }

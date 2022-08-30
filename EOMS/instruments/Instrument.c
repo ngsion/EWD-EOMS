@@ -167,7 +167,7 @@ int QueryID(struct Instrument *pInstr)
 	}
 	else
 	{
-		log_info("instrument %s id is: %*s\n", pInstr->address, retCount, buffer);
+		log_info("instrument %s id is: %*s", pInstr->address, retCount, buffer);
 		memcpy(pInstr->id, buffer, retCount);
 	}
 
