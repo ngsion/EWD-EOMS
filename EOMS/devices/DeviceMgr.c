@@ -53,7 +53,7 @@ static int Start(int x)
 {
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		if(	NULL != defaultDeviceArray[i] ){
+		if(	NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i].isSource){
 			defaultDeviceArray[i] ->Start(defaultDeviceArray[i] );     
 		}
     	

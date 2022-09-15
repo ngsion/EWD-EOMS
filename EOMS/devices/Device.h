@@ -20,6 +20,7 @@
 
 #include "cvidef.h"
 #include "../instruments/Instrument.h"
+#include <stdbool.h>
 //==============================================================================
 // Constants
 #define DEVICE_NAME_LENGTH 64
@@ -29,12 +30,13 @@
 typedef struct Device
 {
     char  name[DEVICE_NAME_LENGTH];
-    char  title[DEVICE_TITLE_LENGTH];
+    char  title[DEVICE_TITLE_LENGTH]; ///chinese name
     Instrument * pInstr;
+    bool isSource;
      
     int (*Start)(struct Device * pDev);
     int (*Stop)(struct Device * pDev);
-    int (*DoFire)(struct Device * pDev, void * inData, void * outData);
+    int (*DoWithCommand)(struct Device * pDev, void * inData, void * outData);
 
 }Device;
 

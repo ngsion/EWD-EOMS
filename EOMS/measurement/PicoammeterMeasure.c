@@ -30,7 +30,7 @@
 
 //==============================================================================
 // Static functions
-static int DoCollect(struct Measurement *pDev, void *inData, void *outData)
+static int DoCollectWithCommand(struct Measurement *pDev, void *inData, void *outData)
 {
 	PicoammeterMeasure *pMeter = (PicoammeterMeasure *)pDev;
 
@@ -63,7 +63,7 @@ static int DoCollect(struct Measurement *pDev, void *inData, void *outData)
 	}
 	else
 	{
-		log_error("Picoammeter DoCollect failed null %d ", NULL == pMeter->measure.pInstr);
+		log_error("Picoammeter DoCollectWithCommand failed null %d ", NULL == pMeter->measure.pInstr);
 	}
 	return 0;
 }
@@ -118,7 +118,7 @@ void PicoammeterMeasureInit(PicoammeterMeasure *pDev)
 	MeasurementInit(&pDev->measure);
 	pDev->measure.Start = Start;
 	pDev->measure.Stop = Stop;
-	pDev->measure.DoCollect = DoCollect;
+	pDev->measure.DoCollectWithCommand = DoCollectWithCommand;
 }
 void PicoammeterMeasureDeinit(PicoammeterMeasure *pDev)
 {

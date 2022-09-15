@@ -30,7 +30,7 @@
 
 //==============================================================================
 // Static functions
-static int DoFire(struct Device *pDev, void *inData, void *outData)
+static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 {
 	Picoammeter *pMeter = (Picoammeter *)pDev;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
@@ -46,7 +46,7 @@ static int DoFire(struct Device *pDev, void *inData, void *outData)
 	}
 	else
 	{
-		log_error("Picoammeter DoFire failed null %d ", NULL == pMeter->device.pInstr);
+		log_error("Picoammeter DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -140,7 +140,7 @@ void PicoammeterInit(Picoammeter *pDev)
 	pDev->SetAttribute = SetAttribute;
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
-	pDev->device.DoFire = DoFire;
+	pDev->device.DoWithCommand = DoWithCommand;
 }
 void PicoammeterDeinit(Picoammeter *pDev)
 {

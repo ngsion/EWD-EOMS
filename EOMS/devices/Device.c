@@ -34,9 +34,9 @@ static int Stop(Device * pDev){
    log_info("Device Stops");
    return 0;
 }
-static int DoFire(struct Device * pDev, void * inData, void * outData)
+static int DoWithCommand(struct Device * pDev, void * inData, void * outData)
 {
-   log_info("Device DoFire");
+   log_info("Device DoWithCommand");
    return 0;
 }
 //==============================================================================
@@ -55,7 +55,7 @@ void DeviceInit(Device * pDev)
 	pDev->pInstr = NULL;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
-	pDev->DoFire = DoFire;
+	pDev->DoWithCommand = DoWithCommand;
 }
 void DeviceDeinit(Device * pDev)
 {

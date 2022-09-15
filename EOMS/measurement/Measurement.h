@@ -20,6 +20,7 @@
 
 #include "cvidef.h"
 #include "Instrument.h"
+#include <stdbool.h>
 //==============================================================================
 // Constants
 
@@ -28,10 +29,11 @@
 typedef struct Measurement
 {
     Instrument * pInstr;
+    bool isCollector;
      
     int (*Start)(struct Measurement * pDev);
     int (*Stop)(struct Measurement * pDev);
-    int (*DoCollect)(struct Measurement * pDev, void * inData, void * outData);
+    int (*DoCollectWithCommand)(struct Measurement * pDev, void * inData, void * outData);
 
 }Measurement;
 
