@@ -126,7 +126,24 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 
 static int CVICALLBACK ThreadFunction2(void *functionData)
 {
+Device *pDev = ((Device *)(DevMgr.pDevArray[0]));
+	Measurement *pMeasure = MeasureMgr.pPicoammeterMeasure;
+	int max = 30;
+	int min = 0;
+	int step = 2;
+	double current = 0.0;
+	int volt;
+	
+	for ( volt = min; volt <= max; volt += step)
+	{
 
+	    log_info("instrument  %d  get current %fnA ", pDev->pInstr->session, current);
+		Delay(1);
+	}
+
+    
+
+	return 0;
 }
 
 static int Start(int x)

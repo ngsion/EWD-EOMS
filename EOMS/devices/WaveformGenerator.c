@@ -58,6 +58,19 @@ static int Start(Device *pDev)
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
+		  	//viPrintf(instr,"*CLS\n");
+			viPrintf(session,"SOURce1:FUNCtion SQU\n");
+			viPrintf(session,"SOURce1:FREQuency +5\n");
+			viPrintf(session,"SOURce1:VOLTage +3\n");
+			viPrintf(session,"SOURce1:VOLTage:OFFSet 0\n"); 
+	//	viPrintf(instr,"SOURce1:VOLTage:PHASe 0\n");
+				viPrintf(session, "OUTPut1 ON\n");  /* Turn on the instrument output */
+         //	viPrintf(instr, "SOURce1:*TRG\n");  /* Send bus trigger */
+		 
+		 viPrintf(session,"SOURce2:FUNCtion DC\n"); 
+		 	viPrintf(session,"SOURce2:FREQuency +5\n");
+		 	viPrintf(session,"SOURce2:VOLTage:OFFSet -1.5\n");
+			viPrintf(session, "OUTPut2 ON\n");
 	}
 	else
 	{

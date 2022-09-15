@@ -14,6 +14,7 @@
 #include <ansi_c.h>
 #include "DeviceMgr.h"
 #include "Picoammeter.h"
+#include "WaveformGenerator.h"
 
 //==============================================================================
 // Constants
@@ -35,6 +36,11 @@ static int Init(int x)
 	
     defaultDeviceArray[0] = (Device*) malloc(sizeof(Picoammeter));
 	PicoammeterInit((Picoammeter*)defaultDeviceArray[0] );
+
+	 defaultDeviceArray[1] = (Device*) malloc(sizeof(WaveformGenerator));
+	WaveformGeneratorInit((WaveformGenerator*)defaultDeviceArray[1] );
+    defaultDeviceArray[1]->isSource = true;
+	
 	return 0;
 }
 
@@ -53,7 +59,7 @@ static int Start(int x)
 {
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		if(	NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i].isSource){
+		if(	NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSource){
 			defaultDeviceArray[i] ->Start(defaultDeviceArray[i] );     
 		}
     	
