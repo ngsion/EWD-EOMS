@@ -36,6 +36,7 @@ static int Init(int x)
 	
     defaultDeviceArray[0] = (Device*) malloc(sizeof(Picoammeter));
 	PicoammeterInit((Picoammeter*)defaultDeviceArray[0] );
+	defaultDeviceArray[0]->isSource = false;
 
 	 defaultDeviceArray[1] = (Device*) malloc(sizeof(WaveformGenerator));
 	WaveformGeneratorInit((WaveformGenerator*)defaultDeviceArray[1] );
@@ -71,7 +72,7 @@ static int Stop(int x)
 {
 		for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		if(	NULL != defaultDeviceArray[i] ){
+		if(	NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSource){
 			defaultDeviceArray[i] ->Stop(defaultDeviceArray[i] );     
 		}
     	

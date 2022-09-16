@@ -74,6 +74,11 @@ static int Init(int x)
 			((Device *)(DevMgr.pDevArray[0]))->pInstr = pNode->pInstr;
 			MeasureMgr.pPicoammeterMeasure->pInstr = pNode->pInstr;
 		}
+		if (Instrument_Type_USB == pNode->pInstr->type)
+		{
+
+			((Device *)(DevMgr.pDevArray[1]))->pInstr = pNode->pInstr;
+		}
 		pHead = pNode->next;
 	}
 
@@ -126,19 +131,17 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 
 static int CVICALLBACK ThreadFunction2(void *functionData)
 {
-Device *pDev = ((Device *)(DevMgr.pDevArray[0]));
+   Device *pDev = ((Device *)(DevMgr.pDevArray[0]));
 	Measurement *pMeasure = MeasureMgr.pPicoammeterMeasure;
-	int max = 30;
-	int min = 0;
-	int step = 2;
+
 	double current = 0.0;
 	int volt;
 	
-	for ( volt = min; volt <= max; volt += step)
+	for ( int i = 0; i < 30; i++)
 	{
-
-	    log_info("instrument  %d  get current %fnA ", pDev->pInstr->session, current);
-		Delay(1);
+        pMeasure->DoCollectWithCommand(pMeasure,&volt, &current);
+	    log_info("instrument  %d  mesure %d get current %fnA ", pDev->pInstr->session,i, current);
+		Delay(0.1);
 	}
 
     

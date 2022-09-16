@@ -39,9 +39,9 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
-		int *pVolt = (int *)inData;
+		float *pVolt = (float *)inData;
 
-		status = viPrintf(session, ":SOUR1:VOLT %d\n", *pVolt);
+		status = viPrintf(session, ":SOUR1:VOLT %f\n", *pVolt);
 		
 	}
 	else
@@ -69,6 +69,7 @@ static int Start(Device *pDev)
 		status = viPrintf(session, "*RST\n");
 		status = viPrintf(session, ":SOUR1:VOLT:RANG 30\n");
 		status = viPrintf(session, ":OUTP1 ON\n");
+		//status = viPrintf(session, ":SOUR1:VOLT +1\n");
 	}
 	else
 	{
@@ -114,7 +115,7 @@ static int Stop(Device *pDev)
 
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
-		status = viPrintf(session, ":OUTP2 OFF\n");
+		status = viPrintf(session, ":OUTP1 OFF\n");
 		status = viPrintf(session, "*RST\n");
 	}
 	else
