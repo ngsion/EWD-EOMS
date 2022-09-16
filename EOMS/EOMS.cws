@@ -56,7 +56,7 @@ Disk Date = 3746078250
 In Projects = "1,"
 Window Top = 126
 Window Left = 50
-Window Z-Order = 8
+Window Z-Order = 9
 Source Window State = "1,0,0,0,0,0,0,0,0,102,0,0,0,0,0,29,8,0,13,0,371,673,1,0,"
 
 [File 0002]
@@ -66,8 +66,8 @@ Disk Date = 3746097743
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Window Z-Order = 1
-Source Window State = "1,68,68,68,36,41,41,0,0,200,0,0,0,0,0,39,49,0,61,76,323,577,1,0,"
+Window Z-Order = 2
+Source Window State = "1,68,68,68,36,41,41,0,0,86,0,0,0,0,0,25,49,0,61,76,323,577,1,0,"
 
 [File 0003]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.c"
@@ -76,7 +76,7 @@ Disk Date = 3746078265
 In Projects = "1,"
 Window Top = 281
 Window Left = 130
-Window Z-Order = 3
+Window Z-Order = 4
 Source Window State = "1,68,68,68,26,33,33,0,3,102,0,0,0,0,0,29,49,0,68,26,371,673,1,0,"
 
 [File 0004]
@@ -86,7 +86,7 @@ Disk Date = 3746078359
 In Projects = "1,"
 Window Top = 312
 Window Left = 146
-Window Z-Order = 12
+Window Z-Order = 13
 Source Window State = "1,35,35,35,37,43,43,0,0,102,0,0,0,0,0,29,24,0,45,44,371,673,1,0,"
 
 [File 0005]
@@ -106,7 +106,7 @@ Disk Date = 3746078372
 In Projects = "1,"
 Window Top = 374
 Window Left = 178
-Window Z-Order = 11
+Window Z-Order = 12
 Source Window State = "1,47,47,47,30,31,31,0,0,102,0,0,0,0,0,29,18,0,48,52,371,673,1,0,"
 
 [File 0007]
@@ -126,7 +126,7 @@ Disk Date = 3743660292
 In Projects = "1,"
 Window Top = 219
 Window Left = 98
-Window Z-Order = 13
+Window Z-Order = 14
 Source Window State = "1,61,62,61,178,178,178,0,0,102,0,0,0,0,0,29,39,0,55,4,371,673,1,0,"
 
 [File 0009]
@@ -136,7 +136,7 @@ Disk Date = 3746097651
 In Projects = "1,"
 Window Top = 250
 Window Left = 114
-Window Z-Order = 9
+Window Z-Order = 10
 Source Window State = "1,117,117,117,18,62,18,0,0,102,0,108,0,0,0,29,99,0,124,51,371,673,1,14,"
 
 [File 0010]
@@ -159,7 +159,7 @@ Window Top = 126
 Window Left = 58
 Window Height = 311
 Window Width = 541
-Window Z-Order = 10
+Window Z-Order = 11
 
 [File 0012]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.c"
@@ -168,8 +168,8 @@ Disk Date = 3743720406
 In Projects = "1,"
 Window Top = 188
 Window Left = 82
-Window Z-Order = 14
-Source Window State = "1,47,47,47,4,14,14,0,0,102,0,0,0,0,0,29,87,0,110,8,371,673,1,0,"
+Window Z-Order = 1
+Source Window State = "1,65,65,65,123,124,123,0,0,200,0,0,0,0,0,39,38,0,61,116,371,673,1,0,"
 
 [File 0013]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.h"
@@ -178,7 +178,7 @@ Disk Date = 3746093562
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 6
+Window Z-Order = 7
 Source Window State = "1,33,33,33,4,8,8,0,0,86,0,0,0,0,0,25,1,0,40,29,323,577,1,0,"
 
 [File 0014]
@@ -188,7 +188,7 @@ Disk Date = 3743651178
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 7
+Window Z-Order = 8
 Source Window State = "1,0,0,0,0,0,0,0,0,86,0,0,0,0,0,25,17,0,21,0,323,577,1,0,"
 
 [File 0015]
@@ -198,7 +198,7 @@ Disk Date = 3743651347
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 5
+Window Z-Order = 6
 Source Window State = "1,29,44,44,0,46,46,0,0,86,0,0,0,0,0,25,0,0,20,23,323,577,1,0,"
 
 [File 0016]
@@ -208,7 +208,7 @@ Disk Date = 3746097717
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 2
+Window Z-Order = 3
 Source Window State = "1,72,72,72,21,26,26,0,0,81,0,0,0,0,0,25,40,0,72,28,323,547,1,0,"
 
 [File 0017]
@@ -218,7 +218,7 @@ Disk Date = 3746093607
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 4
+Window Z-Order = 5
 Source Window State = "1,0,0,0,0,0,0,0,0,81,0,0,0,0,0,25,8,0,29,4,323,547,1,0,"
 
 [File 0018]
