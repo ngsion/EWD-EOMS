@@ -19,7 +19,7 @@
 // Include files
 
 #include "cvidef.h"
-#include "logger/log.h"  
+#include "logger.h"  
 #include "instruments/InstrumentMgr.h"
 
 //==============================================================================

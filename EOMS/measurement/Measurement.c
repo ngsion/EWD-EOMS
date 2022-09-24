@@ -13,7 +13,7 @@
 
 #include <visa.h>
 #include "Measurement.h"
-#include "log.h"
+#include "logger.h"
 
 //==============================================================================
 // Constants
@@ -28,17 +28,17 @@
 // Static functions
 static int Start(Measurement * pDev){
 
-   log_info("Measurement starts");
+   LOG_INFO("Measurement starts");
    return 0;
 }
 static int Stop(Measurement * pDev){
-   log_info("Measurement Stops");
+   LOG_INFO("Measurement Stops");
    return 0;
 }
 
  static int DoCollectWithCommand(struct Measurement * pDev, void * inData, void * outData)
  {
-	log_info("Measurement DoCollectWithCommand");
+	LOG_INFO("Measurement DoCollectWithCommand");
     return 0;
  }
 //==============================================================================

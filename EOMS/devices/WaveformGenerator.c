@@ -14,7 +14,7 @@
 #include <utility.h>
 #include <ansi_c.h>
 #include "WaveformGenerator.h"
-#include "log.h"
+#include "logger.h"
 #include "visa.h"
 #include <string.h>
 //==============================================================================
@@ -38,7 +38,7 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 	}
 	else
 	{
-		log_error("WaveformGenerator DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
+		LOG_ERROR("WaveformGenerator DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -48,34 +48,34 @@ static int Start(Device *pDev)
 {
 	if (!pDev)
 	{
-		log_error("error in WaveformGenerator start");
+		LOG_ERROR("error in WaveformGenerator start");
 		return -1;
 	}
 		WaveformGenerator *pMeter = (WaveformGenerator *)pDev; 
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-        log_info("WaveformGenerator starts");
+        LOG_INFO("WaveformGenerator starts");
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
 		  	//viPrintf(instr,"*CLS\n");
 			viPrintf(session,"SOURce1:FUNCtion SQU\n");
 			viPrintf(session,"SOURce1:FREQuency +5\n");
-			viPrintf(session,"SOURce1:VOLTage:HIGH +4.0\n");
-			viPrintf(session,"SOURce1:VOLTage:LOW +0.0\n"); 
+			viPrintf(session,"SOURce1:VOLTage:HIGH +5.0\n");
+			viPrintf(session,"SOURce1:VOLTage:LOW 0.0\n"); 
 			viPrintf(session,"SOURce1:VOLTage:OFFSet 0\n");
-	//	viPrintf(instr,"SOURce1:VOLTage:PHASe 0\n");
+		//viPrintf(session,"SOURce1:VOLTage:PHASe 90\n");
 				viPrintf(session, "OUTPut1 ON\n");  /* Turn on the instrument output */
          //	viPrintf(instr, "SOURce1:*TRG\n");  /* Send bus trigger */
 		 
 		    viPrintf(session,"SOURce2:FUNCtion DC\n"); 
 		 	//viPrintf(session,"SOURce2:FREQuency +5\n");
-		 	viPrintf(session,"SOURce2:VOLTage:OFFSet 0\n");
+		 	viPrintf(session,"SOURce2:VOLTage:OFFSet 0.0\n");
 			viPrintf(session, "OUTPut2 ON\n");
 	}
 	else
 	{
-		log_error("WaveformGenerator Start failed null %d ", NULL == pMeter->device.pInstr);
+		LOG_ERROR("WaveformGenerator Start failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -85,7 +85,7 @@ static int Stop(Device *pDev)
 {
 
 	WaveformGenerator *pMeter = (WaveformGenerator *)pDev;
-	log_info("WaveformGenerator Stops");
+	LOG_INFO("WaveformGenerator Stops");
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
 
@@ -96,7 +96,7 @@ static int Stop(Device *pDev)
 	}
 	else
 	{
-		log_error("WaveformGenerator Stop failed null %d ", NULL == pMeter->device.pInstr);
+		LOG_ERROR("WaveformGenerator Stop failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;

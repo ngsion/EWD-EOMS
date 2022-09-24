@@ -15,7 +15,7 @@
 #include <utility.h>
 #include <ansi_c.h>
 #include "Picoammeter.h"
-#include "log.h"
+#include "logger.h"
 #include "visa.h"
 #include <string.h>
 //==============================================================================
@@ -40,13 +40,13 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 		ViSession session = pMeter->device.pInstr->session;
 
 		float *pVolt = (float *)inData;
-
+    LOG_INFO("before viPrintf");
 		status = viPrintf(session, ":SOUR1:VOLT %f\n", *pVolt);
-		
+	LOG_INFO("after viPrintf");	
 	}
 	else
 	{
-		log_error("Picoammeter DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
+	    LOG_ERROR("Picoammeter DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -56,24 +56,25 @@ static int Start(Device *pDev)
 {
 	if (!pDev)
 	{
-		log_error("error in Picoammeter start");
+		LOG_ERROR("error in Picoammeter start");
 		return -1;
 	}
 		Picoammeter *pMeter = (Picoammeter *)pDev; 
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-        log_info("Picoammeter starts");
+        LOG_INFO("Picoammeter starts");
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
 		status = viPrintf(session, "*RST\n");
 		status = viPrintf(session, ":SOUR1:VOLT:RANG 30\n");
+		status = viPrintf(session, ":SOUR1:DELay:AUTO OFF\n");
 		status = viPrintf(session, ":OUTP1 ON\n");
-		//status = viPrintf(session, ":SOUR1:VOLT +1\n");
+		
 	}
 	else
 	{
-		log_error("Picoammeter Start failed null %d ", NULL == pMeter->device.pInstr);
+		LOG_ERROR("Picoammeter Start failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -85,7 +86,7 @@ static int SetAttribute(struct Device *pDev)
 
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-		log_info("Picoammeter SetAttribute");
+		LOG_INFO("Picoammeter SetAttribute");
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
@@ -101,7 +102,7 @@ static int SetAttribute(struct Device *pDev)
 	}
 	else
 	{
-		log_error("Picoammeter SetAttribute failed null %d ", NULL == pMeter->device.pInstr);
+		LOG_ERROR("Picoammeter SetAttribute failed null %d ", NULL == pMeter->device.pInstr);
 	}
 	return 0;
 }
@@ -109,7 +110,7 @@ static int Stop(Device *pDev)
 {
 
 	Picoammeter *pMeter = (Picoammeter *)pDev;
-	log_info("Picoammeter Stops");
+	LOG_INFO("Picoammeter Stops");
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
 
@@ -120,7 +121,7 @@ static int Stop(Device *pDev)
 	}
 	else
 	{
-		log_error("Picoammeter Stop failed null %d ", NULL == pMeter->device.pInstr);
+		LOG_ERROR("Picoammeter Stop failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;

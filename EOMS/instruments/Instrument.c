@@ -16,7 +16,7 @@
 #include "stddef.h"
 #include "visa.h"
 #include <string.h>
-#include "../logger/log.h"
+#include "logger.h"
 //==============================================================================
 // Constants
 
@@ -45,12 +45,12 @@ int Open(struct Instrument *pInstr)
 
 	if (status < VI_SUCCESS)
 	{
-		log_error("Cannot open a session to the device %s.", pInstr->address);
+		LOG_ERROR("Cannot open a session to the device %s.", pInstr->address);
 		return -1;
 	}
 	else
 	{
-		log_info("instrument %s is open", pInstr->address);
+		LOG_INFO("instrument %s is open", pInstr->address);
 		pInstr->status = Instrument_Status_Open;
 	}
 
@@ -147,7 +147,7 @@ int QueryID(struct Instrument *pInstr)
 	status = viWrite(pInstr->session, (ViBuf)stringinput, (ViUInt32)strlen(stringinput), &writeCount);
 	if (status < VI_SUCCESS)
 	{
-		log_error("Error writing to the device %s.", pInstr->address);
+		LOG_ERROR("Error writing to the device %s.", pInstr->address);
 
 		return -1;
 	}
@@ -163,11 +163,11 @@ int QueryID(struct Instrument *pInstr)
 	status = viRead(pInstr->session, buffer, INSTRUMENT_ID_LENGTH, &retCount);
 	if (status < VI_SUCCESS)
 	{
-		log_error("Error reading a response from the device %s.", pInstr->address);
+		LOG_ERROR("Error reading a response from the device %s.", pInstr->address);
 	}
 	else
 	{
-		log_info("instrument %s id is: %*s", pInstr->address, retCount, buffer);
+		LOG_INFO("instrument %s id is: %*s", pInstr->address, retCount, buffer);
 		memcpy(pInstr->id, buffer, retCount);
 	}
 
@@ -194,7 +194,7 @@ Instrument *InstrumentAllocInit()
 	Instrument *pInstr = (Instrument *)malloc(sizeof(Instrument));
 	if (NULL == pInstr)
 	{
-		log_fatal("Error creating an Instrument.");
+		LOG_FATAL("Error creating an Instrument.");
 	}
 	else
 	{

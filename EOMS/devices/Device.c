@@ -13,7 +13,7 @@
 
 #include "Device.h"
 #include <string.h>
-#include "../logger/log.h"
+#include "logger.h"
 
 //==============================================================================
 // Constants
@@ -27,16 +27,16 @@
 //==============================================================================
 // Static functions
 static int Start(Device * pDev){
-   log_info("Device starts");
+   LOG_INFO("Device starts");
    return 0;
 }
 static int Stop(Device * pDev){
-   log_info("Device Stops");
+   LOG_INFO("Device Stops");
    return 0;
 }
 static int DoWithCommand(struct Device * pDev, void * inData, void * outData)
 {
-   log_info("Device DoWithCommand");
+   LOG_INFO("Device DoWithCommand");
    return 0;
 }
 //==============================================================================

@@ -9,7 +9,7 @@ IVI Standard Root Dir = "/C/Program Files (x86)/IVI Foundation/IVI"
 VXIplug&play Framework Dir = "/C/Program Files (x86)/IVI Foundation/VISA/winnt"
 IVI Standard Root 64-bit Dir = "/C/Program Files/IVI Foundation/IVI"
 VXIplug&play Framework 64-bit Dir = "/C/Program Files/IVI Foundation/VISA/win64"
-Number of Files = 27
+Number of Files = 30
 Target Type = "Executable"
 Flags = 16
 Copied From Locked InstrDrv Directory = False
@@ -27,14 +27,14 @@ FolderEx 1 = "Source Files"
 Folder 2 = "Source Files/instruments"
 FolderEx 2 = "instruments"
 FolderEx 2 Parent = 1
-Folder 3 = "Source Files/logger"
-FolderEx 3 = "logger"
+Folder 3 = "Source Files/devices"
+FolderEx 3 = "devices"
 FolderEx 3 Parent = 1
-Folder 4 = "Source Files/devices"
-FolderEx 4 = "devices"
+Folder 4 = "Source Files/measurement"
+FolderEx 4 = "measurement"
 FolderEx 4 Parent = 1
-Folder 5 = "Source Files/measurement"
-FolderEx 5 = "measurement"
+Folder 5 = "Source Files/clogger"
+FolderEx 5 = "clogger"
 FolderEx 5 Parent = 1
 Folder 6 = "Include Files"
 FolderEx 6 = "Include Files"
@@ -95,30 +95,17 @@ File Type = "CSource"
 Res Id = 5
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "logger/log.c"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.c"
-Exclude = False
-Compile Into Object File = False
-Project Flags = 0
-Folder = "Source Files/logger"
-Folder Id = 3
-
-[File 0006]
-File Type = "CSource"
-Res Id = 6
-Path Is Rel = True
-Path Rel To = "Project"
 Path Rel Path = "devices/Device.c"
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.c"
 Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files/devices"
-Folder Id = 4
+Folder Id = 3
 
-[File 0007]
+[File 0006]
 File Type = "CSource"
-Res Id = 7
+Res Id = 6
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/DeviceMgr.c"
@@ -127,11 +114,11 @@ Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files/devices"
-Folder Id = 4
+Folder Id = 3
 
-[File 0008]
+[File 0007]
 File Type = "CSource"
-Res Id = 8
+Res Id = 7
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/Picoammeter.c"
@@ -140,11 +127,11 @@ Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files/devices"
-Folder Id = 4
+Folder Id = 3
 
-[File 0009]
+[File 0008]
 File Type = "CSource"
-Res Id = 9
+Res Id = 8
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/WaveformGenerator.c"
@@ -153,11 +140,11 @@ Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files/devices"
-Folder Id = 4
+Folder Id = 3
 
-[File 0010]
+[File 0009]
 File Type = "CSource"
-Res Id = 10
+Res Id = 9
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "measurement/Measurement.c"
@@ -166,11 +153,11 @@ Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files/measurement"
-Folder Id = 5
+Folder Id = 4
 
-[File 0011]
+[File 0010]
 File Type = "CSource"
-Res Id = 11
+Res Id = 10
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "measurement/MeasurementMgr.c"
@@ -179,11 +166,11 @@ Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files/measurement"
-Folder Id = 5
+Folder Id = 4
 
-[File 0012]
+[File 0011]
 File Type = "CSource"
-Res Id = 12
+Res Id = 11
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "measurement/PicoammeterMeasure.c"
@@ -192,11 +179,61 @@ Exclude = False
 Compile Into Object File = False
 Project Flags = 0
 Folder = "Source Files/measurement"
+Folder Id = 4
+
+[File 0012]
+File Type = "CSource"
+Res Id = 12
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "clogger/logger.c"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/logger.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Source Files/clogger"
 Folder Id = 5
 
 [File 0013]
-File Type = "CSource"
+File Type = "Include"
 Res Id = 13
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "clogger/logger.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/logger.h"
+Exclude = False
+Project Flags = 0
+Folder = "Source Files/clogger"
+Folder Id = 5
+
+[File 0014]
+File Type = "CSource"
+Res Id = 14
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "clogger/loggerconf.c"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/loggerconf.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Source Files/clogger"
+Folder Id = 5
+
+[File 0015]
+File Type = "Include"
+Res Id = 15
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "clogger/loggerconf.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/loggerconf.h"
+Exclude = False
+Project Flags = 0
+Folder = "Source Files/clogger"
+Folder Id = 5
+
+[File 0016]
+File Type = "CSource"
+Res Id = 16
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "EOMS.c"
@@ -207,9 +244,9 @@ Project Flags = 0
 Folder = "Source Files"
 Folder Id = 1
 
-[File 0014]
+[File 0017]
 File Type = "CSource"
-Res Id = 14
+Res Id = 17
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "EOMSystem.c"
@@ -220,49 +257,13 @@ Project Flags = 0
 Folder = "Source Files"
 Folder Id = 1
 
-[File 0015]
-File Type = "Include"
-Res Id = 15
-Path Is Rel = True
-Path Rel To = "Project"
-Path Rel Path = "devices/Device.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.h"
-Exclude = False
-Project Flags = 0
-Folder = "Include Files"
-Folder Id = 6
-
-[File 0016]
-File Type = "Include"
-Res Id = 16
-Path Is Rel = True
-Path Rel To = "Project"
-Path Rel Path = "devices/DeviceMgr.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.h"
-Exclude = False
-Project Flags = 0
-Folder = "Include Files"
-Folder Id = 6
-
-[File 0017]
-File Type = "Include"
-Res Id = 17
-Path Is Rel = True
-Path Rel To = "Project"
-Path Rel Path = "EOMS.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.h"
-Exclude = False
-Project Flags = 0
-Folder = "Include Files"
-Folder Id = 6
-
 [File 0018]
 File Type = "Include"
 Res Id = 18
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "EOMSystem.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.h"
+Path Rel Path = "devices/Device.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -273,8 +274,8 @@ File Type = "Include"
 Res Id = 19
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "instruments/Instrument.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.h"
+Path Rel Path = "devices/DeviceMgr.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -285,8 +286,8 @@ File Type = "Include"
 Res Id = 20
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "instruments/InstrumentList.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.h"
+Path Rel Path = "EOMS.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -297,8 +298,8 @@ File Type = "Include"
 Res Id = 21
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "instruments/InstrumentMgr.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.h"
+Path Rel Path = "EOMSystem.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -309,8 +310,8 @@ File Type = "Include"
 Res Id = 22
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "logger/log.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
+Path Rel Path = "instruments/Instrument.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -321,8 +322,8 @@ File Type = "Include"
 Res Id = 23
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "measurement/Measurement.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/Measurement.h"
+Path Rel Path = "instruments/InstrumentList.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -333,8 +334,8 @@ File Type = "Include"
 Res Id = 24
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "measurement/MeasurementMgr.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/MeasurementMgr.h"
+Path Rel Path = "instruments/InstrumentMgr.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -345,8 +346,8 @@ File Type = "Include"
 Res Id = 25
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "devices/Picoammeter.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.h"
+Path Rel Path = "logger/log.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -357,8 +358,8 @@ File Type = "Include"
 Res Id = 26
 Path Is Rel = True
 Path Rel To = "Project"
-Path Rel Path = "measurement/PicoammeterMeasure.h"
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/PicoammeterMeasure.h"
+Path Rel Path = "measurement/Measurement.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/Measurement.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
@@ -367,6 +368,42 @@ Folder Id = 6
 [File 0027]
 File Type = "Include"
 Res Id = 27
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "measurement/MeasurementMgr.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/MeasurementMgr.h"
+Exclude = False
+Project Flags = 0
+Folder = "Include Files"
+Folder Id = 6
+
+[File 0028]
+File Type = "Include"
+Res Id = 28
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "devices/Picoammeter.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.h"
+Exclude = False
+Project Flags = 0
+Folder = "Include Files"
+Folder Id = 6
+
+[File 0029]
+File Type = "Include"
+Res Id = 29
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "measurement/PicoammeterMeasure.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/PicoammeterMeasure.h"
+Exclude = False
+Project Flags = 0
+Folder = "Include Files"
+Folder Id = 6
+
+[File 0030]
+File Type = "Include"
+Res Id = 30
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/WaveformGenerator.h"

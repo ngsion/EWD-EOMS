@@ -15,6 +15,10 @@
 #include "EOMSystem.h"
 #include "DeviceMgr.h"
 #include "MeasurementMgr.h"
+#include "logger.h"
+#include <time.h>
+#include <assert.h>
+
 
 //==============================================================================
 // Constants
@@ -26,6 +30,7 @@
 // Static global variables
 static FILE *fp = NULL;
 
+
 void setupLogger()
 {
 	time_t now; // time_t
@@ -36,21 +41,11 @@ void setupLogger()
 
 	char buf[64] = {0};
 	strftime(buf, 64, "log/EOMSlog_%Y%m%d_%H%M%S.txt", tblock);
-
-	fp = fopen(buf, "a+");
-	if (NULL != fp)
-	{
-		int result = log_add_fp(fp, LOG_DEBUG);
-		if (result < 0)
-		{
-			log_fatal("log_add_fp failed");
-		}
-	}
-	else
-	{
-		perror("error fopen");
-	}
-	// log_set_quiet(true);
+   
+    logger_initConsoleLogger(NULL);
+    logger_initFileLogger(buf,0,0);
+	logger_setLevel(LogLevel_DEBUG);
+   
 }
 
 //==============================================================================
@@ -62,11 +57,13 @@ static int Init(int x)
 	DevMgr.Init(x);
 	MeasureMgr.Init(x);
 
+
+
 	InstrumentListNode *pHead = *InstrMgr.plist;
 	while (pHead != NULL)
 	{
 		InstrumentListNode *pNode = pHead;
-		log_info("Init one instrument is %s", pNode->pInstr->address);
+		LOG_INFO("Init one instrument is %s", pNode->pInstr->address);
 		pNode->pInstr->Open(pNode->pInstr);
 		if (Instrument_Type_ASRL == pNode->pInstr->type)
 		{
@@ -95,7 +92,7 @@ static int Shutdown(int x)
 	while (pHead != NULL)
 	{
 		InstrumentListNode *pNode = pHead;
-		log_info("Shutdown one instrument is %s", pNode->pInstr->address);
+		LOG_INFO("Shutdown one instrument is %s", pNode->pInstr->address);
 		pNode->pInstr->Close(pNode->pInstr);
 		pHead = pNode->next;
 	}
@@ -103,25 +100,29 @@ static int Shutdown(int x)
 	return 0;
 }
 
+
+
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
 	Device *pDev = ((Device *)(DevMgr.pDevArray[0]));
 	Measurement *pMeasure = MeasureMgr.pPicoammeterMeasure;
-	int max = 30;
-	int min = 0;
-	int step = 2;
+	float max = 30;
+	float min = 0;
+	float step = 2;
 	double current = 0.0;
-	int volt;
+	float volt;
 	
 	for ( volt = min; volt <= max; volt += step)
 	{
-
+        LOG_INFO("before dowith command");
 		pDev->DoWithCommand(pDev,&volt, NULL);
+		LOG_INFO("after dowith command");
+
 		Delay(0.01);
 		pMeasure->DoCollectWithCommand(pMeasure,&volt, &current);
-
-	    log_info("instrument  %d set volt %dV get current %fnA ", pDev->pInstr->session, volt, current);
-		Delay(1);
+     
+	    LOG_INFO("instrument  %d set volt %fV get current %fnA ", pDev->pInstr->session, volt, current);
+		
 	}
 
     
@@ -131,17 +132,18 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 
 static int CVICALLBACK ThreadFunction2(void *functionData)
 {
-   Device *pDev = ((Device *)(DevMgr.pDevArray[0]));
+  
 	Measurement *pMeasure = MeasureMgr.pPicoammeterMeasure;
 
 	double current = 0.0;
 	int volt;
 	
-	for ( int i = 0; i < 30; i++)
+	for ( int i = 0; i < 100; i++)
 	{
+		 LOG_INFO("before DoCollectWithCommand");
         pMeasure->DoCollectWithCommand(pMeasure,&volt, &current);
-	    log_info("instrument  %d  mesure %d get current %fnA ", pDev->pInstr->session,i, current);
-		Delay(0.1);
+	    LOG_INFO("instrument  %d  mesure %d get current %fnA ", pMeasure->pInstr->session,i, current);
+		//Delay(0.1);
 	}
 
     
@@ -157,7 +159,7 @@ static int Start(int x)
 	int threadFunctionId = 0;
 	
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
-								  ThreadFunction2, NULL,
+								  ThreadFunction, NULL,
 								  &threadFunctionId);
 		/* Wait for the thread functions to finish executing */
 	CmtWaitForThreadPoolFunctionCompletion (DEFAULT_THREAD_POOL_HANDLE,

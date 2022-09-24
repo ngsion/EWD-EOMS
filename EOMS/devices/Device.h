@@ -32,7 +32,7 @@ typedef struct Device
     char  name[DEVICE_NAME_LENGTH];
     char  title[DEVICE_TITLE_LENGTH]; ///chinese name
     Instrument * pInstr;
-    bool isSource;
+    bool isSignal;
      
     int (*Start)(struct Device * pDev);
     int (*Stop)(struct Device * pDev);

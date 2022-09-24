@@ -16,7 +16,7 @@
 #include <formatio.h>
 #include <utility.h>
 #include "PicoammeterMeasure.h"
-#include "log.h"
+#include "logger.h"
 
 //==============================================================================
 // Constants
@@ -51,19 +51,19 @@ static int DoCollectWithCommand(struct Measurement *pDev, void *inData, void *ou
 		status = viRead(session, buffer, 14, &retCount);
 		if (status < VI_SUCCESS)
 		{
-			log_error("Error reading a response from the device %d.", session);
+			LOG_ERROR("Error reading a response from the device %d.", session);
 		}
 		else
 		{
 
-			//	log_info("instrument %d return %d is: %*s\n", session, retCount,retCount, buffer);
+			//	LOG_INFO("instrument %d return %d is: %*s\n", session, retCount,retCount, buffer);
 			num = Scan(buffer, "%s>%f", &value);
 			*pCurrent = value * 1000000000;
 		}
 	}
 	else
 	{
-		log_error("Picoammeter DoCollectWithCommand failed null %d ", NULL == pMeter->measure.pInstr);
+		LOG_ERROR("Picoammeter DoCollectWithCommand failed null %d ", NULL == pMeter->measure.pInstr);
 	}
 	return 0;
 }
@@ -74,30 +74,34 @@ static int Start(Measurement *pDev)
 
 	if (!pDev)
 	{
-		log_error("error in PicoammeterMeasure start");
+		LOG_ERROR("error in PicoammeterMeasure start");
 		return -1;
 	}
 	PicoammeterMeasure *pMeter = (PicoammeterMeasure *)pDev;
 
 	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
 	{
-		log_info("PicoammeterMeasure starts");
+		LOG_INFO("PicoammeterMeasure starts");
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
 		//	status = viPrintf(session, ":SENS1:CURR:RANG 2e-2\n");
 		status = viPrintf(session, ":FORM:ELEM CURR1\n");
-		//status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
+		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
+		//status = viPrintf(session, ":SYST:AZER OFF\n");
+		//status = viPrintf(session, ":SENS1:MED OFF\n");
+		//status = viPrintf(session, ":SENS1:AVERage OFF\n");
+		
 	}
 	else
 	{
-		log_error("PicoammeterMeasure Start failed null %d ", NULL == pMeter->measure.pInstr);
+		LOG_ERROR("PicoammeterMeasure Start failed null %d ", NULL == pMeter->measure.pInstr);
 	}
 
 	return 0;
 }
 static int Stop(Measurement *pDev)
 {
-	log_info("PicoammeterMeasure Stops");
+	LOG_INFO("PicoammeterMeasure Stops");
 
 	return 0;
 }
