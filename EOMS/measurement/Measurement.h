@@ -21,19 +21,26 @@
 #include "cvidef.h"
 #include "Instrument.h"
 #include <stdbool.h>
+
+
 //==============================================================================
 // Constants
+#define kDEVICE_NAME_LENGTH 64
+#define kDEVICE_PICOAMMETER_STR "Picoammeter"
+#define kDEVICE_WAVEFORMGENTERATOR_STR "WaveformGenerator"
+#define kDEVICE_LCRMETER_STR "LCRMeter"
 
 //==============================================================================
 // Types
 typedef struct Measurement
 {
     Instrument * pInstr;
+    char  name[kDEVICE_NAME_LENGTH];
     bool isCollector;
      
     int (*Start)(struct Measurement * pDev);
     int (*Stop)(struct Measurement * pDev);
-    int (*DoCollectWithCommand)(struct Measurement * pDev, void * inData, void * outData);
+    int (*DoMeasureWithCommand)(struct Measurement * pDev, void * inData, void * outData);
 
 }Measurement;
 

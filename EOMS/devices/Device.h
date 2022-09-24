@@ -25,6 +25,11 @@
 // Constants
 #define DEVICE_NAME_LENGTH 64
 #define DEVICE_TITLE_LENGTH 64
+#define DEVICE_PICOAMMETER_STR "Picoammeter"
+#define DEVICE_WAVEFORMGENTERATOR_STR "WaveformGenerator"
+#define DEVICE_LCRMETER_STR "LCRMeter"
+
+
 //==============================================================================
 // Types
 typedef struct Device

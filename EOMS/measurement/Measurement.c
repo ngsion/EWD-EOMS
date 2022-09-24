@@ -36,9 +36,9 @@ static int Stop(Measurement * pDev){
    return 0;
 }
 
- static int DoCollectWithCommand(struct Measurement * pDev, void * inData, void * outData)
+ static int DoMeasureWithCommand(struct Measurement * pDev, void * inData, void * outData)
  {
-	LOG_INFO("Measurement DoCollectWithCommand");
+	LOG_INFO("Measurement DoMeasureWithCommand");
     return 0;
  }
 //==============================================================================
@@ -50,13 +50,14 @@ void MeasurementInit(Measurement * pDev)
 	{
 		return;
 	}
+	memcpy(pDev->name,"Measurement",sizeof("Measurement"));
     pDev->pInstr = NULL;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
-	pDev->DoCollectWithCommand = DoCollectWithCommand;
+	pDev->DoMeasureWithCommand = DoMeasureWithCommand;
 }
 void MeasurementDeinit(Measurement * pDev)
 {
-	
+	memcpy(pDev->name,"Measurement",sizeof("Measurement"));
 	pDev->pInstr = NULL;
 }

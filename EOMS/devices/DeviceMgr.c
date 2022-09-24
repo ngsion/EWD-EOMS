@@ -16,6 +16,7 @@
 #include "Picoammeter.h"
 #include "WaveformGenerator.h"
 #include "logger.h"
+#include "LCRMeter.h"
 
 //==============================================================================
 // Constants
@@ -37,11 +38,15 @@ static int Init(int x)
 	
     defaultDeviceArray[0] = (Device*) malloc(sizeof(Picoammeter));
 	PicoammeterInit((Picoammeter*)defaultDeviceArray[0] );
-	defaultDeviceArray[0]->isSignal = true;
+	defaultDeviceArray[0]->isSignal = false;
 
-	 defaultDeviceArray[1] = (Device*) malloc(sizeof(WaveformGenerator));
+	defaultDeviceArray[1] = (Device*) malloc(sizeof(WaveformGenerator));
 	WaveformGeneratorInit((WaveformGenerator*)defaultDeviceArray[1] );
     defaultDeviceArray[1]->isSignal = false;
+
+	 defaultDeviceArray[2] = (Device*) malloc(sizeof(LCRMeter));
+	LCRMeterInit((LCRMeter*)defaultDeviceArray[2] );
+    defaultDeviceArray[2]->isSignal = true;
 	
 	return 0;
 }
@@ -72,7 +77,7 @@ static int Start(int x)
 }
 static int Stop(int x)
 {
-		for (int i = 0; i < DEVICE_MAX_NUM; i++)
+	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if(	NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal){
 			defaultDeviceArray[i] ->Stop(defaultDeviceArray[i] );     

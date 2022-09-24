@@ -23,11 +23,13 @@
 
 //==============================================================================
 // Constants
+#define MEASURE_MAX_NUM 12
 
 // Types
 typedef struct MeasurementMgr
 {
-    Measurement * pPicoammeterMeasure;
+ 
+    Measurement ** pMeasureArray;
 
     int (*Init)(int x);
 	int (*Start)(int x);

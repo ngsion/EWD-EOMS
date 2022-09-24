@@ -113,14 +113,14 @@ void WaveformGeneratorInit(WaveformGenerator *pDev)
 		return;
 	}
 	DeviceInit(&pDev->device);
-	memcpy(pDev->device.name, "WaveformGenerator", sizeof("WaveformGenerator"));
+	memcpy(pDev->device.name, DEVICE_WAVEFORMGENTERATOR_STR, sizeof(DEVICE_WAVEFORMGENTERATOR_STR));
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
 }
 void WaveformGeneratorDeinit(WaveformGenerator *pDev)
 {
-	memcpy(pDev->device.name, "WaveformGenerator", sizeof("WaveformGenerator"));
+	memcpy(pDev->device.name, DEVICE_WAVEFORMGENTERATOR_STR, sizeof(DEVICE_WAVEFORMGENTERATOR_STR));
 	DeviceDeinit(&pDev->device);
 }
 

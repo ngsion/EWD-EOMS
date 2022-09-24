@@ -11,8 +11,11 @@
 //==============================================================================
 // Include files
 
+#include <ansi_c.h>
 #include "MeasurementMgr.h"
 #include "PicoammeterMeasure.h"
+#include "LCRMeterMeasure.h"
+#include "logger.h"
 
 //==============================================================================
 // Constants
@@ -22,29 +25,65 @@
 
 //==============================================================================
 // Static global variables
-static PicoammeterMeasure picoaMeasure;
+static Measurement * defaultMeasureArray[MEASURE_MAX_NUM];
+
 //==============================================================================
 // Static functions
+static int Init(int x)
+{
+    for (int i = 0; i < MEASURE_MAX_NUM; i++)
+	{
+		defaultMeasureArray[i] = NULL;
+	}
+	defaultMeasureArray[0] = malloc(sizeof(PicoammeterMeasure));
+	PicoammeterMeasureInit((PicoammeterMeasure*)defaultMeasureArray[0] );
+    defaultMeasureArray[0]->isCollector = false;
+
+	defaultMeasureArray[1] = malloc(sizeof(LCRMeterMeasure));
+	LCRMeterMeasureInit((LCRMeterMeasure*)defaultMeasureArray[1] );
+	defaultMeasureArray[1]->isCollector = false;
+
+	return 0;
+}
+
+
 static int Start(int x)
 {
-   ((Measurement*) &picoaMeasure)->Start((Measurement*) &picoaMeasure);
+	for (int i = 0; i < MEASURE_MAX_NUM; i++)
+	{
+		LOG_INFO("before start");
+		if(	NULL != defaultMeasureArray[i] && true == defaultMeasureArray[i]->isCollector){
+			defaultMeasureArray[i] ->Start(defaultMeasureArray[i] );     
+		}
+    	LOG_INFO("after start");
+	}
     
 	return 0;
 }
 static int Stop(int x)
 {
-     ((Measurement*) &picoaMeasure)->Stop((Measurement*) &picoaMeasure);
-	return 0;
-}
-static int Init(int x)
-{
-    PicoammeterMeasureInit(&picoaMeasure);
-	return 0;
-}
+	for (int i = 0; i < MEASURE_MAX_NUM; i++)
+	{
+		if(	NULL != defaultMeasureArray[i] && true == defaultMeasureArray[i]->isCollector){
+			defaultMeasureArray[i] ->Stop(defaultMeasureArray[i] );     
+		}
+    	
+	}
 
+	return 0;
+}
 static int Shutdown(int x)
 {
-    PicoammeterMeasureDeinit(&picoaMeasure);
+	for (int i = 0; i < MEASURE_MAX_NUM; i++)
+	{
+		if (NULL != defaultMeasureArray[i])
+		{
+			free(defaultMeasureArray[i]);
+			defaultMeasureArray[i] = NULL;
+		}
+		
+	}
+
 	return 0;
 }
 
@@ -55,7 +94,7 @@ static int Shutdown(int x)
 // Global variables
 
 MeasurementMgr MeasureMgr = {
-	.pPicoammeterMeasure =(Measurement*)  &picoaMeasure,
+	.pMeasureArray = &defaultMeasureArray,
 	.Init = Init,
 	.Start = Start,
 	.Stop = Stop,

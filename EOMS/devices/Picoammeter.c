@@ -138,7 +138,7 @@ void PicoammeterInit(Picoammeter *pDev)
 		return;
 	}
 	DeviceInit(&pDev->device);
-	memcpy(pDev->device.name, "Picoammeter", sizeof("Picoammeter"));
+	memcpy(pDev->device.name, DEVICE_PICOAMMETER_STR, sizeof(DEVICE_PICOAMMETER_STR));
 	pDev->SetAttribute = SetAttribute;
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
@@ -146,6 +146,6 @@ void PicoammeterInit(Picoammeter *pDev)
 }
 void PicoammeterDeinit(Picoammeter *pDev)
 {
-	memcpy(pDev->device.name, "Picoammeter", sizeof("Picoammeter"));
+	memcpy(pDev->device.name, DEVICE_PICOAMMETER_STR, sizeof(DEVICE_PICOAMMETER_STR));
 	DeviceDeinit(&pDev->device);
 }

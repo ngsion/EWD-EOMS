@@ -70,7 +70,7 @@ static int sFindResource()
 
 		LOG_INFO("instrument %s is connected, intfType is %d,intfNum is %d.", instrResourceString, intfType, intfNum);
 
-		if( intfType != VI_INTF_ASRL && intfType != VI_INTF_USB){
+		if( intfType != VI_INTF_ASRL && intfType != VI_INTF_USB && intfType != VI_INTF_GPIB){
 			--i;
 			continue;
 		}
