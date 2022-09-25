@@ -54,6 +54,7 @@ void MeasurementInit(Measurement * pDev)
     pDev->pInstr = NULL;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
+	pDev->isCollector = false;
 	pDev->DoMeasureWithCommand = DoMeasureWithCommand;
 }
 void MeasurementDeinit(Measurement * pDev)

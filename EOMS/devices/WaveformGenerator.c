@@ -71,7 +71,7 @@ static int Start(Device *pDev)
 		 
 		    viPrintf(session,"SOURce2:FUNCtion DC\n"); 
 		 	//viPrintf(session,"SOURce2:FREQuency +5\n");
-		 	viPrintf(session,"SOURce2:VOLTage:OFFSet -3.0\n");
+		 	viPrintf(session,"SOURce2:VOLTage:OFFSet -3\n");
 			viPrintf(session, "OUTPut2 ON\n");
 	}
 	else

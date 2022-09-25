@@ -90,6 +90,7 @@ void DeviceInit(Device *pDev)
 	}
 	memcpy(pDev->name, "Device", sizeof("Device"));
 	pDev->pInstr = NULL;
+	pDev->isSignal = false;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
 	pDev->QueryID = QueryID;

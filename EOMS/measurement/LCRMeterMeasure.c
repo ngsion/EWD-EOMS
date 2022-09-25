@@ -56,7 +56,7 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 		{
 			double CpValue = 0.0;
 			double DValue = 0.0;
-             
+            double * pOutValue = (double*)outData;
 			LOG_INFO("instrument %d return %d is: %*s\n", session, retCount,retCount, buffer);
 			char * p = NULL;
 			p = strtok(buffer,",");
@@ -71,6 +71,7 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 				 num = Scan(p, "%s>%f", &DValue);
 			}
 			LOG_INFO("num is %d , CpValue is %f DValue is %f\n",num, CpValue, DValue);
+			*pOutValue = CpValue;
 		}
 	
 	}
@@ -98,7 +99,7 @@ static int Start(Measurement *pDev)
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
 	
-		DoMeasureWithCommand(pMeter,NULL,NULL);
+		
 	}
 	else
 	{

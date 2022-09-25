@@ -11,6 +11,7 @@
 //==============================================================================
 // Include files
 
+#include <utility.h>
 #include <ansi_c.h>
 #include "MeasurementMgr.h"
 #include "PicoammeterMeasure.h"
@@ -27,10 +28,14 @@
 // Static global variables
 static Measurement *defaultMeasureArray[MEASURE_MAX_NUM];
 
+static bool isCollecting;
+static int threadFunctionId = 0;
+
 //==============================================================================
 // Static functions
 static int Init(int x)
 {
+	isCollecting = false;
 	for (int i = 0; i < MEASURE_MAX_NUM; i++)
 	{
 		defaultMeasureArray[i] = NULL;
@@ -46,11 +51,33 @@ static int Init(int x)
 	return 0;
 }
 
+static int CVICALLBACK ThreadFunction2(void *functionData)
+{
+
+	while (true == isCollecting)
+	{
+		for (int i = 0; i < MEASURE_MAX_NUM; i++)
+		{
+			if (NULL != defaultMeasureArray[i] && true == defaultMeasureArray[i]->isCollector)
+			{
+				double value;
+				LOG_INFO("before mesure");
+				defaultMeasureArray[i]->DoMeasureWithCommand(defaultMeasureArray[i], NULL, &value);
+				LOG_INFO("after mesure value %f", value);
+			}
+		}
+		//Delay(0.01);
+	}
+
+	return 0;
+}
+
+
 static int Start(int x)
 {
+
 	for (int i = 0; i < MEASURE_MAX_NUM; i++)
 	{
-
 		if (NULL != defaultMeasureArray[i] && true == defaultMeasureArray[i]->isCollector)
 		{
 			LOG_INFO("before start");
@@ -59,10 +86,28 @@ static int Start(int x)
 		}
 	}
 
+	isCollecting = true;
+
+	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
+								  ThreadFunction2, NULL,
+								  &threadFunctionId);
+
 	return 0;
 }
 static int Stop(int x)
 {
+	if (true == isCollecting)
+	{
+		isCollecting = false;
+		/* Wait for the thread functions to finish executing */
+		CmtWaitForThreadPoolFunctionCompletion(DEFAULT_THREAD_POOL_HANDLE,
+											   threadFunctionId,
+											   0);
+
+		/* Release thread functions */
+		CmtReleaseThreadPoolFunctionID(DEFAULT_THREAD_POOL_HANDLE, threadFunctionId);
+	}
+
 	for (int i = 0; i < MEASURE_MAX_NUM; i++)
 	{
 		if (NULL != defaultMeasureArray[i] && true == defaultMeasureArray[i]->isCollector)

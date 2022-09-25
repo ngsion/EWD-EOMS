@@ -88,8 +88,7 @@ static int Start(Measurement *pDev)
 		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
 		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
           
-		  double current;
-		  DoMeasureWithCommand(pMeter,NULL,&current);
+
 
 		// status = viPrintf(session, ":SYST:AZER OFF\n");
 		// status = viPrintf(session, ":SENS1:MED OFF\n");
