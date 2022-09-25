@@ -123,7 +123,7 @@ static int Init(int x)
 		pHead = pNode->next;
 	}
 
-	DevMgr.AfterInit(x);
+	DevMgr.AfterInit(0);
 	return 0;
 }
 static int Shutdown(int x)
@@ -141,6 +141,8 @@ static int Shutdown(int x)
 		pHead = pNode->next;
 	}
 	InstrMgr.Shutdown(x);
+	DevMgr.Shutdown(x);
+	MeasureMgr.Shutdown(x);
 	return 0;
 }
 
@@ -188,12 +190,9 @@ static int CVICALLBACK ThreadFunction2(void *functionData)
 	return 0;
 }
 
-static int Start(int x)
+static int DoOne()
 {
-	DevMgr.Start(x);
-	MeasureMgr.Start(x);
-
-	int threadFunctionId = 0;
+   int threadFunctionId = 0;
 
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
 								  ThreadFunction, NULL,
@@ -205,6 +204,16 @@ static int Start(int x)
 
 	/* Release thread functions */
 	CmtReleaseThreadPoolFunctionID(DEFAULT_THREAD_POOL_HANDLE, threadFunctionId);
+	return 0;
+
+}
+
+
+static int Start(int x)
+{
+	DevMgr.Start(x);
+	MeasureMgr.Start(x);
+   // DoOne();
 
 	return 0;
 }

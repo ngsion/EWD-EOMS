@@ -67,8 +67,14 @@ static int Start(Device *pDev)
 		ViSession session = pMeter->device.pInstr->session;
 
 		status = viPrintf(session, "*RST\n");
-		status = viPrintf(session, ":SOUR1:VOLT:RANG 30\n");
-		status = viPrintf(session, ":SOUR1:DELay:AUTO OFF\n");
+		status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
+		status = viPrintf(session, ":SOUR1:VOLT:STOP 30\n");
+		status = viPrintf(session, ":SOUR1:VOLT:STOP 2\n");
+		status = viPrintf(session, ":SOUR1:VOLT:MODE SWE\n");
+		status = viPrintf(session, ":SOUR1:SWE:RANG AUTO\n");
+		status = viPrintf(session, ":SOUR1:SWE:SPAC LIN\n");
+		status = viPrintf(session, ":TRIG:COUN 16\n");
+		status = viPrintf(session, ":SOUR1:DELay 0.05\n");
 		status = viPrintf(session, ":OUTP1 ON\n");
 		
 	}
@@ -98,7 +104,6 @@ static int SetAttribute(struct Device *pDev)
 		status = viSetAttribute(session, VI_ATTR_TERMCHAR_EN, VI_TRUE);
 		status = viSetAttribute(session, VI_ATTR_TERMCHAR, 0x0D);
 
-		pMeter->device.pInstr->QueryID(pMeter->device.pInstr);
 	}
 	else
 	{

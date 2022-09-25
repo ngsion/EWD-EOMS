@@ -41,6 +41,7 @@ typedef struct Device
      
     int (*Start)(struct Device * pDev);
     int (*Stop)(struct Device * pDev);
+    int (*QueryID)(struct Device * pDev);
     int (*DoWithCommand)(struct Device * pDev, void * inData, void * outData);
 
 }Device;

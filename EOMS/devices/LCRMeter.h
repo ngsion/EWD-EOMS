@@ -28,7 +28,7 @@
 typedef struct LCRMeter
 {
     Device device;
-    
+    int (*QueryID)(struct Device * pDev);
     int (*SetAttribute)(struct Device * pDev);
 
 }LCRMeter;

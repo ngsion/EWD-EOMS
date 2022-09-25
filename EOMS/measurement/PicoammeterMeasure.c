@@ -84,9 +84,10 @@ static int Start(Measurement *pDev)
 		LOG_INFO("PicoammeterMeasure starts");
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
-		//	status = viPrintf(session, ":SENS1:CURR:RANG 2e-2\n");
+		
 		status = viPrintf(session, ":FORM:ELEM CURR1\n");
 		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
+		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
 		//status = viPrintf(session, ":SYST:AZER OFF\n");
 		//status = viPrintf(session, ":SENS1:MED OFF\n");
 		//status = viPrintf(session, ":SENS1:AVERage OFF\n");

@@ -16,6 +16,7 @@
 #define  PANEL                            1       /* callback function: panelCB */
 #define  PANEL_COMMANDBUTTON              2       /* control type: command, callback function: onOKBtb */
 #define  PANEL_COMMANDBUTTON_2            3       /* control type: command, callback function: onStopBtn */
+#define  PANEL_COMMANDBUTTON_ID           4       /* control type: command, callback function: OnIDBtn */
 
 
      /* Control Arrays: */
@@ -30,6 +31,7 @@
 
      /* Callback Prototypes: */
 
+int  CVICALLBACK OnIDBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK onOKBtb(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK onStopBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK panelCB(int panel, int event, void *callbackData, int eventData1, int eventData2);

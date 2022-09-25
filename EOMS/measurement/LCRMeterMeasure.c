@@ -97,7 +97,7 @@ void LCRMeterMeasureInit(LCRMeterMeasure *pDev)
 		return;
 	}
 	MeasurementInit(&pDev->measure);
-	memcpy(pDev->measure.name, kDEVICE_PICOAMMETER_STR, sizeof(kDEVICE_PICOAMMETER_STR));
+	memcpy(pDev->measure.name, kDEVICE_LCRMETER_STR, sizeof(kDEVICE_LCRMETER_STR));
 	pDev->measure.Start = Start;
 	pDev->measure.Stop = Stop;
 	pDev->measure.DoMeasureWithCommand = DoMeasureWithCommand;

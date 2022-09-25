@@ -26,18 +26,34 @@
 
 //==============================================================================
 // Static functions
-static int Start(Device * pDev){
-   LOG_INFO("Device starts");
-   return 0;
-}
-static int Stop(Device * pDev){
-   LOG_INFO("Device Stops");
-   return 0;
-}
-static int DoWithCommand(struct Device * pDev, void * inData, void * outData)
+static int Start(Device *pDev)
 {
-   LOG_INFO("Device DoWithCommand");
-   return 0;
+	LOG_INFO("Device starts");
+	return 0;
+}
+static int Stop(Device *pDev)
+{
+	LOG_INFO("Device Stops");
+	return 0;
+}
+static int QueryID(Device *pDev)
+{
+	if (!pDev)
+	{
+		LOG_ERROR("error in Device QueryID");
+		return -1;
+	}
+	
+	if (NULL != pDev->pInstr)
+	{
+         pDev->pInstr->QueryID(pDev->pInstr);
+	}
+	return 0;
+}
+static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
+{
+	LOG_INFO("Device DoWithCommand");
+	return 0;
 }
 //==============================================================================
 // Global variables
@@ -45,20 +61,21 @@ static int DoWithCommand(struct Device * pDev, void * inData, void * outData)
 //==============================================================================
 // Global functions
 
-void DeviceInit(Device * pDev)
+void DeviceInit(Device *pDev)
 {
-	if(NULL == pDev)
+	if (NULL == pDev)
 	{
 		return;
 	}
-	memcpy(pDev->name,"Device",sizeof("Device"));
+	memcpy(pDev->name, "Device", sizeof("Device"));
 	pDev->pInstr = NULL;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
+	pDev->QueryID = QueryID;
 	pDev->DoWithCommand = DoWithCommand;
 }
-void DeviceDeinit(Device * pDev)
+void DeviceDeinit(Device *pDev)
 {
-	memcpy(pDev->name,"Device",sizeof("Device"));
+	memcpy(pDev->name, "Device", sizeof("Device"));
 	pDev->pInstr = NULL;
 }

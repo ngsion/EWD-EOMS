@@ -67,7 +67,7 @@ int QueryID(struct Instrument *pInstr)
 
 	unsigned char buffer[INSTRUMENT_ID_LENGTH];
 	memset(buffer, 0, INSTRUMENT_ID_LENGTH);
-	char stringinput[64];
+	char stringinput[64] = {0};
 	ViUInt32 retCount;
 	ViUInt32 writeCount;
 	ViStatus status;
@@ -82,7 +82,6 @@ int QueryID(struct Instrument *pInstr)
 	if (status < VI_SUCCESS)
 	{
 		LOG_ERROR("Error writing to the device %s.", pInstr->address);
-
 		return -1;
 	}
 
