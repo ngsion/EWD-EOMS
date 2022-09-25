@@ -17,6 +17,7 @@
 #include <formatio.h>
 #include <utility.h>
 #include "logger.h"
+#include <string.h>
 
 //==============================================================================
 // Constants
@@ -39,8 +40,38 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
-		double *pCurrent = (double *)outData;
+		
+        status = viPrintf(session, ":FETCh?\n");
 
+		int num;
+		unsigned char buffer[80];
+		memset(buffer, 0, 80);
+		ViUInt32 retCount;
+		status = viRead(session, buffer, 80, &retCount);
+		if (status < VI_SUCCESS)
+		{
+			LOG_ERROR("Error reading a response from the device %d.", session);
+		}
+		else
+		{
+			double CpValue = 0.0;
+			double DValue = 0.0;
+             
+			LOG_INFO("instrument %d return %d is: %*s\n", session, retCount,retCount, buffer);
+			char * p = NULL;
+			p = strtok(buffer,",");
+			if (NULL != p)
+			{
+				 num = Scan(p, "%s>%f", &CpValue);
+				 CpValue *= 1000000000;
+			}
+			p = strtok(NULL,",");
+			if (NULL != p)
+			{
+				 num = Scan(p, "%s>%f", &DValue);
+			}
+			LOG_INFO("num is %d , CpValue is %f DValue is %f\n",num, CpValue, DValue);
+		}
 	
 	}
 	else
@@ -67,7 +98,7 @@ static int Start(Measurement *pDev)
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
 	
-		
+		DoMeasureWithCommand(pMeter,NULL,NULL);
 	}
 	else
 	{

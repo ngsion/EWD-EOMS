@@ -27,7 +27,6 @@
 //==============================================================================
 // Static global variables
 
-
 //==============================================================================
 // Static functions
 static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *outData)
@@ -56,9 +55,10 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 		else
 		{
 
-			//	LOG_INFO("instrument %d return %d is: %*s\n", session, retCount,retCount, buffer);
 			num = Scan(buffer, "%s>%f", &value);
 			*pCurrent = value * 1000000000;
+			LOG_INFO("instrument %d num is %dreturn %d is: %*s\n", session, num, retCount,retCount, buffer);
+			
 		}
 	}
 	else
@@ -67,7 +67,6 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 	}
 	return 0;
 }
-
 
 static int Start(Measurement *pDev)
 {
@@ -78,26 +77,32 @@ static int Start(Measurement *pDev)
 		return -1;
 	}
 	PicoammeterMeasure *pMeter = (PicoammeterMeasure *)pDev;
-
+	 ViStatus status =  VI_SUCCESS;
 	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
 	{
 		LOG_INFO("PicoammeterMeasure starts");
-		ViStatus status;
-		ViSession session = pMeter->measure.pInstr->session;
 		
+		ViSession session = pMeter->measure.pInstr->session;
+
 		status = viPrintf(session, ":FORM:ELEM CURR1\n");
 		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
 		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
-		//status = viPrintf(session, ":SYST:AZER OFF\n");
-		//status = viPrintf(session, ":SENS1:MED OFF\n");
-		//status = viPrintf(session, ":SENS1:AVERage OFF\n");
-		
+          
+		  double current;
+		  DoMeasureWithCommand(pMeter,NULL,&current);
+
+		// status = viPrintf(session, ":SYST:AZER OFF\n");
+		// status = viPrintf(session, ":SENS1:MED OFF\n");
+		// status = viPrintf(session, ":SENS1:AVERage OFF\n");
 	}
 	else
 	{
 		LOG_ERROR("PicoammeterMeasure Start failed null %d ", NULL == pMeter->measure.pInstr);
 	}
-
+	if (status < VI_SUCCESS)
+	{
+		LOG_ERROR("status is %d.", status);
+	}
 	return 0;
 }
 static int Stop(Measurement *pDev)

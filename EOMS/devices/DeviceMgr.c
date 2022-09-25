@@ -38,11 +38,11 @@ static int Init(int x)
 
 	defaultDeviceArray[0] = (Device *)malloc(sizeof(Picoammeter));
 	PicoammeterInit((Picoammeter *)defaultDeviceArray[0]);
-	defaultDeviceArray[0]->isSignal = true;
+	defaultDeviceArray[0]->isSignal = false;
 
 	defaultDeviceArray[1] = (Device *)malloc(sizeof(WaveformGenerator));
 	WaveformGeneratorInit((WaveformGenerator *)defaultDeviceArray[1]);
-	defaultDeviceArray[1]->isSignal = false;
+	defaultDeviceArray[1]->isSignal = true;
 
 	defaultDeviceArray[2] = (Device *)malloc(sizeof(LCRMeter));
 	LCRMeterInit((LCRMeter *)defaultDeviceArray[2]);
@@ -65,6 +65,7 @@ static int AfterInit(int x)
 			}
 			
 	        defaultDeviceArray[i]->QueryID(defaultDeviceArray[i]);
+			defaultDeviceArray[i]->Reset(defaultDeviceArray[i]);
 		}
 	}
 

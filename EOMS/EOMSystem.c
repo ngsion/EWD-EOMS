@@ -211,8 +211,9 @@ static int DoOne()
 
 static int Start(int x)
 {
-	DevMgr.Start(x);
+	DevMgr.Start(x);  
 	MeasureMgr.Start(x);
+
    // DoOne();
 
 	return 0;

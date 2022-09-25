@@ -37,7 +37,7 @@ static int Init(int x)
 	}
 	defaultMeasureArray[0] = malloc(sizeof(PicoammeterMeasure));
 	PicoammeterMeasureInit((PicoammeterMeasure *)defaultMeasureArray[0]);
-	defaultMeasureArray[0]->isCollector = false;
+	defaultMeasureArray[0]->isCollector = true;
 
 	defaultMeasureArray[1] = malloc(sizeof(LCRMeterMeasure));
 	LCRMeterMeasureInit((LCRMeterMeasure *)defaultMeasureArray[1]);

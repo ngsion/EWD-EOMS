@@ -50,21 +50,25 @@ static int Start(Device *pDev)
 		return -1;
 	}
 	LCRMeter *pMeter = (LCRMeter *)pDev;
+	ViStatus status = VI_SUCCESS;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
 		LOG_INFO("LCRMeter starts");
-		ViStatus status;
+
 		ViSession session = pMeter->device.pInstr->session;
-		status = viPrintf(session, "*RST\n");
-        status = viPrintf(session, "FREQ 20Hz\n");
-        status = viPrintf(session, "VOLT 5mV\n");
-		status = viPrintf(session, "BIAS:VOLT 0.0\n");
-		
-		//pMeter->device.pInstr->QueryID(pMeter->device.pInstr);
+		status = viPrintf(session, "FUNC:IMP CPD\n");
+		status = viPrintf(session, "FREQ 1kHz\n");
+		status = viPrintf(session, "VOLT 500mV\n");
+		status = viPrintf(session, "BIAS:VOLT 25\n");
+		status = viPrintf(session, "BIAS:STATE 1\n");
 	}
 	else
 	{
 		LOG_ERROR("LCRMeter Start failed null %d ", NULL == pMeter->device.pInstr);
+	}
+	if (status < VI_SUCCESS)
+	{
+		LOG_ERROR("status is %d.", status);
 	}
 
 	return 0;
@@ -121,6 +125,7 @@ static int SetAttribute(struct Device *pDev)
 	{
 		LOG_ERROR("LCRMeter SetAttribute failed null %d ", NULL == pMeter->device.pInstr);
 	}
+
 	return 0;
 }
 static int Stop(Device *pDev)
@@ -133,7 +138,7 @@ static int Stop(Device *pDev)
 
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
-		status = viPrintf(session, "*RST\n");
+		status = viPrintf(session, "BIAS:STATE 0\n");
 	}
 	else
 	{
@@ -157,9 +162,8 @@ static int QueryID(Device *pDev)
 		LOG_INFO("LCRMeter QueryID");
 
 		ViSession session = pMeter->device.pInstr->session;
-		
+
 		// status = viPrintf(session, "*IDN?\n");
-	
 	}
 	else
 	{

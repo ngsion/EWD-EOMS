@@ -51,14 +51,14 @@ static int Start(Device *pDev)
 		LOG_ERROR("error in WaveformGenerator start");
 		return -1;
 	}
+	ViStatus status = VI_SUCCESS; 
 		WaveformGenerator *pMeter = (WaveformGenerator *)pDev; 
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
         LOG_INFO("WaveformGenerator starts");
-		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
-		  	//viPrintf(instr,"*CLS\n");
+		  	viPrintf(session,"*CLS\n");
 			viPrintf(session,"SOURce1:FUNCtion SQU\n");
 			viPrintf(session,"SOURce1:FREQuency +5\n");
 			viPrintf(session,"SOURce1:VOLTage:HIGH +6.0\n");
@@ -77,7 +77,10 @@ static int Start(Device *pDev)
 	{
 		LOG_ERROR("WaveformGenerator Start failed null %d ", NULL == pMeter->device.pInstr);
 	}
-
+if (status < VI_SUCCESS)
+	{
+		LOG_ERROR("status is %d.", status);
+	}
 	return 0;
 }
 

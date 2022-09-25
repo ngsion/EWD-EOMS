@@ -27,7 +27,6 @@
 //==============================================================================
 // Static global variables
 
-
 //==============================================================================
 // Static functions
 static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
@@ -40,13 +39,13 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 		ViSession session = pMeter->device.pInstr->session;
 
 		float *pVolt = (float *)inData;
-    LOG_INFO("before viPrintf");
+		LOG_INFO("before viPrintf");
 		status = viPrintf(session, ":SOUR1:VOLT %f\n", *pVolt);
-	LOG_INFO("after viPrintf");	
+		LOG_INFO("after viPrintf");
 	}
 	else
 	{
-	    LOG_ERROR("Picoammeter DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
+		LOG_ERROR("Picoammeter DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
 	return 0;
@@ -59,30 +58,32 @@ static int Start(Device *pDev)
 		LOG_ERROR("error in Picoammeter start");
 		return -1;
 	}
-		Picoammeter *pMeter = (Picoammeter *)pDev; 
+	ViStatus status = VI_SUCCESS; 
+	Picoammeter *pMeter = (Picoammeter *)pDev;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-        LOG_INFO("Picoammeter starts");
-		ViStatus status;
-		ViSession session = pMeter->device.pInstr->session;
-
-		status = viPrintf(session, "*RST\n");
-		status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
-		status = viPrintf(session, ":SOUR1:VOLT:STOP 30\n");
-		status = viPrintf(session, ":SOUR1:VOLT:STOP 2\n");
-		status = viPrintf(session, ":SOUR1:VOLT:MODE SWE\n");
-		status = viPrintf(session, ":SOUR1:SWE:RANG AUTO\n");
-		status = viPrintf(session, ":SOUR1:SWE:SPAC LIN\n");
-		status = viPrintf(session, ":TRIG:COUN 16\n");
-		status = viPrintf(session, ":SOUR1:DELay 0.05\n");
-		status = viPrintf(session, ":OUTP1 ON\n");
+		LOG_INFO("Picoammeter starts");
 		
+		ViSession session = pMeter->device.pInstr->session;
+        status = viPrintf(session, ":SOUR1:VOLT %f\n", 25.0);
+		// status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
+		// status = viPrintf(session, ":SOUR1:VOLT:STOP 10\n");
+		// status = viPrintf(session, ":SOUR1:VOLT:STEP 1\n");
+		// status = viPrintf(session, ":SOUR1:VOLT:MODE SWE\n");
+		// status = viPrintf(session, ":SOUR1:SWE:RANG AUTO\n");
+		// status = viPrintf(session, ":SOUR1:SWE:SPAC LIN\n");
+		// status = viPrintf(session, ":TRIG:COUN 10\n");
+		// status = viPrintf(session, ":SOUR1:DELay 1\n");
+		status = viPrintf(session, ":OUTP1 ON\n");
 	}
 	else
 	{
 		LOG_ERROR("Picoammeter Start failed null %d ", NULL == pMeter->device.pInstr);
 	}
-
+if (status < VI_SUCCESS)
+	{
+		LOG_ERROR("status is %d.", status);
+	}
 	return 0;
 }
 
@@ -103,7 +104,6 @@ static int SetAttribute(struct Device *pDev)
 		status = viSetAttribute(session, VI_ATTR_ASRL_STOP_BITS, VI_ASRL_STOP_ONE);
 		status = viSetAttribute(session, VI_ATTR_TERMCHAR_EN, VI_TRUE);
 		status = viSetAttribute(session, VI_ATTR_TERMCHAR, 0x0D);
-
 	}
 	else
 	{
@@ -122,7 +122,6 @@ static int Stop(Device *pDev)
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 		status = viPrintf(session, ":OUTP1 OFF\n");
-		status = viPrintf(session, "*RST\n");
 	}
 	else
 	{
@@ -148,6 +147,7 @@ void PicoammeterInit(Picoammeter *pDev)
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
+
 }
 void PicoammeterDeinit(Picoammeter *pDev)
 {

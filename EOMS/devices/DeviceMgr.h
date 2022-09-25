@@ -30,7 +30,6 @@
 typedef struct DeviceMgr
 {
     Device ** pDevArray;
-    
 	int (*Init)(int x);
     int (*AfterInit)(int x);
 	int (*Start)(int x);

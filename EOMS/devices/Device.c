@@ -11,6 +11,7 @@
 //==============================================================================
 // Include files
 
+#include <visa.h>
 #include "Device.h"
 #include <string.h>
 #include "logger.h"
@@ -26,6 +27,24 @@
 
 //==============================================================================
 // Static functions
+static int Reset(struct Device *pDev)
+{
+	LOG_INFO("Device Reset");
+
+	if (NULL != pDev->pInstr && pDev->pInstr->status >= Instrument_Status_Open)
+	{
+
+		ViStatus status;
+		ViSession session = pDev->pInstr->session;
+        status = viPrintf(session, "*RST\n");
+	}
+	else
+	{
+		LOG_ERROR("Device Reset failed null %d ", NULL == pDev->pInstr);
+	}
+
+	return 0;
+}
 static int Start(Device *pDev)
 {
 	LOG_INFO("Device starts");
@@ -55,6 +74,8 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 	LOG_INFO("Device DoWithCommand");
 	return 0;
 }
+
+
 //==============================================================================
 // Global variables
 
@@ -73,6 +94,7 @@ void DeviceInit(Device *pDev)
 	pDev->Stop = Stop;
 	pDev->QueryID = QueryID;
 	pDev->DoWithCommand = DoWithCommand;
+	pDev->Reset = Reset;
 }
 void DeviceDeinit(Device *pDev)
 {
