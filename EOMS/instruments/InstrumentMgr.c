@@ -58,7 +58,7 @@ static int sFindResource()
 		viClose(defaultRM);
 		return -1;
 	}
-	LOG_INFO(" %d instruments are detected.", numInstrs);
+	LOG_INFO(" %d instruments are detected. defaultRM is %d", numInstrs,defaultRM);
 
 	unsigned short intfType;
 	unsigned short intfNum;

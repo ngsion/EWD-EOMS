@@ -29,7 +29,6 @@
 static Measurement *defaultMeasureArray[MEASURE_MAX_NUM];
 
 static bool isCollecting;
-static int threadFunctionId = 0;
 
 //==============================================================================
 // Static functions
@@ -53,28 +52,32 @@ static int Init(int x)
 
 static int CVICALLBACK ThreadFunction2(void *functionData)
 {
-
+	Measurement *pMeasure = (Measurement *)functionData;
 	while (true == isCollecting)
 	{
-		for (int i = 0; i < MEASURE_MAX_NUM; i++)
-		{
-			if (NULL != defaultMeasureArray[i] && true == defaultMeasureArray[i]->isCollector)
-			{
-				double value;
-				LOG_INFO("before mesure");
-				defaultMeasureArray[i]->DoMeasureWithCommand(defaultMeasureArray[i], NULL, &value);
-				LOG_INFO("after mesure value %f", value);
-			}
-		}
-		//Delay(0.01);
+		double value;
+		LOG_INFO("before mesure");
+		pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
+		LOG_INFO("after mesure value %f", value);
+	
+		Delay(0.001);
 	}
 
 	return 0;
 }
 
+static int DoOneMeasure(Measurement *pMeasure)
+{
+
+	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
+								  ThreadFunction2, pMeasure,
+								  &pMeasure->jobId);
+	return 0;
+}
 
 static int Start(int x)
 {
+	isCollecting = true;
 
 	for (int i = 0; i < MEASURE_MAX_NUM; i++)
 	{
@@ -83,14 +86,9 @@ static int Start(int x)
 			LOG_INFO("before start");
 			defaultMeasureArray[i]->Start(defaultMeasureArray[i]);
 			LOG_INFO("after start");
+			DoOneMeasure(defaultMeasureArray[i]);
 		}
 	}
-
-	isCollecting = true;
-
-	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
-								  ThreadFunction2, NULL,
-								  &threadFunctionId);
 
 	return 0;
 }
@@ -99,13 +97,19 @@ static int Stop(int x)
 	if (true == isCollecting)
 	{
 		isCollecting = false;
-		/* Wait for the thread functions to finish executing */
-		CmtWaitForThreadPoolFunctionCompletion(DEFAULT_THREAD_POOL_HANDLE,
-											   threadFunctionId,
-											   0);
 
-		/* Release thread functions */
-		CmtReleaseThreadPoolFunctionID(DEFAULT_THREAD_POOL_HANDLE, threadFunctionId);
+		for (int i = 0; i < MEASURE_MAX_NUM; i++)
+		{
+			if (NULL != defaultMeasureArray[i] && true == defaultMeasureArray[i]->isCollector)
+			{
+				/* Wait for the thread functions to finish executing */
+				CmtWaitForThreadPoolFunctionCompletion(DEFAULT_THREAD_POOL_HANDLE,
+													   defaultMeasureArray[i]->jobId,
+													   0);
+				/* Release thread functions */
+				CmtReleaseThreadPoolFunctionID(DEFAULT_THREAD_POOL_HANDLE, defaultMeasureArray[i]->jobId);
+			}
+		}
 	}
 
 	for (int i = 0; i < MEASURE_MAX_NUM; i++)

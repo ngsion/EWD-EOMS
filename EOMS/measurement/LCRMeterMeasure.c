@@ -28,20 +28,19 @@
 //==============================================================================
 // Static global variables
 
-
 //==============================================================================
 // Static functions
 static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *outData)
 {
 	LCRMeterMeasure *pMeter = (LCRMeterMeasure *)pDev;
-
+	int result = -1;
 	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
 	{
 
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
-		
-        status = viPrintf(session, ":FETCh?\n");
+
+		status = viPrintf(session, ":FETCh?\n");
 
 		int num;
 		unsigned char buffer[80];
@@ -56,32 +55,48 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 		{
 			double CpValue = 0.0;
 			double DValue = 0.0;
-            double * pOutValue = (double*)outData;
-			LOG_INFO("instrument %d return %d is: %*s\n", session, retCount,retCount, buffer);
-			char * p = NULL;
-			p = strtok(buffer,",");
+
+			double *pOutValue = (double *)outData;
+			LOG_INFO("instrument %d return %d is: %*s\n", session, retCount, retCount, buffer);
+			char *p = NULL;
+			p = strtok(buffer, ",");
 			if (NULL != p)
 			{
-				 num = Scan(p, "%s>%f", &CpValue);
-				 CpValue *= 1000000000;
+				num = Scan(p, "%s>%f", &CpValue);
+				CpValue *= 1000000000;
 			}
-			p = strtok(NULL,",");
+			p = strtok(NULL, ",");
 			if (NULL != p)
 			{
-				 num = Scan(p, "%s>%f", &DValue);
+				num = Scan(p, "%s>%f", &DValue);
 			}
-			LOG_INFO("num is %d , CpValue is %f DValue is %f\n",num, CpValue, DValue);
-			*pOutValue = CpValue;
+			p = strtok(NULL, ",");
+			if (NULL != p)
+			{
+				num = Scan(p, "%s>%d", &result);
+			}
+			LOG_INFO("num is %d , CpValue is %f DValue is %f\n", num, CpValue, DValue);
+			if (0 == result)
+			{
+				*pOutValue = CpValue;
+			}
+			else
+			{
+				*pOutValue = CpValue < 0 ? -299999 : 299999;
+			}
+
+			if (pDev->count >= kMEASURE_DATA_LENGTH)
+				pDev->count = 0;
+			pDev->dataArray[pDev->count] = *pOutValue;
+			pDev->count = pDev->count + 1;
 		}
-	
 	}
 	else
 	{
 		LOG_ERROR("LCRMeterMeasure DoMeasureWithCommand failed null %d ", NULL == pMeter->measure.pInstr);
 	}
-	return 0;
+	return result;
 }
-
 
 static int Start(Measurement *pDev)
 {
@@ -98,8 +113,6 @@ static int Start(Measurement *pDev)
 		LOG_INFO("LCRMeterMeasure starts");
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
-	
-		
 	}
 	else
 	{
@@ -138,4 +151,3 @@ void LCRMeterMeasureDeinit(LCRMeterMeasure *pDev)
 {
 	MeasurementDeinit(&pDev->measure);
 }
-

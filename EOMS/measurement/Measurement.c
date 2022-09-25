@@ -52,10 +52,12 @@ void MeasurementInit(Measurement * pDev)
 	}
 	memcpy(pDev->name,"Measurement",sizeof("Measurement"));
     pDev->pInstr = NULL;
+	pDev->jobId = 0;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
 	pDev->isCollector = false;
 	pDev->DoMeasureWithCommand = DoMeasureWithCommand;
+	pDev->count = 0;
 }
 void MeasurementDeinit(Measurement * pDev)
 {

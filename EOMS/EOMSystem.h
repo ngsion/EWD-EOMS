@@ -21,7 +21,9 @@
 #include "cvidef.h"
 #include "logger.h"  
 #include "instruments/InstrumentMgr.h"
-
+#include "DeviceMgr.h"
+#include "MeasurementMgr.h"
+#include <stdbool.h>
 //==============================================================================
 // Constants
 
@@ -29,7 +31,8 @@
 // Types
 typedef struct 
 {
-	
+	bool isWorking;
+
 	int (*Init)(int x);
 	int (*Shutdown)(int x);
     int (*Start)(int x);

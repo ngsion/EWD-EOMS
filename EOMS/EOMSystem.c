@@ -13,8 +13,6 @@
 
 #include <utility.h>
 #include "EOMSystem.h"
-#include "DeviceMgr.h"
-#include "MeasurementMgr.h"
 #include "logger.h"
 #include <time.h>
 #include <assert.h>
@@ -44,6 +42,7 @@ void setupLogger()
 //	logger_initConsoleLogger(NULL);
 	logger_initFileLogger(buf, 0, 0);
 	logger_setLevel(LogLevel_DEBUG);
+	logger_autoFlush(5000);
 }
 
 //==============================================================================
@@ -150,6 +149,7 @@ static int Shutdown(int x)
 
 static int Start(int x)
 {
+	System.isWorking = true;
 	DevMgr.Start(x);  
 	MeasureMgr.Start(x);
 
@@ -157,6 +157,7 @@ static int Start(int x)
 }
 static int Stop(int x)
 {
+	System.isWorking = false;
 	MeasureMgr.Stop(x);
 	DevMgr.Stop(x);
 
@@ -166,6 +167,7 @@ static int Stop(int x)
 //==============================================================================
 // Global variables
 EOMSystem System = {
+	.isWorking = false,
 	.Init = Init,
 	.Shutdown = Shutdown,
 	.Start = Start,
