@@ -25,6 +25,28 @@
 
 //==============================================================================
 // Static functions
+static int Reset(struct Device *pDev)
+{
+	LOG_INFO("LCRMeter Reset");
+
+	if (NULL != pDev->pInstr && pDev->pInstr->status >= Instrument_Status_Open)
+	{
+
+		ViStatus status;
+		ViSession session = pDev->pInstr->session;
+        status = viPrintf(session, "*RST\n");
+		status = viPrintf(session, "FUNC:IMP CPD\n");
+		//status = viPrintf(session, "FREQ MIN\n"); ///MIN=20Hz, MAX=1MHz
+		status = viPrintf(session, "VOLT 0mV\n");
+		//status = viPrintf(session, "APER FAST\n");
+	}
+	else
+	{
+		LOG_ERROR("Device Reset failed null %d ", NULL == pDev->pInstr);
+	}
+
+	return 0;
+}
 static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 {
 	LCRMeter *pMeter = (LCRMeter *)pDev;
@@ -194,6 +216,7 @@ void LCRMeterInit(LCRMeter *pDev)
 	pDev->device.Stop = Stop;
 	pDev->device.QueryID = QueryID;
 	pDev->device.DoWithCommand = DoWithCommand;
+	pDev->device.Reset = Reset;
 }
 void LCRMeterDeinit(LCRMeter *pDev)
 {

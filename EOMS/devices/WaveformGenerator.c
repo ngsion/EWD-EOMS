@@ -60,6 +60,7 @@ static int Start(Device *pDev)
 
 		  	viPrintf(session,"*CLS\n");
 			viPrintf(session,"SOURce1:FUNCtion SQU\n");
+			//viPrintf(session,"SOURce1:FUNCtion:SQU:DCYC +20.0\n");
 			viPrintf(session,"SOURce1:FREQuency +5\n");
 			viPrintf(session,"SOURce1:VOLTage:HIGH +6.0\n");
 			viPrintf(session,"SOURce1:VOLTage:LOW 0.0\n"); 

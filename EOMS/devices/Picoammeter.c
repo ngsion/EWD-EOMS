@@ -65,7 +65,7 @@ static int Start(Device *pDev)
 		LOG_INFO("Picoammeter starts");
 		
 		ViSession session = pMeter->device.pInstr->session;
-        status = viPrintf(session, ":SOUR1:VOLT %f\n", 25.0);
+        status = viPrintf(session, ":SOUR1:VOLT %f\n", 0);
 		// status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
 		// status = viPrintf(session, ":SOUR1:VOLT:STOP 10\n");
 		// status = viPrintf(session, ":SOUR1:VOLT:STEP 1\n");
