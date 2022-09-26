@@ -29,20 +29,21 @@
 #define kDEVICE_PICOAMMETER_STR "Picoammeter"
 #define kDEVICE_WAVEFORMGENTERATOR_STR "WaveformGenerator"
 #define kDEVICE_LCRMETER_STR "LCRMeter"
-#define kMEASURE_DATA_LENGTH 50
+
 
 //==============================================================================
 // Types
 typedef struct Measurement
 {
     Instrument * pInstr;
-    char  name[kDEVICE_NAME_LENGTH];
+    Queue * pDataQueue;
     bool isCollector;
     int  jobId;
+    char  name[kDEVICE_NAME_LENGTH];
+    
 
 
-    Queue * pDataQueue;
-
+    
 
 
     int (*Start)(struct Measurement * pDev);

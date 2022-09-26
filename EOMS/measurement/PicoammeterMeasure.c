@@ -38,7 +38,7 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
-		double *pCurrent = (double *)outData;
+		double *pOutValue = (double *)outData;
 
 		status = viPrintf(session, ":READ?\n");
 
@@ -54,11 +54,24 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 		}
 		else
 		{
-
-			num = Scan(buffer, "%s>%f", &value);
-			*pCurrent = value * 1000000000;
-			LOG_INFO("instrument %d num is %dreturn %d is: %*s\n", session, num, retCount,retCount, buffer);
+            if (0 ==  strcmp(buffer,PA_NAN_STR))
+			{
+				return -1;
+			}
 			
+			num = Scan(buffer, "%s>%f", &value);
+			value *= 1000000000; /// pA -> mA
+			LOG_INFO("instrument %d num is %d value is %f,return %d is: %*s\n", session, num, value,retCount, retCount, buffer);
+			if (-20 < value && value < 20)
+			{
+				*pOutValue = value;
+			}
+			else
+			{
+				*pOutValue = value > 0 ? 20 : -20;
+			}
+
+			pDev->pDataQueue->Push(pDev->pDataQueue, *pOutValue);
 		}
 	}
 	else
@@ -77,19 +90,17 @@ static int Start(Measurement *pDev)
 		return -1;
 	}
 	PicoammeterMeasure *pMeter = (PicoammeterMeasure *)pDev;
-	 ViStatus status =  VI_SUCCESS;
+	ViStatus status = VI_SUCCESS;
 	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
 	{
 		LOG_INFO("PicoammeterMeasure starts");
-		
+
 		ViSession session = pMeter->measure.pInstr->session;
 
 		status = viPrintf(session, ":FORM:ELEM CURR1\n");
 		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
 		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
-          
-
-
+        status = viPrintf(session, ":CONFIgure:CURRent:DC\n");
 		// status = viPrintf(session, ":SYST:AZER OFF\n");
 		// status = viPrintf(session, ":SENS1:MED OFF\n");
 		// status = viPrintf(session, ":SENS1:AVERage OFF\n");

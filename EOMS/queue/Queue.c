@@ -89,6 +89,9 @@ Queue *QueueAllocInit()
 		pq->head = NULL;
 		pq->tail = NULL;
 		pq->size = 0;
+		pq->Empty = Empty;
+		pq->Pop = Pop;
+		pq->Push = Push;
 	}
 	return pq;
 }

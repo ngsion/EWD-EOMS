@@ -86,7 +86,9 @@ int CVICALLBACK onOKBtb(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
+		SetCtrlAttribute(panelHandle,PANEL_TIMER,ATTR_ENABLED,TRUE);
 		SetCtrlAttribute(panelHandle, PANEL_STRIPCHART_TOP, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
+		SetCtrlAttribute(panelHandle, PANEL_STRIPCHART_BOTTOM, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
 		System.Start(0);
 		break;
 	}
@@ -99,7 +101,7 @@ int CVICALLBACK onStopBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-
+		SetCtrlAttribute(panelHandle,PANEL_TIMER,ATTR_ENABLED,FALSE);
 		System.Stop(0);
 		break;
 	}
@@ -127,15 +129,24 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 
 		for (int i = 0; i < MEASURE_MAX_NUM; i++)
 		{
-			if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, kDEVICE_LCRMETER_STR))
+			if (NULL != MeasureMgr.pMeasureArray[i])
 			{
-				double oneData = 0;
-				
-				if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue,&oneData))
+				if (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, kDEVICE_LCRMETER_STR))
 				{
-					PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_TOP, oneData);
+					double oneData = 0;
+					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
+					{
+						PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_TOP, oneData);
+					}
 				}
-				break;
+				else if (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, kDEVICE_PICOAMMETER_STR))
+				{
+					double oneData = 0;
+					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
+					{
+						PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_BOTTOM, oneData);
+					}
+				}
 			}
 		}
 

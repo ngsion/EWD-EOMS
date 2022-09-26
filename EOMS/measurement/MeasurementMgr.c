@@ -45,7 +45,7 @@ static int Init(int x)
 
 	defaultMeasureArray[1] = malloc(sizeof(LCRMeterMeasure));
 	LCRMeterMeasureInit((LCRMeterMeasure *)defaultMeasureArray[1]);
-	defaultMeasureArray[1]->isCollector = true;
+	defaultMeasureArray[1]->isCollector = false;
 
 	return 0;
 }
@@ -57,9 +57,15 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	{
 		double value;
 		LOG_INFO("before mesure");
-		pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
-		LOG_INFO("after mesure value %f", value);
-	
+		if (0 == pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value))
+		{
+			LOG_INFO("after mesure value %f", value);
+		}
+		else
+		{
+			LOG_INFO("DoMeasureWithCommand return invalid value");
+		}
+
 		Delay(0.001);
 	}
 

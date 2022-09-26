@@ -77,7 +77,7 @@ static int AfterInit(int x)
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
-	Delay(3);
+	Delay(5);
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
