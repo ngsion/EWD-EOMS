@@ -85,10 +85,8 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 				*pOutValue = CpValue < 0 ? -299999 : 299999;
 			}
 
-			if (pDev->count >= kMEASURE_DATA_LENGTH)
-				pDev->count = 0;
-			pDev->dataArray[pDev->count] = *pOutValue;
-			pDev->count = pDev->count + 1;
+            pDev->pDataQueue->Push(pDev->pDataQueue,*pOutValue);
+			
 		}
 	}
 	else

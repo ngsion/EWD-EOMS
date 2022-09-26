@@ -50,7 +50,7 @@ static int Init(int x)
 	return 0;
 }
 
-static int CVICALLBACK ThreadFunction2(void *functionData)
+static int CVICALLBACK ThreadFunction(void *functionData)
 {
 	Measurement *pMeasure = (Measurement *)functionData;
 	while (true == isCollecting)
@@ -70,7 +70,7 @@ static int DoOneMeasure(Measurement *pMeasure)
 {
 
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
-								  ThreadFunction2, pMeasure,
+								  ThreadFunction, pMeasure,
 								  &pMeasure->jobId);
 	return 0;
 }

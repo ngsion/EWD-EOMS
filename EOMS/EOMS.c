@@ -28,7 +28,6 @@
 // Static global variables
 
 static int panelHandle = 0;
-static int topDataIndex = 0;
 
 //==============================================================================
 // Static functions
@@ -87,7 +86,7 @@ int CVICALLBACK onOKBtb(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-		SetCtrlAttribute(panelHandle, PANEL_STRIPCHART_TOP, ATTR_SCROLL_MODE, VAL_BLOCK);
+		SetCtrlAttribute(panelHandle, PANEL_STRIPCHART_TOP, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
 		System.Start(0);
 		break;
 	}
@@ -130,10 +129,11 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 		{
 			if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, kDEVICE_LCRMETER_STR))
 			{
-				if (topDataIndex != MeasureMgr.pMeasureArray[i]->count)
+				double oneData = 0;
+				
+				if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue,&oneData))
 				{
-					topDataIndex = MeasureMgr.pMeasureArray[i]->count;
-					PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_TOP, MeasureMgr.pMeasureArray[i]->dataArray[topDataIndex-1]);
+					PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_TOP, oneData);
 				}
 				break;
 			}

@@ -57,10 +57,12 @@ void MeasurementInit(Measurement * pDev)
 	pDev->Stop = Stop;
 	pDev->isCollector = false;
 	pDev->DoMeasureWithCommand = DoMeasureWithCommand;
-	pDev->count = 0;
+	pDev->pDataQueue = QueueAllocInit();
+
 }
 void MeasurementDeinit(Measurement * pDev)
 {
 	memcpy(pDev->name,"Measurement",sizeof("Measurement"));
 	pDev->pInstr = NULL;
+	QueueDelloc(pDev->pDataQueue);
 }

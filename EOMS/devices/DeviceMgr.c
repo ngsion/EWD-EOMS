@@ -11,6 +11,7 @@
 //==============================================================================
 // Include files
 
+#include <utility.h>
 #include <ansi_c.h>
 #include "DeviceMgr.h"
 #include "Picoammeter.h"
@@ -27,6 +28,8 @@
 //==============================================================================
 // Static global variables
 static Device *defaultDeviceArray[DEVICE_MAX_NUM];
+static int threadId = 0;
+
 //==============================================================================
 // Static functions
 static int Init(int x)
@@ -58,14 +61,30 @@ static int AfterInit(int x)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-			if(0 == strcmp(defaultDeviceArray[i]->name, DEVICE_PICOAMMETER_STR) )
+			if (0 == strcmp(defaultDeviceArray[i]->name, DEVICE_PICOAMMETER_STR))
 			{
 				Picoammeter *pMeter = defaultDeviceArray[i];
 				pMeter->SetAttribute(pMeter);
 			}
-			
-	        defaultDeviceArray[i]->QueryID(defaultDeviceArray[i]);
+
+			defaultDeviceArray[i]->QueryID(defaultDeviceArray[i]);
 			defaultDeviceArray[i]->Reset(defaultDeviceArray[i]);
+		}
+	}
+
+	return 0;
+}
+
+static int CVICALLBACK ThreadFunction(void *functionData)
+{
+	Delay(3);
+	for (int i = 0; i < DEVICE_MAX_NUM; i++)
+	{
+		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
+		{
+			LOG_INFO("before start");
+			defaultDeviceArray[i]->Start(defaultDeviceArray[i]);
+			LOG_INFO("after start");
 		}
 	}
 
@@ -74,17 +93,15 @@ static int AfterInit(int x)
 
 static int Start(int x)
 {
-	for (int i = 0; i < DEVICE_MAX_NUM; i++)
-	{
-		
-		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
-		{
-			LOG_INFO("before start");
-			defaultDeviceArray[i]->Start(defaultDeviceArray[i]);
-			LOG_INFO("after start");
-		}
-		
-	}
+	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,
+								  ThreadFunction, NULL,
+								  &threadId);
+	/* Wait for the thread functions to finish executing */
+	CmtWaitForThreadPoolFunctionCompletion(DEFAULT_THREAD_POOL_HANDLE,
+										   threadId,
+										   0);
+	/* Release thread functions */
+	CmtReleaseThreadPoolFunctionID(DEFAULT_THREAD_POOL_HANDLE, threadId);
 
 	return 0;
 }

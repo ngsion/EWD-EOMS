@@ -22,6 +22,7 @@ extern "C"
 #include "cvidef.h"
 #include <stdint.h>
 
+
 //==============================================================================
 // Constants
 #define INSTRUMENT_ID_LENGTH 128

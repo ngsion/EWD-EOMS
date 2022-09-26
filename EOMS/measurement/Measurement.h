@@ -21,7 +21,7 @@
 #include "cvidef.h"
 #include "Instrument.h"
 #include <stdbool.h>
-
+#include "Queue.h"
 
 //==============================================================================
 // Constants
@@ -40,8 +40,9 @@ typedef struct Measurement
     bool isCollector;
     int  jobId;
 
-    double dataArray[kMEASURE_DATA_LENGTH];
-    int count;
+
+    Queue * pDataQueue;
+
 
 
     int (*Start)(struct Measurement * pDev);
