@@ -65,15 +65,19 @@ static int Start(Device *pDev)
 		LOG_INFO("Picoammeter starts");
 		
 		ViSession session = pMeter->device.pInstr->session;
-        status = viPrintf(session, ":SOUR1:VOLT %f\n", 0);
-		// status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
-		// status = viPrintf(session, ":SOUR1:VOLT:STOP 10\n");
-		// status = viPrintf(session, ":SOUR1:VOLT:STEP 1\n");
-		// status = viPrintf(session, ":SOUR1:VOLT:MODE SWE\n");
-		// status = viPrintf(session, ":SOUR1:SWE:RANG AUTO\n");
-		// status = viPrintf(session, ":SOUR1:SWE:SPAC LIN\n");
-		// status = viPrintf(session, ":TRIG:COUN 10\n");
-		// status = viPrintf(session, ":SOUR1:DELay 1\n");
+    //    status = viPrintf(session, ":SOUR1:VOLT %f\n", 15.0);
+	//	 status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
+	//	 status = viPrintf(session, ":SOUR1:VOLT:STOP 10\n");
+	//	 status = viPrintf(session, ":SOUR1:VOLT:STEP 1\n");
+	//	 status = viPrintf(session, ":SOUR1:VOLT:MODE SWE\n"); 
+	//	 status = viPrintf(session, ":SOUR1:VOLT:MODE LIST\n");
+	//	 status = viPrintf(session, ":SOUR1:LIST:RANG AUTO\n");
+	//	  status = viPrintf(session, ":SOUR1:LIST:VOLT 0,2\n");
+	//	 status = viPrintf(session, ":SOUR1:SWE:RANG AUTO\n");
+	//	 status = viPrintf(session, ":SOUR1:SWE:SPAC LIN\n");
+	//	 status = viPrintf(session, ":TRIG:COUN 10\n");
+	//	status = viPrintf(session, ":TRIG:COUN 2\n");
+	  //   status = viPrintf(session, ":SOUR1:DELay 1\n");
 		status = viPrintf(session, ":OUTP1 ON\n");
 	}
 	else

@@ -61,8 +61,8 @@ static int Start(Device *pDev)
 		  	viPrintf(session,"*CLS\n");
 			viPrintf(session,"SOURce1:FUNCtion SQU\n");
 			//viPrintf(session,"SOURce1:FUNCtion:SQU:DCYC +20.0\n");
-			viPrintf(session,"SOURce1:FREQuency +2\n");
-			viPrintf(session,"SOURce1:VOLTage:HIGH +2.0\n");
+			viPrintf(session,"SOURce1:FREQuency 1\n");
+			viPrintf(session,"SOURce1:VOLTage:HIGH +6.0\n");
 			viPrintf(session,"SOURce1:VOLTage:LOW 0.0\n"); 
 			viPrintf(session,"SOURce1:VOLTage:OFFSet 0\n");
 		//viPrintf(session,"SOURce1:VOLTage:PHASe 90\n");
@@ -71,6 +71,7 @@ static int Start(Device *pDev)
 		 
 		    viPrintf(session,"SOURce2:FUNCtion DC\n"); 
 		 	//viPrintf(session,"SOURce2:FREQuency +5\n");
+			//viPrintf(session,"SOURce2:VOLTage 4\n");
 		 	viPrintf(session,"SOURce2:VOLTage:OFFSet -3\n");
 			viPrintf(session, "OUTPut2 ON\n");
 	}

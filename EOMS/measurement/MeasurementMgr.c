@@ -66,7 +66,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			LOG_INFO("DoMeasureWithCommand return invalid value");
 		}
 
-		Delay(0.001);
+		Delay(0.01);
 	}
 
 	return 0;

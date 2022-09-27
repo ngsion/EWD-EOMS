@@ -17,6 +17,7 @@
 #include "EOMS.h"
 #include "toolbox.h"
 #include "EOMSystem.h"
+#include "Queue.h"
 
 //==============================================================================
 // Constants
@@ -114,7 +115,17 @@ int CVICALLBACK OnIDBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-
+		{
+        Queue* qu = QueueAllocInit();
+		qu->Push(qu,0.4);
+		qu->Push(qu,0.5);
+		
+		LOG_INFO("queeu size %d",qu->size);
+		double data;
+		qu->Pop(qu,&data);
+		   LOG_INFO("queeu size %d , data is %f",qu->size,data);
+		}
+		
 		break;
 	}
 	return 0;
@@ -136,6 +147,7 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 					double oneData = 0;
 					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
 					{
+						LOG_INFO("queeu size %d , data is %f",MeasureMgr.pMeasureArray[i]->pDataQueue->size,oneData); 
 						PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_TOP, oneData);
 					}
 				}
@@ -144,6 +156,7 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 					double oneData = 0;
 					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
 					{
+						LOG_INFO("queeu size %d , data is %f",MeasureMgr.pMeasureArray[i]->pDataQueue->size,oneData); 
 						PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_BOTTOM, oneData);
 					}
 				}

@@ -57,8 +57,23 @@ static bool Pop(Queue *pq, QDataType *data)
 	{
 		if (NULL != pq->head)
 		{
-			*data = pq->head->data;
-			--pq->size;
+			if ( NULL == pq->head->next )
+			{
+				*data = pq->head->data;
+			     --pq->size;
+				 free(pq->head);
+				 pq->head = pq->tail = NULL;
+			}
+			else
+			{
+				*data = pq->head->data;
+			     --pq->size;
+				QNode * next = pq->head->next;
+				free(pq->head);
+				pq->head = next;
+			}
+			
+			
 			return true;
 		}
 	}

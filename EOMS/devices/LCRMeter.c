@@ -42,7 +42,7 @@ static int Reset(struct Device *pDev)
 	}
 	else
 	{
-		LOG_ERROR("Device Reset failed null %d ", NULL == pDev->pInstr);
+		LOG_ERROR("LCRMeter Reset failed null %d ", NULL == pDev->pInstr);
 	}
 
 	return 0;

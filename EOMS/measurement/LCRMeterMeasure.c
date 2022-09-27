@@ -75,18 +75,13 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			{
 				num = Scan(p, "%s>%d", &result);
 			}
-			LOG_INFO("num is %d , CpValue is %f DValue is %f\n", num, CpValue, DValue);
+		
 			if (0 == result)
 			{
 				*pOutValue = CpValue;
+				pDev->pDataQueue->Push(pDev->pDataQueue, *pOutValue);
 			}
-			else
-			{
-				*pOutValue = CpValue < 0 ? -299999 : 299999;
-			}
-
-            pDev->pDataQueue->Push(pDev->pDataQueue,*pOutValue);
-			
+			LOG_INFO("num is %d , CpValue is %f DValue is %f queue size %d\n", num, CpValue, DValue,pDev->pDataQueue->size); 
 		}
 	}
 	else

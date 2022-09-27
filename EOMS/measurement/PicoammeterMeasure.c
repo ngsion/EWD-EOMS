@@ -44,7 +44,7 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 
 		int num;
 		double value;
-		unsigned char buffer[14];
+		unsigned char buffer[14]={0};
 		memset(buffer, 0, 14);
 		ViUInt32 retCount;
 		status = viRead(session, buffer, 14, &retCount);
@@ -54,23 +54,16 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 		}
 		else
 		{
-            if (0 ==  strcmp(buffer,PA_NAN_STR))
+           // if (0 ==  strcmp(buffer,PA_NAN_STR))
 			{
-				return -1;
+			//	return -1;
 			}
 			
 			num = Scan(buffer, "%s>%f", &value);
-			value *= 1000000000; /// pA -> mA
+			value *= 1000000000; /// A -> NA
 			LOG_INFO("instrument %d num is %d value is %f,return %d is: %*s\n", session, num, value,retCount, retCount, buffer);
-			if (-20 < value && value < 20)
-			{
-				*pOutValue = value;
-			}
-			else
-			{
-				*pOutValue = value > 0 ? 20 : -20;
-			}
-
+			*pOutValue = value;
+		
 			pDev->pDataQueue->Push(pDev->pDataQueue, *pOutValue);
 		}
 	}
@@ -98,9 +91,9 @@ static int Start(Measurement *pDev)
 		ViSession session = pMeter->measure.pInstr->session;
 
 		status = viPrintf(session, ":FORM:ELEM CURR1\n");
-		status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
-		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
-        status = viPrintf(session, ":CONFIgure:CURRent:DC\n");
+		//status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
+	//	status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
+      //  status = viPrintf(session, ":CONFIgure:CURRent:DC\n");
 		// status = viPrintf(session, ":SYST:AZER OFF\n");
 		// status = viPrintf(session, ":SENS1:MED OFF\n");
 		// status = viPrintf(session, ":SENS1:AVERage OFF\n");
