@@ -41,11 +41,11 @@ static int Init(int x)
 
 	defaultDeviceArray[0] = (Device *)malloc(sizeof(Picoammeter));
 	PicoammeterInit((Picoammeter *)defaultDeviceArray[0]);
-	defaultDeviceArray[0]->isSignal = false;
+	defaultDeviceArray[0]->isSignal = true;
 
 	defaultDeviceArray[1] = (Device *)malloc(sizeof(WaveformGenerator));
 	WaveformGeneratorInit((WaveformGenerator *)defaultDeviceArray[1]);
-	defaultDeviceArray[1]->isSignal = true;
+	defaultDeviceArray[1]->isSignal = false;
 
 	defaultDeviceArray[2] = (Device *)malloc(sizeof(LCRMeter));
 	LCRMeterInit((LCRMeter *)defaultDeviceArray[2]);
@@ -76,7 +76,7 @@ static int AfterInit(int x)
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
-	Delay(3);
+ 	Delay(3);
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
@@ -86,19 +86,19 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			LOG_INFO("after start");
 		}
 	}
-	// int index = 0;
-	// for( index = 0; index <= 15; index++)
-	// {
-	// 	float volt = index *  2;
-	// 	defaultDeviceArray[0]->DoWithCommand(defaultDeviceArray[0],&volt,NULL);
-	// 	Delay(0.4);
-	// }
-	// for( index = 0; index <= 15; index++)
-	// {
-	// 	float volt = 30 - index *  2;
-	// 	defaultDeviceArray[0]->DoWithCommand(defaultDeviceArray[0],&volt,NULL);
-	// 	Delay(0.4);
-	// }
+	int index = 0;
+	for( index = 0; index <= 15; index++)
+	{
+		float volt = index *  2;
+		defaultDeviceArray[0]->DoWithCommand(defaultDeviceArray[0],&volt,NULL);
+		Delay(0.5);
+	}
+	for( index = 0; index <= 15; index++)
+	{
+		float volt = 30 - index *  2;
+		defaultDeviceArray[0]->DoWithCommand(defaultDeviceArray[0],&volt,NULL);
+		Delay(0.5);
+	}
 	
 		 /* Wait for the thread functions to finish executing */
 	 CmtWaitForThreadPoolFunctionCompletion(DEFAULT_THREAD_POOL_HANDLE,threadId,0);

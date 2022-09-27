@@ -58,7 +58,7 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			{
 			//	return -1;
 			}
-			
+			buffer[13] = '\0';
 			num = Scan(buffer, "%s>%f", &value);
 			value *= 1000000000; /// A -> NA
 			LOG_INFO("instrument %d num is %d value is %f,return %d is: %*s\n", session, num, value,retCount, retCount, buffer);
