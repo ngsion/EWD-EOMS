@@ -1,0 +1,68 @@
+//==============================================================================
+//
+// Title:		SettingMgr.h
+// Purpose:		A short description of the interface.
+//
+// Created on:	2022-10-04 at 21:10:43 by .
+// Copyright:	. All Rights Reserved.
+//
+//==============================================================================
+
+#ifndef __SettingMgr_H__
+#define __SettingMgr_H__
+
+#ifdef __cplusplus
+    extern "C" {
+#endif
+
+//==============================================================================
+// Include files
+
+#include "cvidef.h"
+
+//==============================================================================
+// Constants
+typedef enum{
+    Signal_None = 0,
+    Signal_Picoammieter = 1 << 0,
+    Signal_WaveformGenerator= 1 << 1,
+    Signal_LCRMeter= 1 << 2
+};
+
+
+typedef enum{
+    Data_None = 0,
+    Data_Current = 1 << 0,
+    Data_Cp = 1 << 1,
+    Data_D = 1 << 2
+};
+
+//==============================================================================
+
+// Types
+typedef struct SettingMgr
+{
+    unsigned int signal;
+    unsigned int data;
+    
+    int (*Init)(int x);
+	int (*Shutdown)(int x);
+
+}SettingMgr;
+
+//==============================================================================
+// External variables
+
+//==============================================================================
+// Global functions
+
+
+//==============================================================================
+// External variables
+extern SettingMgr SetMgr;
+
+#ifdef __cplusplus
+    }
+#endif
+
+#endif  /* ndef __SettingMgr_H__ */

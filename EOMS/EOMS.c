@@ -73,7 +73,9 @@ int CVICALLBACK panelCB(int panel, int event, void *callbackData,
 	if (event == EVENT_CLOSE)
 	{
 		if (true == System.isWorking)
+		{
 			System.Stop(0);
+		}
 		System.Shutdown(0);
 		QuitUserInterface(0);
 	}

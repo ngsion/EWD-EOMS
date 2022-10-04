@@ -41,15 +41,12 @@ static int Init(int x)
 
 	defaultDeviceArray[0] = (Device *)malloc(sizeof(Picoammeter));
 	PicoammeterInit((Picoammeter *)defaultDeviceArray[0]);
-	defaultDeviceArray[0]->isSignal = true;
 
 	defaultDeviceArray[1] = (Device *)malloc(sizeof(WaveformGenerator));
 	WaveformGeneratorInit((WaveformGenerator *)defaultDeviceArray[1]);
-	defaultDeviceArray[1]->isSignal = false;
 
 	defaultDeviceArray[2] = (Device *)malloc(sizeof(LCRMeter));
 	LCRMeterInit((LCRMeter *)defaultDeviceArray[2]);
-	defaultDeviceArray[2]->isSignal = false;
 
 	return 0;
 }

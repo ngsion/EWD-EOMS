@@ -17,6 +17,7 @@
 #include <time.h>
 #include <assert.h>
 #include <string.h>
+#include "SettingMgr.h"
 
 //==============================================================================
 // Constants
@@ -39,7 +40,7 @@ void setupLogger()
 	char buf[64] = {0};
 	strftime(buf, 64, "log/EOMSlog_%Y%m%d_%H%M%S.txt", tblock);
 
-//	logger_initConsoleLogger(NULL);
+	//	logger_initConsoleLogger(NULL);
 	logger_initFileLogger(buf, 0, 0);
 	logger_setLevel(LogLevel_DEBUG);
 	logger_autoFlush(5000);
@@ -53,6 +54,7 @@ static int Init(int x)
 	InstrMgr.Init(x);
 	DevMgr.Init(x);
 	MeasureMgr.Init(x);
+	SetMgr.Init(x);
 
 	InstrumentListNode *pHead = *InstrMgr.plist;
 	while (pHead != NULL)
@@ -63,7 +65,7 @@ static int Init(int x)
 		int i = 0;
 		if (Instrument_Type_ASRL == pNode->pInstr->type)
 		{
-			for ( i = 0; i < DEVICE_MAX_NUM; i++)
+			for (i = 0; i < DEVICE_MAX_NUM; i++)
 			{
 				if (NULL != DevMgr.pDevArray[i] && 0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_PICOAMMETER_STR))
 				{
@@ -71,7 +73,7 @@ static int Init(int x)
 					break;
 				}
 			}
-			for ( i = 0; i < MEASURE_MAX_NUM; i++)
+			for (i = 0; i < MEASURE_MAX_NUM; i++)
 			{
 				if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_PICOAMMETER_STR))
 				{
@@ -83,7 +85,7 @@ static int Init(int x)
 		else if (Instrument_Type_USB == pNode->pInstr->type)
 		{
 
-			for ( i = 0; i < DEVICE_MAX_NUM; i++)
+			for (i = 0; i < DEVICE_MAX_NUM; i++)
 			{
 				if (NULL != DevMgr.pDevArray[i] && 0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_WAVEFORMGENTERATOR_STR))
 				{
@@ -91,7 +93,7 @@ static int Init(int x)
 					break;
 				}
 			}
-			for ( i = 0; i < MEASURE_MAX_NUM; i++)
+			for (i = 0; i < MEASURE_MAX_NUM; i++)
 			{
 				if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_WAVEFORMGENTERATOR_STR))
 				{
@@ -102,7 +104,7 @@ static int Init(int x)
 		}
 		else if (Instrument_Type_GPIB == pNode->pInstr->type)
 		{
-			for ( i = 0; i < DEVICE_MAX_NUM; i++)
+			for (i = 0; i < DEVICE_MAX_NUM; i++)
 			{
 				if (NULL != DevMgr.pDevArray[i] && 0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_LCRMETER_STR))
 				{
@@ -110,7 +112,7 @@ static int Init(int x)
 					break;
 				}
 			}
-			for ( i = 0; i < MEASURE_MAX_NUM; i++)
+			for (i = 0; i < MEASURE_MAX_NUM; i++)
 			{
 				if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_LCRMETER_STR))
 				{
@@ -142,15 +144,58 @@ static int Shutdown(int x)
 	InstrMgr.Shutdown(x);
 	DevMgr.Shutdown(x);
 	MeasureMgr.Shutdown(x);
+	SetMgr.Shutdown(x);
 	return 0;
 }
 
+static int LoadSettings(int x)
+{
+	int i;
+	for (i = 0; i < DEVICE_MAX_NUM; i++)
+	{
+		bool flag = false;
 
+		if ((SetMgr.signal & Signal_Picoammieter) && (0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_PICOAMMETER_STR)))
+		{
+			flag = true;
+		}
+		else if ((SetMgr.signal & Signal_WaveformGenerator) && (0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_WAVEFORMGENTERATOR_STR)))
+		{
+			flag = true;
+		}
+		else if ((SetMgr.signal & Signal_LCRMeter) && (0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_LCRMETER_STR)))
+		{
+			flag = true;
+		}
+		DevMgr.pDevArray[i]->isSignal = flag;
+	}
+
+	for (i = 0; i < MEASURE_MAX_NUM; i++)
+
+	{
+		bool flag = false;
+		if ((SetMgr.data & Data_Cp) && (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_LCRMETER_STR)))
+		{
+			flag = true;
+		}
+		else if ((SetMgr.data & Data_D) && (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_LCRMETER_STR)))
+		{
+			flag = true;
+		}
+		else if ((SetMgr.data & Data_Current) && (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_PICOAMMETER_STR)))
+		{
+			flag = true;
+		}
+		MeasureMgr.pMeasureArray[i]->isCollector = flag;
+	}
+
+	return 0;
+}
 
 static int Start(int x)
 {
 	System.isWorking = true;
-	DevMgr.Start(x);  
+	DevMgr.Start(x);
 	MeasureMgr.Start(x);
 
 	return 0;
@@ -170,6 +215,7 @@ EOMSystem System = {
 	.isWorking = false,
 	.Init = Init,
 	.Shutdown = Shutdown,
+	.LoadSettings = LoadSettings,
 	.Start = Start,
 	.Stop = Stop};
 

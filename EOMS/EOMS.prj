@@ -9,7 +9,7 @@ IVI Standard Root Dir = "/C/Program Files (x86)/IVI Foundation/IVI"
 VXIplug&play Framework Dir = "/C/Program Files (x86)/IVI Foundation/VISA/winnt"
 IVI Standard Root 64-bit Dir = "/C/Program Files/IVI Foundation/IVI"
 VXIplug&play Framework 64-bit Dir = "/C/Program Files/IVI Foundation/VISA/win64"
-Number of Files = 36
+Number of Files = 38
 Target Type = "Executable"
 Flags = 16
 Copied From Locked InstrDrv Directory = False
@@ -39,8 +39,11 @@ FolderEx 5 Parent = 1
 Folder 6 = "Source Files/queue"
 FolderEx 6 = "queue"
 FolderEx 6 Parent = 1
-Folder 7 = "Include Files"
-FolderEx 7 = "Include Files"
+Folder 7 = "Source Files/setting"
+FolderEx 7 = "setting"
+FolderEx 7 Parent = 1
+Folder 8 = "Include Files"
+FolderEx 8 = "Include Files"
 
 [File 0001]
 File Type = "User Interface Resource"
@@ -278,6 +281,19 @@ File Type = "CSource"
 Res Id = 19
 Path Is Rel = True
 Path Rel To = "Project"
+Path Rel Path = "setting/SettingMgr.c"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
+Exclude = False
+Compile Into Object File = False
+Project Flags = 0
+Folder = "Source Files/setting"
+Folder Id = 7
+
+[File 0020]
+File Type = "CSource"
+Res Id = 20
+Path Is Rel = True
+Path Rel To = "Project"
 Path Rel Path = "EOMS.c"
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
 Exclude = False
@@ -286,9 +302,9 @@ Project Flags = 0
 Folder = "Source Files"
 Folder Id = 1
 
-[File 0020]
+[File 0021]
 File Type = "CSource"
-Res Id = 20
+Res Id = 21
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "EOMSystem.c"
@@ -299,9 +315,9 @@ Project Flags = 0
 Folder = "Source Files"
 Folder Id = 1
 
-[File 0021]
+[File 0022]
 File Type = "Include"
-Res Id = 21
+Res Id = 22
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/Device.h"
@@ -309,11 +325,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0022]
+[File 0023]
 File Type = "Include"
-Res Id = 22
+Res Id = 23
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/DeviceMgr.h"
@@ -321,11 +337,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0023]
+[File 0024]
 File Type = "Include"
-Res Id = 23
+Res Id = 24
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "EOMS.h"
@@ -333,11 +349,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0024]
+[File 0025]
 File Type = "Include"
-Res Id = 24
+Res Id = 25
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "EOMSystem.h"
@@ -345,11 +361,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0025]
+[File 0026]
 File Type = "Include"
-Res Id = 25
+Res Id = 26
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "instruments/Instrument.h"
@@ -357,11 +373,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0026]
+[File 0027]
 File Type = "Include"
-Res Id = 26
+Res Id = 27
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "instruments/InstrumentList.h"
@@ -369,11 +385,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0027]
+[File 0028]
 File Type = "Include"
-Res Id = 27
+Res Id = 28
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "instruments/InstrumentMgr.h"
@@ -381,11 +397,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0028]
+[File 0029]
 File Type = "Include"
-Res Id = 28
+Res Id = 29
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/LCRMeter.h"
@@ -393,11 +409,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/LCRMeter.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0029]
+[File 0030]
 File Type = "Include"
-Res Id = 29
+Res Id = 30
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "measurement/LCRMeterMeasure.h"
@@ -405,11 +421,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/LCRMeterMeasure.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0030]
+[File 0031]
 File Type = "Include"
-Res Id = 30
+Res Id = 31
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "logger/log.h"
@@ -417,11 +433,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/logger/log.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0031]
+[File 0032]
 File Type = "Include"
-Res Id = 31
+Res Id = 32
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "measurement/Measurement.h"
@@ -429,11 +445,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/Measurement.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0032]
+[File 0033]
 File Type = "Include"
-Res Id = 32
+Res Id = 33
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "measurement/MeasurementMgr.h"
@@ -441,11 +457,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/MeasurementMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0033]
+[File 0034]
 File Type = "Include"
-Res Id = 33
+Res Id = 34
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/Picoammeter.h"
@@ -453,11 +469,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0034]
+[File 0035]
 File Type = "Include"
-Res Id = 34
+Res Id = 35
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "measurement/PicoammeterMeasure.h"
@@ -465,11 +481,11 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/PicoammeterMeasure.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0035]
+[File 0036]
 File Type = "Include"
-Res Id = 35
+Res Id = 36
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "queue/Queue.h"
@@ -477,11 +493,23 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/queue/Queue.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
-[File 0036]
+[File 0037]
 File Type = "Include"
-Res Id = 36
+Res Id = 37
+Path Is Rel = True
+Path Rel To = "Project"
+Path Rel Path = "setting/SettingMgr.h"
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.h"
+Exclude = False
+Project Flags = 0
+Folder = "Include Files"
+Folder Id = 8
+
+[File 0038]
+File Type = "Include"
+Res Id = 38
 Path Is Rel = True
 Path Rel To = "Project"
 Path Rel Path = "devices/WaveformGenerator.h"
@@ -489,7 +517,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/WaveformGenerator.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 7
+Folder Id = 8
 
 [Custom Build Configs]
 Num Custom Build Configs = 0
