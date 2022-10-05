@@ -67,7 +67,7 @@ static int Init(int x)
 		{
 			for (i = 0; i < DEVICE_MAX_NUM; i++)
 			{
-				if (NULL != DevMgr.pDevArray[i] && 0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_PICOAMMETER_STR))
+				if (NULL != DevMgr.pDevArray[i] && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_Picoammeter))
 				{
 					DevMgr.pDevArray[i]->pInstr = pNode->pInstr;
 					break;
@@ -75,7 +75,7 @@ static int Init(int x)
 			}
 			for (i = 0; i < MEASURE_MAX_NUM; i++)
 			{
-				if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_PICOAMMETER_STR))
+				if (NULL != MeasureMgr.pMeasureArray[i] && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter))
 				{
 					MeasureMgr.pMeasureArray[i]->pInstr = pNode->pInstr;
 					break;
@@ -87,7 +87,7 @@ static int Init(int x)
 
 			for (i = 0; i < DEVICE_MAX_NUM; i++)
 			{
-				if (NULL != DevMgr.pDevArray[i] && 0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_WAVEFORMGENTERATOR_STR))
+				if (NULL != DevMgr.pDevArray[i] && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_WaveformGenerator))
 				{
 					DevMgr.pDevArray[i]->pInstr = pNode->pInstr;
 					break;
@@ -95,7 +95,7 @@ static int Init(int x)
 			}
 			for (i = 0; i < MEASURE_MAX_NUM; i++)
 			{
-				if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_WAVEFORMGENTERATOR_STR))
+				if (NULL != MeasureMgr.pMeasureArray[i] && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_WaveformGenerator))
 				{
 					MeasureMgr.pMeasureArray[i]->pInstr = pNode->pInstr;
 					break;
@@ -106,7 +106,7 @@ static int Init(int x)
 		{
 			for (i = 0; i < DEVICE_MAX_NUM; i++)
 			{
-				if (NULL != DevMgr.pDevArray[i] && 0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_LCRMETER_STR))
+				if (NULL != DevMgr.pDevArray[i] && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_LCRMeter))
 				{
 					DevMgr.pDevArray[i]->pInstr = pNode->pInstr;
 					break;
@@ -114,7 +114,7 @@ static int Init(int x)
 			}
 			for (i = 0; i < MEASURE_MAX_NUM; i++)
 			{
-				if (NULL != MeasureMgr.pMeasureArray[i] && 0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_LCRMETER_STR))
+				if (NULL != MeasureMgr.pMeasureArray[i] && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter))
 				{
 					MeasureMgr.pMeasureArray[i]->pInstr = pNode->pInstr;
 					break;
@@ -153,40 +153,46 @@ static int LoadSettings(int x)
 	int i;
 	for (i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		bool flag = false;
+		if (NULL != DevMgr.pDevArray[i])
+		{
+			bool flag = false;
 
-		if ((SetMgr.signal & Signal_Picoammieter) && (0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_PICOAMMETER_STR)))
-		{
-			flag = true;
+			if ((SetMgr.signal & Signal_Picoammieter) && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_Picoammeter))
+			{
+				flag = true;
+			}
+			else if ((SetMgr.signal & Signal_WaveformGenerator) && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_WaveformGenerator))
+			{
+				flag = true;
+			}
+			else if ((SetMgr.signal & Signal_LCRMeter) && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_LCRMeter))
+			{
+				flag = true;
+			}
+			DevMgr.pDevArray[i]->isSignal = flag;
 		}
-		else if ((SetMgr.signal & Signal_WaveformGenerator) && (0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_WAVEFORMGENTERATOR_STR)))
-		{
-			flag = true;
-		}
-		else if ((SetMgr.signal & Signal_LCRMeter) && (0 == strcmp(DevMgr.pDevArray[i]->name, DEVICE_LCRMETER_STR)))
-		{
-			flag = true;
-		}
-		DevMgr.pDevArray[i]->isSignal = flag;
 	}
 
 	for (i = 0; i < MEASURE_MAX_NUM; i++)
 
 	{
-		bool flag = false;
-		if ((SetMgr.data & Data_Cp) && (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_LCRMETER_STR)))
+		if (NULL != MeasureMgr.pMeasureArray[i])
 		{
-			flag = true;
+			bool flag = false;
+			if ((SetMgr.data & Data_Cp) && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter))
+			{
+				flag = true;
+			}
+			else if ((SetMgr.data & Data_D) && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter))
+			{
+				flag = true;
+			}
+			else if ((SetMgr.data & Data_Current) && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter))
+			{
+				flag = true;
+			}
+			MeasureMgr.pMeasureArray[i]->isCollector = flag;
 		}
-		else if ((SetMgr.data & Data_D) && (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_LCRMETER_STR)))
-		{
-			flag = true;
-		}
-		else if ((SetMgr.data & Data_Current) && (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, DEVICE_PICOAMMETER_STR)))
-		{
-			flag = true;
-		}
-		MeasureMgr.pMeasureArray[i]->isCollector = flag;
 	}
 
 	return 0;

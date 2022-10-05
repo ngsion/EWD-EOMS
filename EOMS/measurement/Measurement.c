@@ -50,7 +50,7 @@ void MeasurementInit(Measurement * pDev)
 	{
 		return;
 	}
-	memcpy(pDev->name,"Measurement",sizeof("Measurement"));
+	pDev->instrumentFlag = Instrument_Unknown;
     pDev->pInstr = NULL;
 	pDev->jobId = 0;
 	pDev->Start = Start;
@@ -62,7 +62,7 @@ void MeasurementInit(Measurement * pDev)
 }
 void MeasurementDeinit(Measurement * pDev)
 {
-	memcpy(pDev->name,"Measurement",sizeof("Measurement"));
+	pDev->instrumentFlag = Instrument_Unknown; 
 	pDev->pInstr = NULL;
 	QueueDelloc(pDev->pDataQueue);
 }

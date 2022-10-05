@@ -118,16 +118,8 @@ int CVICALLBACK OnIDBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 		{
-        Queue* qu = QueueAllocInit();
-		qu->Push(qu,0.4);
-		qu->Push(qu,0.5);
-		
-		LOG_INFO("queeu size %d",qu->size);
-		double data;
-		qu->Pop(qu,&data);
-		   LOG_INFO("queeu size %d , data is %f",qu->size,data);
+        System.LoadSettings(0);
 		}
-		
 		break;
 	}
 	return 0;
@@ -144,7 +136,7 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 		{
 			if (NULL != MeasureMgr.pMeasureArray[i])
 			{
-				if (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, kDEVICE_LCRMETER_STR))
+				if (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter)
 				{
 					double oneData = 0;
 					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
@@ -153,7 +145,7 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 						PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_TOP, oneData);
 					}
 				}
-				else if (0 == strcmp(MeasureMgr.pMeasureArray[i]->name, kDEVICE_PICOAMMETER_STR))
+				else if (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter)
 				{
 					double oneData = 0;
 					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))

@@ -17,9 +17,9 @@
 #define  PANEL_COMMANDBUTTON              2       /* control type: command, callback function: onOKBtb */
 #define  PANEL_COMMANDBUTTON_2            3       /* control type: command, callback function: onStopBtn */
 #define  PANEL_COMMANDBUTTON_ID           4       /* control type: command, callback function: OnIDBtn */
-#define  PANEL_STRIPCHART_TOP             5       /* control type: strip, callback function: (none) */
+#define  PANEL_STRIPCHART_BOTTOM          5       /* control type: strip, callback function: (none) */
 #define  PANEL_TIMER                      6       /* control type: timer, callback function: UpdateTimer */
-#define  PANEL_STRIPCHART_BOTTOM          7       /* control type: strip, callback function: (none) */
+#define  PANEL_STRIPCHART_TOP             7       /* control type: strip, callback function: (none) */
 
 
      /* Control Arrays: */

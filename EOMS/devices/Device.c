@@ -88,7 +88,7 @@ void DeviceInit(Device *pDev)
 	{
 		return;
 	}
-	memcpy(pDev->name, "Device", sizeof("Device"));
+	pDev->instrumentFlag = 0;
 	pDev->pInstr = NULL;
 	pDev->isSignal = false;
 	pDev->Start = Start;
@@ -99,6 +99,6 @@ void DeviceInit(Device *pDev)
 }
 void DeviceDeinit(Device *pDev)
 {
-	memcpy(pDev->name, "Device", sizeof("Device"));
+	pDev->instrumentFlag = 0;
 	pDev->pInstr = NULL;
 }

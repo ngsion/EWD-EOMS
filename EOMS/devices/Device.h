@@ -19,30 +19,30 @@
 // Include files
 
 #include "cvidef.h"
-#include "../instruments/Instrument.h"
+#include "Instrument.h"
 #include <stdbool.h>
 //==============================================================================
 // Constants
-#define DEVICE_NAME_LENGTH 64
 #define DEVICE_TITLE_LENGTH 64
-#define DEVICE_PICOAMMETER_STR "Picoammeter"
-#define DEVICE_WAVEFORMGENTERATOR_STR "WaveformGenerator"
-#define DEVICE_LCRMETER_STR "LCRMeter"
 
 
 //==============================================================================
 // Types
 typedef struct Device
 {
-    char  name[DEVICE_NAME_LENGTH];
+    unsigned int instrumentFlag;
     char  title[DEVICE_TITLE_LENGTH]; ///chinese name
     Instrument * pInstr;
     bool isSignal;
+
+
+
     int (*Reset)(struct Device * pDev); 
     int (*Start)(struct Device * pDev);
     int (*Stop)(struct Device * pDev);
     int (*QueryID)(struct Device * pDev);
     int (*DoWithCommand)(struct Device * pDev, void * inData, void * outData);
+    
 }Device;
 
 

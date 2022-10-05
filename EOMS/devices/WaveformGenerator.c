@@ -52,7 +52,7 @@ static int Start(Device *pDev)
 		return -1;
 	}
 	ViStatus status = VI_SUCCESS; 
-		WaveformGenerator *pMeter = (WaveformGenerator *)pDev; 
+	WaveformGenerator *pMeter = (WaveformGenerator *)pDev; 
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
         LOG_INFO("WaveformGenerator starts");
@@ -62,7 +62,7 @@ static int Start(Device *pDev)
 			viPrintf(session,"SOURce1:FUNCtion SQU\n");
 			//viPrintf(session,"SOURce1:FUNCtion:SQU:DCYC +20.0\n");
 			viPrintf(session,"SOURce1:FREQuency 1\n");
-			viPrintf(session,"SOURce1:VOLTage:HIGH +6.0\n");
+			viPrintf(session,"SOURce1:VOLTage:HIGH +3.0\n");
 			viPrintf(session,"SOURce1:VOLTage:LOW 0.0\n"); 
 			viPrintf(session,"SOURce1:VOLTage:OFFSet 0\n");
 		//viPrintf(session,"SOURce1:VOLTage:PHASe 90\n");
@@ -72,8 +72,8 @@ static int Start(Device *pDev)
 		    viPrintf(session,"SOURce2:FUNCtion DC\n"); 
 		 	//viPrintf(session,"SOURce2:FREQuency +5\n");
 			//viPrintf(session,"SOURce2:VOLTage 4\n");
-		 	viPrintf(session,"SOURce2:VOLTage:OFFSet -3\n");
-			viPrintf(session, "OUTPut2 ON\n");
+		 	viPrintf(session,"SOURce2:VOLTage:OFFSet -1.5\n");
+			viPrintf(session,"OUTPut2 ON\n");
 	}
 	else
 	{
@@ -118,14 +118,14 @@ void WaveformGeneratorInit(WaveformGenerator *pDev)
 		return;
 	}
 	DeviceInit(&pDev->device);
-	memcpy(pDev->device.name, DEVICE_WAVEFORMGENTERATOR_STR, sizeof(DEVICE_WAVEFORMGENTERATOR_STR));
+    pDev->device.instrumentFlag = Instrument_WaveformGenerator;  
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
 }
 void WaveformGeneratorDeinit(WaveformGenerator *pDev)
 {
-	memcpy(pDev->device.name, DEVICE_WAVEFORMGENTERATOR_STR, sizeof(DEVICE_WAVEFORMGENTERATOR_STR));
+	pDev->device.instrumentFlag = Instrument_WaveformGenerator;    
 	DeviceDeinit(&pDev->device);
 }
 

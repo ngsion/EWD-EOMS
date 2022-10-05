@@ -101,8 +101,8 @@ static int sFindResource()
 
 static int Init(int x)
 {
-	sFindResource(x);
-	return 0;
+	
+	return sFindResource(x);
 }
 static int Shutdown(int x)
 {

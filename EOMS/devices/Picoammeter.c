@@ -39,8 +39,9 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 		ViSession session = pMeter->device.pInstr->session;
 
 		float *pVolt = (float *)inData;
-		LOG_INFO("before viPrintf");
-		status = viPrintf(session, ":SOUR1:VOLT %f\n", *pVolt);
+		LOG_INFO("before viPrintf %f",*pVolt);
+		status = viPrintf(session, ":SOUR1:VOLT %0.2f\n", *pVolt);
+		
 		LOG_INFO("after viPrintf");
 	}
 	else
@@ -50,6 +51,28 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 
 	return 0;
 }
+
+static int CVICALLBACK ThreadFunction(void *functionData)
+{
+    Picoammeter *pMeter = (Picoammeter *)functionData;
+	int index = 0;
+	for( index = 0; index <= 15; index++)
+	{
+		float volt = index *  2;
+		pMeter->device.DoWithCommand(pMeter,&volt,NULL);
+		Delay(1);
+	}
+	for( index = 0; index <= 15; index++)
+	{
+		float volt = 30 - index *  2;
+		pMeter->device.DoWithCommand(pMeter,&volt,NULL);
+		Delay(1);
+	}
+	LOG_INFO("Picoammeter ThreadFunction end");
+	pMeter->device.Stop(pMeter);
+	return 0;
+}
+
 
 static int Start(Device *pDev)
 {
@@ -65,20 +88,24 @@ static int Start(Device *pDev)
 		LOG_INFO("Picoammeter starts");
 		
 		ViSession session = pMeter->device.pInstr->session;
-    //    status = viPrintf(session, ":SOUR1:VOLT %f\n", 15.0);
-	//	 status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
-	//	 status = viPrintf(session, ":SOUR1:VOLT:STOP 10\n");
-	//	 status = viPrintf(session, ":SOUR1:VOLT:STEP 1\n");
-	//	 status = viPrintf(session, ":SOUR1:VOLT:MODE SWE\n"); 
-	//	 status = viPrintf(session, ":SOUR1:VOLT:MODE LIST\n");
-	//	 status = viPrintf(session, ":SOUR1:LIST:RANG AUTO\n");
-	//	  status = viPrintf(session, ":SOUR1:LIST:VOLT 0,2\n");
-	//	 status = viPrintf(session, ":SOUR1:SWE:RANG AUTO\n");
-	//	 status = viPrintf(session, ":SOUR1:SWE:SPAC LIN\n");
-	//	 status = viPrintf(session, ":TRIG:COUN 10\n");
-	//	status = viPrintf(session, ":TRIG:COUN 2\n");
-	  //   status = viPrintf(session, ":SOUR1:DELay 1\n");
+        status = viPrintf(session, ":SOUR1:VOLT 0\n");
+		// status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
+		// status = viPrintf(session, ":SOUR1:VOLT:STOP 10\n");
+		// status = viPrintf(session, ":SOUR1:VOLT:STEP 1\n");
+		// status = viPrintf(session, ":SOUR1:VOLT:MODE SWE\n"); 
+		// status = viPrintf(session, ":SOUR1:VOLT:MODE LIST\n");
+		//  status = viPrintf(session, ":SOUR1:LIST:VOLT 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,30,28,26,24,22,20,18,16,14,12,10,8,6,4,2,0\n");
+		// status = viPrintf(session, ":SOUR1:SWE:RANG AUTO\n");
+		// status = viPrintf(session, ":SOUR1:SWE:SPAC LIN\n");
+		// status = viPrintf(session, ":TRIG:COUN 10\n");
+	 	//status = viPrintf(session, ":TRIG:COUN 32\n");
+	    // status = viPrintf(session, ":SOUR1:DELay 0.1\n");
+		
+		status = viPrintf(session, ":SOUR1:VOLT:RANG:AUTO ON\n");  
 		status = viPrintf(session, ":OUTP1 ON\n");
+
+		CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,ThreadFunction, pDev, NULL);
+				
 	}
 	else
 	{
@@ -146,7 +173,7 @@ void PicoammeterInit(Picoammeter *pDev)
 		return;
 	}
 	DeviceInit(&pDev->device);
-	memcpy(pDev->device.name, DEVICE_PICOAMMETER_STR, sizeof(DEVICE_PICOAMMETER_STR));
+	pDev->device.instrumentFlag = Instrument_Picoammeter; 
 	pDev->SetAttribute = SetAttribute;
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
@@ -155,6 +182,6 @@ void PicoammeterInit(Picoammeter *pDev)
 }
 void PicoammeterDeinit(Picoammeter *pDev)
 {
-	memcpy(pDev->device.name, DEVICE_PICOAMMETER_STR, sizeof(DEVICE_PICOAMMETER_STR));
+	pDev->device.instrumentFlag = Instrument_Picoammeter;   
 	DeviceDeinit(&pDev->device);
 }

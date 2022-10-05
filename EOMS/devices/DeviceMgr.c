@@ -58,7 +58,7 @@ static int AfterInit(int x)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-			if (0 == strcmp(defaultDeviceArray[i]->name, DEVICE_PICOAMMETER_STR))
+			if (defaultDeviceArray[i]->instrumentFlag == Instrument_Picoammeter)
 			{
 				Picoammeter *pMeter = defaultDeviceArray[i];
 				pMeter->SetAttribute(pMeter);
@@ -73,7 +73,8 @@ static int AfterInit(int x)
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
- 	Delay(3);
+ 	Delay(2);
+
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
@@ -83,27 +84,11 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			LOG_INFO("after start");
 		}
 	}
-	int index = 0;
-	for( index = 0; index <= 15; index++)
-	{
-		float volt = index *  2;
-		defaultDeviceArray[0]->DoWithCommand(defaultDeviceArray[0],&volt,NULL);
-		Delay(0.5);
-	}
-	for( index = 0; index <= 15; index++)
-	{
-		float volt = 30 - index *  2;
-		defaultDeviceArray[0]->DoWithCommand(defaultDeviceArray[0],&volt,NULL);
-		Delay(0.5);
-	}
 	
-		 /* Wait for the thread functions to finish executing */
-	 CmtWaitForThreadPoolFunctionCompletion(DEFAULT_THREAD_POOL_HANDLE,threadId,0);
-	 /* Release thread functions */
-	 CmtReleaseThreadPoolFunctionID(DEFAULT_THREAD_POOL_HANDLE, threadId);
-
 	return 0;
 }
+
+
 
 static int Start(int x)
 {
@@ -115,10 +100,8 @@ static int Start(int x)
 		}
 	}
 
-
 	//ThreadFunction(NULL);
-	 CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,ThreadFunction, NULL,&threadId);
-
+	 CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,ThreadFunction, NULL,NULL);
 
 	return 0;
 }

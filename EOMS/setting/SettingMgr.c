@@ -45,6 +45,6 @@ static int Shutdown(int x)
 // Global functions
 SettingMgr SetMgr = {
 	.Init = Init,
-	.signal = Signal_Picoammieter,
-	.data = Data_Current,
+	.signal = Signal_WaveformGenerator,
+	.data = Data_Cp | Data_D | Data_Current,
 	.Shutdown = Shutdown};

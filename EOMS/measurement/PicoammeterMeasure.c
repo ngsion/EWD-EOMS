@@ -92,7 +92,7 @@ static int Start(Measurement *pDev)
 
 		status = viPrintf(session, ":FORM:ELEM CURR1\n");
 		//status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
-	//	status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
+		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
       //  status = viPrintf(session, ":CONFIgure:CURRent:DC\n");
 		// status = viPrintf(session, ":SYST:AZER OFF\n");
 		// status = viPrintf(session, ":SENS1:MED OFF\n");
@@ -129,7 +129,7 @@ void PicoammeterMeasureInit(PicoammeterMeasure *pDev)
 		return;
 	}
 	MeasurementInit(&pDev->measure);
-	memcpy(pDev->measure.name, kDEVICE_PICOAMMETER_STR, sizeof(kDEVICE_PICOAMMETER_STR));
+	pDev->measure.instrumentFlag = Instrument_Picoammeter;   
 	pDev->measure.Start = Start;
 	pDev->measure.Stop = Stop;
 	pDev->measure.DoMeasureWithCommand = DoMeasureWithCommand;

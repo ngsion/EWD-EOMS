@@ -25,10 +25,7 @@
 
 //==============================================================================
 // Constants
-#define kDEVICE_NAME_LENGTH 64
-#define kDEVICE_PICOAMMETER_STR "Picoammeter"
-#define kDEVICE_WAVEFORMGENTERATOR_STR "WaveformGenerator"
-#define kDEVICE_LCRMETER_STR "LCRMeter"
+
 
 
 //==============================================================================
@@ -39,11 +36,9 @@ typedef struct Measurement
     Queue * pDataQueue;
     bool isCollector;
     int  jobId;
-    char  name[kDEVICE_NAME_LENGTH];
+    unsigned int instrumentFlag;
     
-
-
-    
+ 
 
 
     int (*Start)(struct Measurement * pDev);

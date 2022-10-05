@@ -30,6 +30,14 @@ extern "C"
 
     //==============================================================================
     // Types
+
+typedef enum{
+    Instrument_Unknown = 0,
+    Instrument_Picoammeter = 1,
+    Instrument_LCRMeter,
+    Instrument_WaveformGenerator
+};
+
     typedef enum
     {
         Instrument_Status_Disconnected = 0,
@@ -57,8 +65,9 @@ extern "C"
         uint32_t resouceMgr;
         uint32_t session;
         char address[INSTRUMENT_ADDRESS_LENGTH];
-        char id[INSTRUMENT_ID_LENGTH];
+        char identifier[INSTRUMENT_ID_LENGTH];
 
+  
         int (*Open)(struct Instrument *pInstr);
         int (*QueryID)(struct Instrument *pInstr);
         int (*Close)(struct Instrument *pInstr);

@@ -26,7 +26,8 @@ typedef enum{
     Signal_None = 0,
     Signal_Picoammieter = 1 << 0,
     Signal_WaveformGenerator= 1 << 1,
-    Signal_LCRMeter= 1 << 2
+    Signal_LCRMeter= 1 << 2,
+    Signal_All = Signal_Picoammieter | Signal_WaveformGenerator | Signal_LCRMeter
 };
 
 
@@ -34,7 +35,8 @@ typedef enum{
     Data_None = 0,
     Data_Current = 1 << 0,
     Data_Cp = 1 << 1,
-    Data_D = 1 << 2
+    Data_D = 1 << 2,
+    Data_ALL = Data_Current | Data_Cp | Data_D
 };
 
 //==============================================================================

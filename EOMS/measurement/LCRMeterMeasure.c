@@ -135,12 +135,13 @@ void LCRMeterMeasureInit(LCRMeterMeasure *pDev)
 		return;
 	}
 	MeasurementInit(&pDev->measure);
-	memcpy(pDev->measure.name, kDEVICE_LCRMETER_STR, sizeof(kDEVICE_LCRMETER_STR));
+	pDev->measure.instrumentFlag = Instrument_LCRMeter;
 	pDev->measure.Start = Start;
 	pDev->measure.Stop = Stop;
 	pDev->measure.DoMeasureWithCommand = DoMeasureWithCommand;
 }
 void LCRMeterMeasureDeinit(LCRMeterMeasure *pDev)
 {
+	pDev->measure.instrumentFlag = Instrument_LCRMeter;
 	MeasurementDeinit(&pDev->measure);
 }

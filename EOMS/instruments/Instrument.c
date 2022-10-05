@@ -101,7 +101,7 @@ int QueryID(struct Instrument *pInstr)
 	else
 	{
 		LOG_INFO("instrument %s id is: %*s", pInstr->address, retCount, buffer);
-		memcpy(pInstr->id, buffer, retCount);
+		memcpy(pInstr->identifier, buffer, retCount);
 	}
 
 	return 0;
@@ -136,7 +136,7 @@ Instrument *InstrumentAllocInit()
 		pInstr->session = 0;
 		pInstr->resouceMgr = 0;
 		memset(pInstr->address, 0, INSTRUMENT_ADDRESS_LENGTH);
-		memset(pInstr->id, 0, INSTRUMENT_ID_LENGTH);
+		memset(pInstr->identifier, 0, INSTRUMENT_ID_LENGTH);
 		pInstr->Open = Open;
 		pInstr->QueryID = QueryID;
 		pInstr->Close = Close;

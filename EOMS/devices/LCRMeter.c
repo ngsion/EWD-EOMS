@@ -52,15 +52,33 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 	LCRMeter *pMeter = (LCRMeter *)pDev;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-
+        float *pVolt = (float *)inData;
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
+		status = viPrintf(session, "BIAS:VOLT %0.2f\n",*pVolt);
 	}
 	else
 	{
 		LOG_ERROR("LCRMeter DoWithCommand failed null %d ", NULL == pMeter->device.pInstr);
 	}
 
+	return 0;
+}
+
+
+static int CVICALLBACK ThreadFunction(void *functionData)
+{
+    LCRMeter *pMeter = (LCRMeter *)functionData;
+	int index = 0;
+	for( index = 0; index <= 15; index++)
+	{
+		float volt = index *  2;
+		pMeter->device.DoWithCommand(pMeter,&volt,NULL);
+		Delay(0.5);
+	}
+
+	LOG_INFO("LCRMeter ThreadFunction end");
+	pMeter->device.Stop(pMeter);
 	return 0;
 }
 
@@ -81,8 +99,10 @@ static int Start(Device *pDev)
 		status = viPrintf(session, "FUNC:IMP CPD\n");
 		status = viPrintf(session, "FREQ 1kHz\n");
 		status = viPrintf(session, "VOLT 500mV\n");
-		status = viPrintf(session, "BIAS:VOLT 25\n");
+		status = viPrintf(session, "BIAS:VOLT 0\n");
 		status = viPrintf(session, "BIAS:STATE 1\n");
+
+		CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,ThreadFunction, pDev, NULL);
 	}
 	else
 	{
@@ -92,7 +112,8 @@ static int Start(Device *pDev)
 	{
 		LOG_ERROR("status is %d.", status);
 	}
-
+ 
+   
 	return 0;
 }
 
@@ -161,6 +182,7 @@ static int Stop(Device *pDev)
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 		status = viPrintf(session, "BIAS:STATE 0\n");
+		
 	}
 	else
 	{
@@ -210,7 +232,7 @@ void LCRMeterInit(LCRMeter *pDev)
 		return;
 	}
 	DeviceInit(&pDev->device);
-	memcpy(pDev->device.name, DEVICE_LCRMETER_STR, sizeof(DEVICE_LCRMETER_STR));
+	pDev->device.instrumentFlag = Instrument_LCRMeter; 
 	pDev->SetAttribute = SetAttribute;
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
@@ -220,6 +242,6 @@ void LCRMeterInit(LCRMeter *pDev)
 }
 void LCRMeterDeinit(LCRMeter *pDev)
 {
-	memcpy(pDev->device.name, DEVICE_LCRMETER_STR, sizeof(DEVICE_LCRMETER_STR));
+	pDev->device.instrumentFlag = Instrument_LCRMeter; 
 	DeviceDeinit(&pDev->device);
 }
