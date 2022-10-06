@@ -10,7 +10,7 @@
 
 //==============================================================================
 // Include files
-
+#include "DataSaveMgr.h"   
 #include <utility.h>
 #include "EOMSystem.h"
 #include "logger.h"
@@ -18,6 +18,7 @@
 #include <assert.h>
 #include <string.h>
 #include "SettingMgr.h"
+
 
 //==============================================================================
 // Constants
@@ -203,7 +204,7 @@ static int Start(int x)
 	System.isWorking = true;
 	DevMgr.Start(x);
 	MeasureMgr.Start(x);
-
+    DataMgr.Start(x);
 	return 0;
 }
 static int Stop(int x)
@@ -211,7 +212,7 @@ static int Stop(int x)
 	System.isWorking = false;
 	MeasureMgr.Stop(x);
 	DevMgr.Stop(x);
-
+    DataMgr.Stop(x);
 	return 0;
 }
 

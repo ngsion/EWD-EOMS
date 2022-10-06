@@ -41,8 +41,8 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 		float *pVolt = (float *)inData;
 		LOG_INFO("before viPrintf %f",*pVolt);
 		status = viPrintf(session, ":SOUR1:VOLT %0.2f\n", *pVolt);
-		
 		LOG_INFO("after viPrintf");
+		
 	}
 	else
 	{
