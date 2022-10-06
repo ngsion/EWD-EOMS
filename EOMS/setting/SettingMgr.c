@@ -46,5 +46,5 @@ static int Shutdown(int x)
 SettingMgr SetMgr = {
 	.Init = Init,
 	.signal = Signal_WaveformGenerator,
-	.data = Data_Cp | Data_D | Data_Current,
+	.data = Data_Current,
 	.Shutdown = Shutdown};

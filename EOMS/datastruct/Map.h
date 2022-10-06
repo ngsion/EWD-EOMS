@@ -28,15 +28,16 @@
 typedef struct MapNode
 {
     char * key;
-    int value;
+    unsigned int cvalue;
+    unsigned int rvalue;
 }MapNode;
 
 
 typedef struct Map
 {
     MapNode array[MAP_NODE_LENGTH]; 
-    int (*SetMap)(struct Map * map, char * key, int value);
-    int (*GetValue)(struct Map * map, char * key);
+    int (*SetMap)(struct Map * map, char * key, unsigned int cvalue, unsigned int rvalue);
+    int (*GetValue)(struct Map * map, char * key, unsigned int * cvalue, unsigned int * rvalue);
     int (*RemoveKey)(struct Map * map, char * key);
     void (*PrintMap)(struct Map * map);
 }Map;

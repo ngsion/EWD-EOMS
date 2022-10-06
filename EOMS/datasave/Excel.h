@@ -23,7 +23,8 @@ extern "C"
 #include "cvidef.h"
 #include "Map.h"
 
-
+#define COLUMN_START_POS 1
+#define ROW_START_POS 1
     // Types
 
     typedef struct Excel
@@ -33,10 +34,12 @@ extern "C"
         CAObjHandle worksheetHandle;
 
         Map * columnMap;
-        Map * rowMap;
+        unsigned int currentColumnMax;
+
 
 		char ExcelFileName[MAX_PATHNAME_LEN];   
         int (*SetCellInt)(struct Excel *excel, char *key, int value);
+        int (*SetCellDouble)(struct Excel *excel, char *key, double value);
         int (*SetCellStr)(struct Excel *excel, char *key, char *value);
         int (*Save)(struct Excel *excel);
     } Excel;

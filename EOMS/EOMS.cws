@@ -20,8 +20,6 @@ Project 0001 Folder Source Files/measurement Collapsed = True
 Project 0001 FolderId 4 Collapsed = True
 Project 0001 Folder Source Files/clogger Collapsed = True
 Project 0001 FolderId 5 Collapsed = True
-Project 0001 Folder Source Files/setting Collapsed = True
-Project 0001 FolderId 6 Collapsed = True
 Drag Bar Left = 277
 Window Top = 54
 Window Left = 280
@@ -40,7 +38,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 2
+Number of Opened Files = 6
 Window Confinement Region Enabled = True
 MainColumnWidth = 260
 FileDateColumnWidth = 70
@@ -69,19 +67,20 @@ Disk Date = 3747786628
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,138,138,138,23,25,25,0,0,0,0,0,0,0,0,0,85,0,95,13,263,541,1,0,"
+Window Z-Order = 5
+Source Window State = "1,138,138,138,23,25,25,0,0,80,0,0,0,0,0,20,85,0,107,168,263,541,1,0,"
 Breakpoint 0001 = "84,0,enabled,"
 Tracepoint 0001 = "0,0,85,1,"
 
 [File 0003]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/Excel.c"
 File Type = "CSource"
-Disk Date = 3747893331
+Disk Date = 3747907081
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
 Window Z-Order = 1
-Source Window State = "1,91,91,91,15,20,20,0,0,200,0,0,0,0,0,41,32,0,42,37,215,541,1,0,"
+Source Window State = "1,32,32,32,0,31,31,0,0,200,0,0,0,0,0,32,56,0,72,8,215,541,1,0,"
 
 [File 0004]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
@@ -237,20 +236,22 @@ Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 [File 0021]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
 File Type = "CSource"
-Disk Date = 3747882470
+Disk Date = 3747905855
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,20,20,323,421,1,0,"
+Window Z-Order = 6
+Source Window State = "1,48,48,48,12,31,31,0,0,60,0,0,0,0,0,25,19,0,47,44,323,421,1,0,"
 
 [File 0022]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Map.c"
 File Type = "CSource"
-Disk Date = 3747886606
+Disk Date = 3747905782
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,157,157,157,8,12,12,0,0,0,0,0,0,0,0,0,97,0,115,48,323,541,1,0,"
+Window Z-Order = 3
+Source Window State = "1,157,157,157,8,12,12,0,0,80,0,0,0,0,0,25,67,0,84,16,323,541,1,0,"
 
 [File 0023]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Queue.c"
@@ -287,7 +288,7 @@ Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 [File 0027]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/Excel.h"
 File Type = "Include"
-Disk Date = 3747891203
+Disk Date = 3747904469
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
@@ -339,11 +340,12 @@ Source Window State = "1,41,41,41,27,45,45,0,0,0,0,0,0,0,0,0,10,0,41,42,323,547,
 [File 0033]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Map.h"
 File Type = "Include"
-Disk Date = 3747885862
+Disk Date = 3747903815
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,26,49,26,0,30,0,0,3,0,0,0,0,0,0,0,17,0,49,30,323,541,1,0,"
+Window Z-Order = 4
+Source Window State = "1,39,39,39,10,18,18,0,3,80,0,0,0,0,0,25,17,0,39,10,323,541,1,0,"
 
 [File 0034]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/Measurement.h"
@@ -404,7 +406,11 @@ Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
 [Tab Order]
 Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMS.c"
-Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/Excel.c"
+Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Map.c"
+Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
+Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
+Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Map.h"
+Tab 0006 = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/Excel.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

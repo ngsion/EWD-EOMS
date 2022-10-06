@@ -34,7 +34,8 @@ char * strdup(const char *s)
 
 //==============================================================================
 // Static functions
-static int SetMap(Map *map, char *key, int value)
+
+static int SetMap(Map *map, char *key, unsigned int cvalue, unsigned int rvalue)
 {
 	int index = 0;
 	bool added = false;
@@ -43,7 +44,8 @@ static int SetMap(Map *map, char *key, int value)
 	{
 		if (NULL != map->array[index].key && 0 == strcmp(map->array[index].key, key))
 		{
-			map->array[index].value = value;
+			map->array[index].cvalue = cvalue;
+			map->array[index].rvalue = rvalue;
 			added = true;
 			break;
 		}
@@ -56,7 +58,8 @@ static int SetMap(Map *map, char *key, int value)
 			if (NULL == map->array[index].key)
 			{
 				map->array[index].key = strdup(key);
-				map->array[index].value = value;
+				map->array[index].cvalue = cvalue;
+			    map->array[index].rvalue = rvalue;
 				added = true;
 				break;
 			}
@@ -68,14 +71,16 @@ static int SetMap(Map *map, char *key, int value)
 	return -1;
 }
 
-static int GetValue(Map *map, char *key)
+static int GetValue(Map *map, char *key, unsigned int * cvalue, unsigned int * rvalue)
 {
 	int value = -1;
 	for (int index = 0; index < MAP_NODE_LENGTH; index++)
 	{
 		if (NULL != map->array[index].key && 0 == strcmp(map->array[index].key, key))
 		{
-			value = map->array[index].value;
+			*cvalue = map->array[index].cvalue;
+			*rvalue = map->array[index].rvalue;
+			value = 0;
 			break;
 		}
 	}
@@ -102,7 +107,7 @@ static void PrintMap(Map *map)
 	{
 		if (NULL != map->array[index].key)
 		{
-			printf("[%d]: %s -> %d\n", index, map->array[index].key, map->array[index].value);
+			printf("[%d]: %s -> %d , %d\n", index, map->array[index].key, map->array[index].cvalue, map->array[index].rvalue);
 		}
 	}
 }
@@ -121,7 +126,8 @@ Map *MapAllocInit()
 	for (int index = 0; index < MAP_NODE_LENGTH; index++)
 	{
 		map->array[index].key = NULL;
-		map->array[index].value = 0;
+		map->array[index].cvalue = 0;
+		map->array[index].rvalue = 0;
 	}
 	return map;
 }
@@ -147,14 +153,16 @@ void TestMap()
 	Map * map = MapAllocInit();
 	if (map)
 	{
-		map->SetMap(map,"hello",2);
-		map->SetMap(map,"abc",3);
-		map->SetMap(map,"a",3);
+		map->SetMap(map,"hello",2,2);
+		map->SetMap(map,"abc",3,4);
+		map->SetMap(map,"a",3,4);
 		map->PrintMap(map);
 		map->RemoveKey(map,"a");
 		map->PrintMap(map);
-		printf("get value %d",map->GetValue(map,"ab"));
-		map->SetMap(map,"abc",8);
+		unsigned int column = 0;
+		unsigned int row = 0;
+		printf("get value %d",map->GetValue(map,"ab",column,row));
+		map->SetMap(map,"abc",8,5);
 		map->PrintMap(map);   
 		MapDelloc(map);
 	}
