@@ -10,7 +10,7 @@
 
 //==============================================================================
 // Include files
-
+#include "Excel.h"   
 #include <ansi_c.h>
 #include <cvirte.h>
 #include <userint.h>
@@ -18,6 +18,8 @@
 #include "toolbox.h"
 #include "EOMSystem.h"
 #include "Queue.h"
+#include "Map.h"
+
 
 //==============================================================================
 // Constants
@@ -118,7 +120,8 @@ int CVICALLBACK OnIDBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 		{
-        System.LoadSettings(0);
+            System.LoadSettings(0);
+			TestExel();
 		}
 		break;
 	}

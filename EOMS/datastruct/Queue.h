@@ -53,6 +53,8 @@ extern "C"
     Queue *QueueAllocInit();
     void QueueDelloc(Queue *pQueue);
 
+    void TestQueue();
+
 #ifdef __cplusplus
 }
 #endif

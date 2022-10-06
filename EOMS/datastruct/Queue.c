@@ -57,23 +57,22 @@ static bool Pop(Queue *pq, QDataType *data)
 	{
 		if (NULL != pq->head)
 		{
-			if ( NULL == pq->head->next )
+			if (NULL == pq->head->next)
 			{
 				*data = pq->head->data;
-			     --pq->size;
-				 free(pq->head);
-				 pq->head = pq->tail = NULL;
+				--pq->size;
+				free(pq->head);
+				pq->head = pq->tail = NULL;
 			}
 			else
 			{
 				*data = pq->head->data;
-			     --pq->size;
-				QNode * next = pq->head->next;
+				--pq->size;
+				QNode *next = pq->head->next;
 				free(pq->head);
 				pq->head = next;
 			}
-			
-			
+
 			return true;
 		}
 	}
@@ -126,4 +125,16 @@ void QueueDelloc(Queue *pq)
 		free(pq);
 		pq = NULL;
 	}
+}
+
+void TestQueue()
+{
+	Queue *qu = QueueAllocInit();
+	qu->Push(qu, 0.4);
+	qu->Push(qu, 0.5);
+
+	printf("queeu size %d", qu->size);
+	double data;
+	qu->Pop(qu, &data);
+	printf("queeu size %d , data is %f", qu->size, data);
 }
