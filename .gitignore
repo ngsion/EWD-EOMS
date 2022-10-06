@@ -54,4 +54,5 @@ dkms.conf
 
 cvibuild.EOMS/
 log/
+data/
 .vscode/
