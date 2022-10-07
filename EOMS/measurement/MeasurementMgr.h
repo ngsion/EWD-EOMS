@@ -35,7 +35,8 @@ typedef struct MeasurementMgr
 	int (*Start)(int x);
 	int (*Stop)(int x);
 	int (*Shutdown)(int x);
-
+    Measurement * (*FindWithInstrFlag)(int flag);
+    
 }MeasurementMgr;
 
 //==============================================================================

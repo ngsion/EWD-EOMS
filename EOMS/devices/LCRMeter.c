@@ -66,21 +66,6 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 }
 
 
-static int CVICALLBACK ThreadFunction(void *functionData)
-{
-    LCRMeter *pMeter = (LCRMeter *)functionData;
-	int index = 0;
-	for( index = 0; index <= 15; index++)
-	{
-		float volt = index *  2;
-		pMeter->device.DoWithCommand(pMeter,&volt,NULL);
-		Delay(0.5);
-	}
-
-	LOG_INFO("LCRMeter ThreadFunction end");
-	pMeter->device.Stop(pMeter);
-	return 0;
-}
 
 static int Start(Device *pDev)
 {
@@ -98,11 +83,10 @@ static int Start(Device *pDev)
 		ViSession session = pMeter->device.pInstr->session;
 		status = viPrintf(session, "FUNC:IMP CPD\n");
 		status = viPrintf(session, "FREQ 1kHz\n");
-		status = viPrintf(session, "VOLT 500mV\n");
+		status = viPrintf(session, "VOLT 1V\n");
 		status = viPrintf(session, "BIAS:VOLT 0\n");
 		status = viPrintf(session, "BIAS:STATE 1\n");
 
-		CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,ThreadFunction, pDev, NULL);
 	}
 	else
 	{

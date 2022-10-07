@@ -32,7 +32,9 @@ static int Stop(int x)
 {
 	if (NULL != psExcel)
 	{
+		psExcel->Save(psExcel);
 		ExcelDelloc(psExcel);
+		psExcel = NULL;
 	}
 
 	return 0;
@@ -42,6 +44,7 @@ int SaveInt(char *key, int value)
 	if (NULL != psExcel)
 	{
 		psExcel->SetCellInt(psExcel, key, value);
+		
 	}
 	else
 	{
@@ -54,6 +57,7 @@ int SaveDouble(char *key, double value)
 	if (NULL != psExcel)
 	{
 		psExcel->SetCellDouble(psExcel, key, value);
+		
 	}
 	else
 	{
@@ -66,6 +70,7 @@ int SaveStr(char *key, char *value)
 	if (NULL != psExcel)
 	{
 		psExcel->SetCellStr(psExcel, key, value);
+		
 	}
 	else
 	{

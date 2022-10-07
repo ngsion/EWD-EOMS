@@ -141,6 +141,20 @@ static int Shutdown(int x)
 	return 0;
 }
 
+static Measurement *FindWithInstrFlag(int flag)
+{
+	Measurement *pMeter = NULL;
+	for (int i = 0; i < MEASURE_MAX_NUM; i++)
+	{
+		if (NULL != defaultMeasureArray[i] && (defaultMeasureArray[i]->instrumentFlag == flag))
+		{
+			pMeter = defaultMeasureArray[i];
+			break;
+		}
+	}
+	return pMeter;
+}
+
 //==============================================================================
 // Global functions
 
@@ -152,4 +166,7 @@ MeasurementMgr MeasureMgr = {
 	.Init = Init,
 	.Start = Start,
 	.Stop = Stop,
-	.Shutdown = Shutdown};
+	.Shutdown = Shutdown,
+	.FindWithInstrFlag = FindWithInstrFlag
+	
+	};

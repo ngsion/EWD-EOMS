@@ -73,7 +73,7 @@ static int AfterInit(int x)
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
- 	Delay(2);
+	Delay(2);
 
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
@@ -84,11 +84,9 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			LOG_INFO("after start");
 		}
 	}
-	
+
 	return 0;
 }
-
-
 
 static int Start(int x)
 {
@@ -100,8 +98,8 @@ static int Start(int x)
 		}
 	}
 
-	//ThreadFunction(NULL);
-	 CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,ThreadFunction, NULL,NULL);
+	// ThreadFunction(NULL);
+	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
 
 	return 0;
 }
@@ -130,7 +128,19 @@ static int Shutdown(int x)
 
 	return 0;
 }
-
+static Device *FindWithInstrFlag(int flag)
+{
+	Device *pMeter = NULL;
+	for (int i = 0; i < DEVICE_MAX_NUM; i++)
+	{
+		if (NULL != defaultDeviceArray[i] && (defaultDeviceArray[i]->instrumentFlag == flag))
+		{
+			pMeter = defaultDeviceArray[i];
+			break;
+		}
+	}
+	return pMeter;
+}
 //==============================================================================
 // Global variables
 
@@ -140,6 +150,7 @@ DeviceMgr DevMgr = {
 	.Init = Init,
 	.Shutdown = Shutdown,
 	.Start = Start,
-	.Stop = Stop
+	.Stop = Stop,
+	.FindWithInstrFlag = FindWithInstrFlag
 
 };

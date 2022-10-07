@@ -36,6 +36,7 @@ typedef struct DeviceMgr
 	int (*Start)(int x);
 	int (*Stop)(int x);
 	int (*Shutdown)(int x);
+    Device * (*FindWithInstrFlag)(int flag);
 
 }DeviceMgr;
 

@@ -52,26 +52,6 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 	return 0;
 }
 
-static int CVICALLBACK ThreadFunction(void *functionData)
-{
-    Picoammeter *pMeter = (Picoammeter *)functionData;
-	int index = 0;
-	for( index = 0; index <= 15; index++)
-	{
-		float volt = index *  2;
-		pMeter->device.DoWithCommand(pMeter,&volt,NULL);
-		Delay(1);
-	}
-	for( index = 0; index <= 15; index++)
-	{
-		float volt = 30 - index *  2;
-		pMeter->device.DoWithCommand(pMeter,&volt,NULL);
-		Delay(1);
-	}
-	LOG_INFO("Picoammeter ThreadFunction end");
-	pMeter->device.Stop(pMeter);
-	return 0;
-}
 
 
 static int Start(Device *pDev)
@@ -89,6 +69,9 @@ static int Start(Device *pDev)
 		
 		ViSession session = pMeter->device.pInstr->session;
         status = viPrintf(session, ":SOUR1:VOLT 0\n");
+		status = viPrintf(session, ":FORM:ELEM CURR1\n");
+		//status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
+		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
 		// status = viPrintf(session, ":SOUR1:VOLT:STAR 0\n");
 		// status = viPrintf(session, ":SOUR1:VOLT:STOP 10\n");
 		// status = viPrintf(session, ":SOUR1:VOLT:STEP 1\n");
@@ -103,8 +86,6 @@ static int Start(Device *pDev)
 		
 		status = viPrintf(session, ":SOUR1:VOLT:RANG:AUTO ON\n");  
 		status = viPrintf(session, ":OUTP1 ON\n");
-
-		CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE,ThreadFunction, pDev, NULL);
 				
 	}
 	else

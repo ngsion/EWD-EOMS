@@ -121,7 +121,7 @@ int CVICALLBACK OnIDBtn(int panel, int control, int event,
 	case EVENT_COMMIT:
 		{
             System.LoadSettings(0);
-			TestExel();
+		
 		}
 		break;
 	}

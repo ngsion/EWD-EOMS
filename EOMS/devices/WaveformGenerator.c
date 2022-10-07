@@ -33,8 +33,6 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 	WaveformGenerator *pMeter = (WaveformGenerator *)pDev;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-
-		
 	}
 	else
 	{
@@ -51,35 +49,35 @@ static int Start(Device *pDev)
 		LOG_ERROR("error in WaveformGenerator start");
 		return -1;
 	}
-	ViStatus status = VI_SUCCESS; 
-	WaveformGenerator *pMeter = (WaveformGenerator *)pDev; 
+	ViStatus status = VI_SUCCESS;
+	WaveformGenerator *pMeter = (WaveformGenerator *)pDev;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-        LOG_INFO("WaveformGenerator starts");
+		LOG_INFO("WaveformGenerator starts");
 		ViSession session = pMeter->device.pInstr->session;
 
-		  	viPrintf(session,"*CLS\n");
-			viPrintf(session,"SOURce1:FUNCtion SQU\n");
-			//viPrintf(session,"SOURce1:FUNCtion:SQU:DCYC +20.0\n");
-			viPrintf(session,"SOURce1:FREQuency 1\n");
-			viPrintf(session,"SOURce1:VOLTage:HIGH +3.0\n");
-			viPrintf(session,"SOURce1:VOLTage:LOW 0.0\n"); 
-			viPrintf(session,"SOURce1:VOLTage:OFFSet 0\n");
-		//viPrintf(session,"SOURce1:VOLTage:PHASe 90\n");
-			viPrintf(session, "OUTPut1 ON\n");  /* Turn on the instrument output */
-         //	viPrintf(instr, "SOURce1:*TRG\n");  /* Send bus trigger */
-		 
-		    viPrintf(session,"SOURce2:FUNCtion DC\n"); 
-		 	//viPrintf(session,"SOURce2:FREQuency +5\n");
-			//viPrintf(session,"SOURce2:VOLTage 4\n");
-		 	viPrintf(session,"SOURce2:VOLTage:OFFSet -1.5\n");
-			viPrintf(session,"OUTPut2 ON\n");
+		viPrintf(session, "*CLS\n");
+		viPrintf(session, "SOURce1:FUNCtion SQU\n");
+		// viPrintf(session,"SOURce1:FUNCtion:SQU:DCYC +20.0\n");
+		viPrintf(session, "SOURce1:FREQuency 1\n");
+		viPrintf(session, "SOURce1:VOLTage:HIGH +3.0\n");
+		viPrintf(session, "SOURce1:VOLTage:LOW 0.0\n");
+		viPrintf(session, "SOURce1:VOLTage:OFFSet 0\n");
+		// viPrintf(session,"SOURce1:VOLTage:PHASe 90\n");
+		viPrintf(session, "OUTPut1 ON\n"); /* Turn on the instrument output */
+										   //	viPrintf(instr, "SOURce1:*TRG\n");  /* Send bus trigger */
+
+		viPrintf(session, "SOURce2:FUNCtion DC\n");
+		// viPrintf(session,"SOURce2:FREQuency +5\n");
+		// viPrintf(session,"SOURce2:VOLTage 4\n");
+		viPrintf(session, "SOURce2:VOLTage:OFFSet -1.5\n");
+		viPrintf(session, "OUTPut2 ON\n");
 	}
 	else
 	{
 		LOG_ERROR("WaveformGenerator Start failed null %d ", NULL == pMeter->device.pInstr);
 	}
-if (status < VI_SUCCESS)
+	if (status < VI_SUCCESS)
 	{
 		LOG_ERROR("status is %d.", status);
 	}
@@ -96,7 +94,7 @@ static int Stop(Device *pDev)
 
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
-        viPrintf(session, "OUTPut2 OFF\n");
+		viPrintf(session, "OUTPut2 OFF\n");
 		viPrintf(session, "OUTPut1 OFF\n");
 	}
 	else
@@ -118,14 +116,13 @@ void WaveformGeneratorInit(WaveformGenerator *pDev)
 		return;
 	}
 	DeviceInit(&pDev->device);
-    pDev->device.instrumentFlag = Instrument_WaveformGenerator;  
+	pDev->device.instrumentFlag = Instrument_WaveformGenerator;
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
 }
 void WaveformGeneratorDeinit(WaveformGenerator *pDev)
 {
-	pDev->device.instrumentFlag = Instrument_WaveformGenerator;    
+	pDev->device.instrumentFlag = Instrument_WaveformGenerator;
 	DeviceDeinit(&pDev->device);
 }
-

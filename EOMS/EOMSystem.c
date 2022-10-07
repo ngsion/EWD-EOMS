@@ -10,7 +10,7 @@
 
 //==============================================================================
 // Include files
-#include "DataSaveMgr.h"   
+#include "DataSaveMgr.h"
 #include <utility.h>
 #include "EOMSystem.h"
 #include "logger.h"
@@ -18,7 +18,6 @@
 #include <assert.h>
 #include <string.h>
 #include "SettingMgr.h"
-
 
 //==============================================================================
 // Constants
@@ -63,63 +62,49 @@ static int Init(int x)
 		InstrumentListNode *pNode = pHead;
 		LOG_INFO("Init one instrument is %s", pNode->pInstr->address);
 		pNode->pInstr->Open(pNode->pInstr);
-		int i = 0;
+		Device *pMeter = NULL;
+		Measurement *pMeasure = NULL;
 		if (Instrument_Type_ASRL == pNode->pInstr->type)
 		{
-			for (i = 0; i < DEVICE_MAX_NUM; i++)
+			pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+			if (NULL != pMeter)
 			{
-				if (NULL != DevMgr.pDevArray[i] && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_Picoammeter))
-				{
-					DevMgr.pDevArray[i]->pInstr = pNode->pInstr;
-					break;
-				}
+				pMeter->pInstr = pNode->pInstr;
 			}
-			for (i = 0; i < MEASURE_MAX_NUM; i++)
+
+			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
+			if (NULL != pMeasure)
 			{
-				if (NULL != MeasureMgr.pMeasureArray[i] && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter))
-				{
-					MeasureMgr.pMeasureArray[i]->pInstr = pNode->pInstr;
-					break;
-				}
+				pMeasure->pInstr = pNode->pInstr;
 			}
 		}
 		else if (Instrument_Type_USB == pNode->pInstr->type)
 		{
 
-			for (i = 0; i < DEVICE_MAX_NUM; i++)
+			pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+			if (NULL != pMeter)
 			{
-				if (NULL != DevMgr.pDevArray[i] && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_WaveformGenerator))
-				{
-					DevMgr.pDevArray[i]->pInstr = pNode->pInstr;
-					break;
-				}
+				pMeter->pInstr = pNode->pInstr;
 			}
-			for (i = 0; i < MEASURE_MAX_NUM; i++)
+
+			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+			if (NULL != pMeasure)
 			{
-				if (NULL != MeasureMgr.pMeasureArray[i] && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_WaveformGenerator))
-				{
-					MeasureMgr.pMeasureArray[i]->pInstr = pNode->pInstr;
-					break;
-				}
+				pMeasure->pInstr = pNode->pInstr;
 			}
 		}
 		else if (Instrument_Type_GPIB == pNode->pInstr->type)
 		{
-			for (i = 0; i < DEVICE_MAX_NUM; i++)
+			pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
+			if (NULL != pMeter)
 			{
-				if (NULL != DevMgr.pDevArray[i] && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_LCRMeter))
-				{
-					DevMgr.pDevArray[i]->pInstr = pNode->pInstr;
-					break;
-				}
+				pMeter->pInstr = pNode->pInstr;
 			}
-			for (i = 0; i < MEASURE_MAX_NUM; i++)
+
+			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
+			if (NULL != pMeasure)
 			{
-				if (NULL != MeasureMgr.pMeasureArray[i] && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter))
-				{
-					MeasureMgr.pMeasureArray[i]->pInstr = pNode->pInstr;
-					break;
-				}
+				pMeasure->pInstr = pNode->pInstr;
 			}
 		}
 		pHead = pNode->next;
@@ -149,6 +134,15 @@ static int Shutdown(int x)
 	return 0;
 }
 
+static int Stop(int x)
+{
+	System.isWorking = false;
+	MeasureMgr.Stop(x);
+	DevMgr.Stop(x);
+	DataMgr.Stop(x);
+	return 0;
+}
+
 static int LoadSettings(int x)
 {
 	int i;
@@ -157,7 +151,6 @@ static int LoadSettings(int x)
 		if (NULL != DevMgr.pDevArray[i])
 		{
 			bool flag = false;
-
 			if ((SetMgr.signal & Signal_Picoammieter) && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_Picoammeter))
 			{
 				flag = true;
@@ -175,7 +168,6 @@ static int LoadSettings(int x)
 	}
 
 	for (i = 0; i < MEASURE_MAX_NUM; i++)
-
 	{
 		if (NULL != MeasureMgr.pMeasureArray[i])
 		{
@@ -199,23 +191,84 @@ static int LoadSettings(int x)
 	return 0;
 }
 
+static int CVICALLBACK ThreadFunction(void *functionData)
+{
+	if (Signal_Picoammieter == SetMgr.signal)
+	{
+		Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
+
+		if (NULL != pMeter && NULL != pMeasure)
+		{
+			int index = 0;
+			float volt = 0;
+			double value = 0;
+			for (index = 0; index <= 15; index++)
+			{
+				float volt = index * 2;
+				pMeter->DoWithCommand(pMeter, &volt, NULL);
+				DataMgr.SaveInt("V", volt);
+				pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
+				DataMgr.SaveDouble("I+", value);
+				Delay(1);
+			}
+
+			for (index = 0; index <= 15; index++)
+			{
+				float volt = 30 - index * 2;
+				pMeter->DoWithCommand(pMeter, &volt, NULL);
+				pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
+				DataMgr.SaveDouble("I-", value);
+				Delay(1);
+			}
+			LOG_INFO("Picoammeter ThreadFunction end");
+		}
+		Stop(0);
+		return 0;
+	}
+	else if (Signal_LCRMeter == SetMgr.signal)
+	{
+		Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
+		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
+		if (NULL != pMeter && NULL != pMeasure)
+		{
+			int index = 0;
+			double value = 0;
+			double dvalue = 0.0;
+			float volt = 0;
+			for (index = 0; index <= 15; index++)
+			{
+				volt = index * 2;
+				pMeter->DoWithCommand(pMeter, &volt, NULL);
+				DataMgr.SaveInt("V", volt);
+				pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value);
+				DataMgr.SaveDouble("C(+)", value);
+				DataMgr.SaveDouble("D(+)", dvalue);
+				Delay(0.5);
+			}
+
+			LOG_INFO("LCRMeter ThreadFunction end");
+		}
+		Stop(0);
+		return 0;
+	}
+	else
+	{
+
+		MeasureMgr.Start(0);
+	}
+}
+
 static int Start(int x)
 {
 	System.isWorking = true;
 	DevMgr.Start(x);
-	MeasureMgr.Start(x);
-    DataMgr.Start(x);
-	return 0;
-}
-static int Stop(int x)
-{
-	System.isWorking = false;
-	MeasureMgr.Stop(x);
-	DevMgr.Stop(x);
-    DataMgr.Stop(x);
-	return 0;
-}
+	DataMgr.Start(x);
 
+	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
+
+	return 0;
+}
 //==============================================================================
 // Global variables
 EOMSystem System = {

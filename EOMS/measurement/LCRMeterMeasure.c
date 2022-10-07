@@ -57,13 +57,14 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			double DValue = 0.0;
 
 			double *pOutValue = (double *)outData;
+			double *pDValue = (double *)inData;   
 			LOG_INFO("instrument %d return %d is: %*s\n", session, retCount, retCount, buffer);
 			char *p = NULL;
 			p = strtok(buffer, ",");
 			if (NULL != p)
 			{
 				num = Scan(p, "%s>%f", &CpValue);
-				CpValue *= 1000000000;
+				CpValue *= 1000000000000;
 			}
 			p = strtok(NULL, ",");
 			if (NULL != p)
@@ -79,6 +80,7 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			if (0 == result)
 			{
 				*pOutValue = CpValue;
+				*pDValue = DValue;
 				pDev->pDataQueue->Push(pDev->pDataQueue, *pOutValue);
 			}
 			LOG_INFO("num is %d , CpValue is %f DValue is %f queue size %d\n", num, CpValue, DValue,pDev->pDataQueue->size); 
