@@ -10,13 +10,14 @@
 
 //==============================================================================
 // Include files
-
+#include "DataSaveMgr.h"     
 #include <utility.h>
 #include <ansi_c.h>
 #include "MeasurementMgr.h"
 #include "PicoammeterMeasure.h"
 #include "LCRMeterMeasure.h"
 #include "logger.h"
+
 
 //==============================================================================
 // Constants
@@ -54,10 +55,20 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	Measurement *pMeasure = (Measurement *)functionData;
 	while (true == isCollecting)
 	{
-		double value;
+		double value = 0;
+		double dvalue = 0;
 		LOG_INFO("before mesure");
-		if (0 == pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value))
+		if (0 == pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value))
 		{
+			if(pMeasure->instrumentFlag == Instrument_Picoammeter)
+			{
+				DataMgr.SaveDouble("I", value);
+			}
+			else if(pMeasure->instrumentFlag == Instrument_LCRMeter)
+			{
+				DataMgr.SaveDouble("C", value);
+				DataMgr.SaveDouble("D", dvalue);
+			}
 			LOG_INFO("after mesure value %f", value);
 		}
 		else

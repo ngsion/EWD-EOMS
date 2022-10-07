@@ -108,7 +108,7 @@ static int Shutdown(int x)
 {
 	if (NULL != defaultRM)
 	{
-		viClose(defaultRM);
+	//	viClose(defaultRM);
 	}
 	InstrumentListClear(&defaultInstrList);
 	return 0;

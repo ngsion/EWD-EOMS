@@ -10,7 +10,7 @@
 
 //==============================================================================
 // Include files
-#include "Excel.h"   
+#include "Excel.h"
 #include <ansi_c.h>
 #include <cvirte.h>
 #include <userint.h>
@@ -19,7 +19,6 @@
 #include "EOMSystem.h"
 #include "Queue.h"
 #include "Map.h"
-
 
 //==============================================================================
 // Constants
@@ -41,30 +40,6 @@ static int panelHandle = 0;
 //==============================================================================
 // Global functions
 
-/// HIFN The main entry-point function.
-int main(int argc, char *argv[])
-{
-	int error = 0;
-
-	System.Init(0);
-
-	/* initialize and load resources */
-	nullChk(InitCVIRTE(0, argv, 0));
-	errChk(panelHandle = LoadPanel(0, "EOMS.uir", PANEL));
-
-	/* display the panel and run the user interface */
-	errChk(DisplayPanel(panelHandle));
-	errChk(RunUserInterface());
-
-Error:
-	/* clean up */
-	if (panelHandle > 0)
-		DiscardPanel(panelHandle);
-
-	System.Shutdown(0);
-	return 0;
-}
-
 //==============================================================================
 // UI callback function prototypes
 
@@ -78,6 +53,7 @@ int CVICALLBACK panelCB(int panel, int event, void *callbackData,
 		{
 			System.Stop(0);
 		}
+		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, FALSE);
 		System.Shutdown(0);
 		QuitUserInterface(0);
 	}
@@ -91,9 +67,11 @@ int CVICALLBACK onOKBtb(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-		SetCtrlAttribute(panelHandle,PANEL_TIMER,ATTR_ENABLED,TRUE);
-		SetCtrlAttribute(panelHandle, PANEL_STRIPCHART_TOP, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
-		SetCtrlAttribute(panelHandle, PANEL_STRIPCHART_BOTTOM, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
+		ClearStripChart(panel, PANEL_STRIPCHART_TOP);
+		ClearStripChart(panel, PANEL_STRIPCHART_BOTTOM);
+		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, TRUE);
+		SetCtrlAttribute(panel, PANEL_STRIPCHART_TOP, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
+		SetCtrlAttribute(panel, PANEL_STRIPCHART_BOTTOM, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
 		System.Start(0);
 		break;
 	}
@@ -106,7 +84,7 @@ int CVICALLBACK onStopBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-		SetCtrlAttribute(panelHandle,PANEL_TIMER,ATTR_ENABLED,FALSE);
+		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, FALSE);
 		System.Stop(0);
 		break;
 	}
@@ -119,11 +97,21 @@ int CVICALLBACK OnIDBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-		{
-            System.LoadSettings(0);
+	{
+		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, FALSE);
+		System.Stop(0);
 		
-		}
-		break;
+		HidePanel(panel);
+
+		panelHandle = LoadPanel(0, "Entry.uir", PANEL);
+
+		/* display the panel and run the user interface */
+		DisplayPanel(panelHandle);
+		RunUserInterface();
+
+		DiscardPanel(panel);
+	}
+	break;
 	}
 	return 0;
 }
@@ -144,8 +132,8 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 					double oneData = 0;
 					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
 					{
-						LOG_INFO("queeu size %d , data is %f",MeasureMgr.pMeasureArray[i]->pDataQueue->size,oneData); 
-						PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_TOP, oneData);
+						LOG_INFO("queeu size %d , data is %f", MeasureMgr.pMeasureArray[i]->pDataQueue->size, oneData);
+						PlotStripChartPoint(panel, PANEL_STRIPCHART_TOP, oneData);
 					}
 				}
 				else if (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter)
@@ -153,8 +141,8 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 					double oneData = 0;
 					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
 					{
-						LOG_INFO("queeu size %d , data is %f",MeasureMgr.pMeasureArray[i]->pDataQueue->size,oneData); 
-						PlotStripChartPoint(panelHandle, PANEL_STRIPCHART_BOTTOM, oneData);
+						LOG_INFO("queeu size %d , data is %f", MeasureMgr.pMeasureArray[i]->pDataQueue->size, oneData);
+						PlotStripChartPoint(panel, PANEL_STRIPCHART_BOTTOM, oneData);
 					}
 				}
 			}

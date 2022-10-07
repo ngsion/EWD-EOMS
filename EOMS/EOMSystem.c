@@ -69,6 +69,7 @@ static int Init(int x)
 			pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
 			if (NULL != pMeter)
 			{
+				SetMgr.online |= Online_Picoammieter;
 				pMeter->pInstr = pNode->pInstr;
 			}
 
@@ -84,6 +85,7 @@ static int Init(int x)
 			pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
 			if (NULL != pMeter)
 			{
+				SetMgr.online |= Online_WaveformGenerator;
 				pMeter->pInstr = pNode->pInstr;
 			}
 
@@ -98,6 +100,7 @@ static int Init(int x)
 			pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
 			if (NULL != pMeter)
 			{
+				SetMgr.online |= Online_LCRMeter;
 				pMeter->pInstr = pNode->pInstr;
 			}
 
@@ -257,6 +260,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 
 		MeasureMgr.Start(0);
 	}
+	return 0;
 }
 
 static int Start(int x)

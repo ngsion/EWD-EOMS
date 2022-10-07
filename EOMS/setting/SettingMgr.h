@@ -26,10 +26,18 @@ typedef enum{
     Signal_None = 0,
     Signal_Picoammieter = 1 << 0,
     Signal_WaveformGenerator= 1 << 1,
-    Signal_LCRMeter= 1 << 2,
+    Signal_LCRMeter = 1 << 2,
     Signal_All = Signal_Picoammieter | Signal_WaveformGenerator | Signal_LCRMeter
 };
 
+
+typedef enum{
+    Online_None = 0,
+    Online_Picoammieter = 1 << 0,
+    Online_WaveformGenerator= 1 << 1,
+    Online_LCRMeter = 1 << 2,
+    Online_All = Signal_Picoammieter | Signal_WaveformGenerator | Signal_LCRMeter
+};
 
 typedef enum{
     Data_None = 0,
@@ -46,6 +54,7 @@ typedef struct SettingMgr
 {
     unsigned int signal;
     unsigned int data;
+    unsigned int online;
     
     int (*Init)(int x);
 	int (*Shutdown)(int x);
