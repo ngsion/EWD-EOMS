@@ -39,12 +39,24 @@ static int Stop(int x)
 
 	return 0;
 }
-int SaveInt(char *key, int value)
+
+static int SaveKey(char *key)
+{
+	if (NULL != psExcel)
+	{
+		psExcel->SetCell(psExcel, key);
+	}
+	else
+	{
+		LOG_ERROR("SaveKey Failed , %s", key);
+	}
+	return 0;
+}
+static int SaveInt(char *key, int value)
 {
 	if (NULL != psExcel)
 	{
 		psExcel->SetCellInt(psExcel, key, value);
-		
 	}
 	else
 	{
@@ -52,12 +64,11 @@ int SaveInt(char *key, int value)
 	}
 	return 0;
 }
-int SaveDouble(char *key, double value)
+static int SaveDouble(char *key, double value)
 {
 	if (NULL != psExcel)
 	{
 		psExcel->SetCellDouble(psExcel, key, value);
-		
 	}
 	else
 	{
@@ -65,12 +76,11 @@ int SaveDouble(char *key, double value)
 	}
 	return 0;
 }
-int SaveStr(char *key, char *value)
+static int SaveStr(char *key, char *value)
 {
 	if (NULL != psExcel)
 	{
 		psExcel->SetCellStr(psExcel, key, value);
-		
 	}
 	else
 	{
@@ -84,6 +94,7 @@ int SaveStr(char *key, char *value)
 DataSaveMgr DataMgr = {
 	.Start = Start,
 	.Stop = Stop,
+	.SaveKey = SaveKey,
 	.SaveInt = SaveInt,
 	.SaveDouble = SaveDouble,
 	.SaveStr = SaveStr};

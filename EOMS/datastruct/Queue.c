@@ -137,4 +137,5 @@ void TestQueue()
 	double data;
 	qu->Pop(qu, &data);
 	printf("queeu size %d , data is %f", qu->size, data);
+    QueueDelloc(qu);
 }

@@ -37,7 +37,8 @@ extern "C"
         unsigned int currentColumnMax;
 
 
-		char ExcelFileName[MAX_PATHNAME_LEN];   
+		char ExcelFileName[MAX_PATHNAME_LEN];  
+        int (*SetCell)(struct Excel *excel, char *key); 
         int (*SetCellInt)(struct Excel *excel, char *key, int value);
         int (*SetCellDouble)(struct Excel *excel, char *key, double value);
         int (*SetCellStr)(struct Excel *excel, char *key, char *value);

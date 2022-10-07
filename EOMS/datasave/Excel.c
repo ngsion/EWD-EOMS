@@ -40,6 +40,17 @@ static int GetIndex(struct Excel *excel, char *key, unsigned int *cvalue, unsign
     }
     return excel->columnMap->GetValue(excel->columnMap, key, cvalue, rvalue);
 }
+
+static int SetCell(struct Excel *excel, char *key)
+{
+    unsigned int column = 0;
+    unsigned int row = 0;
+    if (0 == GetIndex(excel, key, &column, &row))
+    {
+        return 0;
+    }
+    return -1;
+}
 static int SetCellInt(struct Excel *excel, char *key, int value)
 {
     char index[8] = {0};
@@ -122,7 +133,7 @@ Excel *ExcelAllocInit()
 
     if (NULL != excel)
     {
-
+        excel->SetCell = SetCell;
         excel->SetCellInt = SetCellInt;
         excel->SetCellStr = SetCellStr;
         excel->Save = Save;

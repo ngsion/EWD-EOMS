@@ -216,13 +216,21 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 				Delay(1);
 			}
 
+            
+	        double valueArray[16] = {0}; 
 			for (index = 0; index <= 15; index++)
 			{
 				float volt = 30 - index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
 				pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
-				DataMgr.SaveDouble("I-", value);
+			    valueArray[index] = value;
 				Delay(1);
+			}
+          
+			for (index = 0; index <= 15; index++)
+			{
+				int i = 15 - index;
+                DataMgr.SaveDouble("I-", valueArray[i]);
 			}
 			LOG_INFO("Picoammeter ThreadFunction end");
 		}
@@ -246,10 +254,28 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 				DataMgr.SaveInt("V", volt);
 				pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value);
 				DataMgr.SaveDouble("C(+)", value);
+				DataMgr.SaveKey("C(-)"); 
 				DataMgr.SaveDouble("D(+)", dvalue);
 				Delay(0.5);
 			}
 
+            double valueArray[16] = {0}; 
+             double dvalueArray[16] = {0}; 
+            for (index = 0; index <= 15; index++)
+			{
+				volt = 30 - index * 2;
+				pMeter->DoWithCommand(pMeter, &volt, NULL);
+				pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value);
+				valueArray[index] = value;
+				dvalueArray[index] = dvalue;
+				Delay(0.5);
+			}
+            for (index = 0; index <= 15; index++)
+			{
+				int i = 15 - index;
+                DataMgr.SaveDouble("C(-)", valueArray[i]);
+				DataMgr.SaveDouble("D(-)", dvalueArray[i]);
+			}
 			LOG_INFO("LCRMeter ThreadFunction end");
 		}
 		Stop(0);

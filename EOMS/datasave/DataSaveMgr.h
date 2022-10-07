@@ -30,6 +30,7 @@ extern "C"
 
         int (*Start)(int x);
         int (*Stop)(int x);
+        int (*SaveKey)(char *key);
         int (*SaveInt)(char *key, int value);
         int (*SaveDouble)(char *key, double value);
         int (*SaveStr)(char *key, char *value);
