@@ -17,6 +17,8 @@
 #include "Entry.h"
 #include "EOMSystem.h"
 #include "SettingMgr.h"
+#include "Stack.h"
+#include "UIMgr.h"
 
 //==============================================================================
 // Constants
@@ -26,7 +28,7 @@
 
 //==============================================================================
 // Static global variables
-static int panelHandle = 0;
+
 
 //==============================================================================
 // Static functions
@@ -128,18 +130,9 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		}
 
 		System.LoadSettings(0);   
+	
 		
-		
-		HidePanel(panel);
-
-		panelHandle = LoadPanel(0, "EOMS.uir", PANEL);
-
-		/* display the panel and run the user interface */
-		DisplayPanel(panelHandle);
-		RunUserInterface();
-
-		DiscardPanel(panel);
-
+		UI.ShowGraph(0);
 	
 	}
 
@@ -178,19 +171,6 @@ int updateLED(int panel)
 	return 0;
 }
 
-int main(int argc, char *argv[])
-{
-	if (InitCVIRTE(0, argv, 0) == 0)
-		return -1; /* out of memory */
-	if ((panelHandle = LoadPanel(0, "Entry.uir", PANEL)) < 0)
-		return -1;
-	System.Init(0);
-	DisplayPanel(panelHandle);
-	RunUserInterface();
-	DiscardPanel(panelHandle);
-	System.Shutdown(0);
-	return 0;
-}
 
 int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 						int eventData1, int eventData2)

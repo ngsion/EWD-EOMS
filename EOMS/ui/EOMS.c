@@ -19,6 +19,8 @@
 #include "EOMSystem.h"
 #include "Queue.h"
 #include "Map.h"
+#include "SettingMgr.h"
+#include "UIMgr.h"
 
 //==============================================================================
 // Constants
@@ -29,7 +31,7 @@
 //==============================================================================
 // Static global variables
 
-static int panelHandle = 0;
+
 
 //==============================================================================
 // Static functions
@@ -67,6 +69,24 @@ int CVICALLBACK onOKBtb(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
+	    if(true == System.isWorking) return 0;
+
+		if (Signal_LCRMeter == SetMgr.signal)
+		{
+			SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_MANUAL, 4000, 10000);
+		}
+		else
+		{
+			SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
+		}
+		if (Signal_Picoammieter == SetMgr.signal)
+		{
+			SetAxisScalingMode( panel, PANEL_STRIPCHART_BOTTOM, VAL_LEFT_YAXIS, VAL_MANUAL, -1000, 1500);
+		}
+		else
+		{
+			SetAxisScalingMode( panel, PANEL_STRIPCHART_BOTTOM, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 1000);
+		}
 		ClearStripChart(panel, PANEL_STRIPCHART_TOP);
 		ClearStripChart(panel, PANEL_STRIPCHART_BOTTOM);
 		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, TRUE);
@@ -100,16 +120,8 @@ int CVICALLBACK OnIDBtn(int panel, int control, int event,
 	{
 		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, FALSE);
 		System.Stop(0);
-		
-		HidePanel(panel);
 
-		panelHandle = LoadPanel(0, "Entry.uir", PANEL);
-
-		/* display the panel and run the user interface */
-		DisplayPanel(panelHandle);
-		RunUserInterface();
-
-		DiscardPanel(panel);
+		UI.ShowEntry(0);
 	}
 	break;
 	}

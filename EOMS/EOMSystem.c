@@ -18,6 +18,7 @@
 #include <assert.h>
 #include <string.h>
 #include "SettingMgr.h"
+#include "Stack.h"
 
 //==============================================================================
 // Constants
@@ -191,6 +192,7 @@ static int LoadSettings(int x)
 		}
 	}
 
+
 	return 0;
 }
 
@@ -216,22 +218,21 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 				Delay(1);
 			}
 
-            
-	        double valueArray[16] = {0}; 
+			Stack *pStack = StackAllocInit();
 			for (index = 0; index <= 15; index++)
 			{
 				float volt = 30 - index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
 				pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
-			    valueArray[index] = value;
+				pStack->InStack(pStack, value);
 				Delay(1);
 			}
-          
-			for (index = 0; index <= 15; index++)
+			while (pStack->Size(pStack) > 0)
 			{
-				int i = 15 - index;
-                DataMgr.SaveDouble("I-", valueArray[i]);
+				DataMgr.SaveDouble("I-", pStack->OutStack(pStack));
 			}
+			StackDelloc(pStack);
+
 			LOG_INFO("Picoammeter ThreadFunction end");
 		}
 		Stop(0);
@@ -254,28 +255,33 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 				DataMgr.SaveInt("V", volt);
 				pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value);
 				DataMgr.SaveDouble("C(+)", value);
-				DataMgr.SaveKey("C(-)"); 
+				DataMgr.SaveKey("C(-)");
 				DataMgr.SaveDouble("D(+)", dvalue);
 				Delay(0.5);
 			}
 
-            double valueArray[16] = {0}; 
-             double dvalueArray[16] = {0}; 
-            for (index = 0; index <= 15; index++)
+			Stack *cStack = StackAllocInit();
+			Stack *dStack = StackAllocInit();
+			for (index = 0; index <= 15; index++)
 			{
 				volt = 30 - index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
 				pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value);
-				valueArray[index] = value;
-				dvalueArray[index] = dvalue;
+				cStack->InStack(cStack,value);
+				dStack->InStack(dStack,dvalue);
 				Delay(0.5);
 			}
-            for (index = 0; index <= 15; index++)
+			while (cStack->Size(cStack) > 0)
 			{
-				int i = 15 - index;
-                DataMgr.SaveDouble("C(-)", valueArray[i]);
-				DataMgr.SaveDouble("D(-)", dvalueArray[i]);
+				DataMgr.SaveDouble("C(-)", cStack->OutStack(cStack));
 			}
+			while (dStack->Size(dStack) > 0)
+			{
+				DataMgr.SaveDouble("D(-)", dStack->OutStack(dStack));
+			}
+			StackDelloc(cStack);
+			StackDelloc(dStack);
+
 			LOG_INFO("LCRMeter ThreadFunction end");
 		}
 		Stop(0);
