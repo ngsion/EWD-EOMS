@@ -28,6 +28,7 @@ typedef struct
 	int (*ShowEntry)(int x);
 	int (*ShowGraph)(int x);
     int (*ShowLCGraph)(int x);
+	int (*ShowCVGraph)(int x); 
 	
 }UIMgr;
 

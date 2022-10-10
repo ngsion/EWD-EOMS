@@ -133,6 +133,10 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		{
 			UI.ShowLCGraph(0);
 		}
+		else if (Signal_LCRMeter == SetMgr.signal)
+		{
+			UI.ShowCVGraph(0);
+		}
 		else
 		{
 			UI.ShowGraph(0);

@@ -20,6 +20,7 @@ static int panelHandle;
 #include "UIMgr.h"
 #include "EOMSystem.h"
 
+
 //==============================================================================
 // Constants
 
@@ -64,6 +65,18 @@ static int ShowLCGraph(int x)
 
 	return 0;
 }
+static int ShowCVGraph(int x)
+{
+	QuitUserInterface(0);
+	DiscardPanel(panelHandle);
+	
+	panelHandle = LoadPanel(0, "CVGraph.uir", PANEL);
+	/* display the panel and run the user interface */
+	DisplayPanel(panelHandle);
+	status = RunUserInterface();
+
+	return 0;
+}
 static int ShowGraph(int x)
 {
 	QuitUserInterface(0);
@@ -81,7 +94,8 @@ static int ShowGraph(int x)
 UIMgr UI = {
 	.ShowEntry = ShowEntry,
 	.ShowGraph = ShowGraph,
-	.ShowLCGraph = ShowLCGraph
+	.ShowLCGraph = ShowLCGraph,
+	.ShowCVGraph = ShowCVGraph 
 	};
 
 int main(int argc, char *argv[])
