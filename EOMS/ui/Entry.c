@@ -49,7 +49,6 @@ int CVICALLBACK OnRadioWave(int panel, int control, int event,
 		SetCtrlVal(panel, PANEL_RADIOBUTTON_PICO, 0);
 		SetCtrlVal(panel, PANEL_RADIOBUTTON_LCR, 0);
 	}
-
 	break;
 	}
 	return 0;
@@ -65,7 +64,6 @@ int CVICALLBACK OnRadioLCR(int panel, int control, int event,
 		SetCtrlVal(panel, PANEL_RADIOBUTTON_PICO, 0);
 		SetCtrlVal(panel, PANEL_RADIOBUTTON_WAVE, 0);
 	}
-
 	break;
 	}
 	return 0;
@@ -127,7 +125,10 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 			SetMgr.data |= Data_Current;
 		}
 
+
+
 		System.LoadSettings(0);
+
 
 		if (Signal_Picoammieter == SetMgr.signal)
 		{

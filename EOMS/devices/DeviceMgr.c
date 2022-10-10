@@ -28,7 +28,7 @@
 //==============================================================================
 // Static global variables
 static Device *defaultDeviceArray[DEVICE_MAX_NUM];
-static int threadId = 0;
+
 
 //==============================================================================
 // Static functions
@@ -71,11 +71,22 @@ static int AfterInit(int x)
 	return 0;
 }
 
-static int CVICALLBACK ThreadFunction(void *functionData)
+static int Reset(int x)
 {
-	Delay(2);
+   	
+	for ( int i = 0; i < DEVICE_MAX_NUM; i++)
+	{
+		if (NULL != defaultDeviceArray[i])
+		{
+			defaultDeviceArray[i]->Reset(defaultDeviceArray[i]);
+		}
+	}
+	return 0;
+}
+static int Start(int x)
+{
 
-	for (int i = 0; i < DEVICE_MAX_NUM; i++)
+	for ( int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
 		{
@@ -84,22 +95,6 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			LOG_INFO("after start");
 		}
 	}
-
-	return 0;
-}
-
-static int Start(int x)
-{
-	for (int i = 0; i < DEVICE_MAX_NUM; i++)
-	{
-		if (NULL != defaultDeviceArray[i])
-		{
-			defaultDeviceArray[i]->Reset(defaultDeviceArray[i]);
-		}
-	}
-
-	// ThreadFunction(NULL);
-	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
 
 	return 0;
 }
@@ -149,6 +144,7 @@ DeviceMgr DevMgr = {
 	.AfterInit = AfterInit,
 	.Init = Init,
 	.Shutdown = Shutdown,
+	.Reset = Reset,
 	.Start = Start,
 	.Stop = Stop,
 	.FindWithInstrFlag = FindWithInstrFlag

@@ -71,22 +71,11 @@ int CVICALLBACK onOKBtb(int panel, int control, int event,
 	case EVENT_COMMIT:
 	    if(true == System.isWorking) return 0;
 
-		if (Signal_LCRMeter == SetMgr.signal)
-		{
-			SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_MANUAL, 4000, 10000);
-		}
-		else
-		{
-			SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
-		}
-		if (Signal_Picoammieter == SetMgr.signal)
-		{
-			SetAxisScalingMode( panel, PANEL_STRIPCHART_BOTTOM, VAL_LEFT_YAXIS, VAL_MANUAL, -1000, 1500);
-		}
-		else
-		{
-			SetAxisScalingMode( panel, PANEL_STRIPCHART_BOTTOM, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 1000);
-		}
+
+		SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
+	
+		SetAxisScalingMode( panel, PANEL_STRIPCHART_BOTTOM, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
+		
 		ClearStripChart(panel, PANEL_STRIPCHART_TOP);
 		ClearStripChart(panel, PANEL_STRIPCHART_BOTTOM);
 		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, TRUE);
