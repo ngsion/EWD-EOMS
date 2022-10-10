@@ -19,6 +19,7 @@
 #include "SettingMgr.h"
 #include "Stack.h"
 #include "UIMgr.h"
+#include "DeviceMgr.h"
 
 //==============================================================================
 // Constants
@@ -28,7 +29,6 @@
 
 //==============================================================================
 // Static global variables
-
 
 //==============================================================================
 // Static functions
@@ -112,8 +112,6 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 			SetMgr.signal = Signal_WaveformGenerator;
 		}
 
-		
-		
 		SetMgr.data = Data_None;
 		int picoData = 0;
 		int lcrData = 0;
@@ -129,14 +127,45 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 			SetMgr.data |= Data_Current;
 		}
 
-		System.LoadSettings(0);   
-	
-		
+		System.LoadSettings(0);
+
 		UI.ShowGraph(0);
-	
 	}
 
 	break;
+	}
+	return 0;
+}
+
+int updateStrings(int panel)
+{
+
+	Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+	if (NULL != pMeter && NULL != pMeter->pInstr)
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_PICO, pMeter->pInstr->identifier);
+	}
+	else
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_PICO, "");
+	}
+	pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
+	if (NULL != pMeter && NULL != pMeter->pInstr)
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_LCR, pMeter->pInstr->identifier);
+	}
+	else
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_LCR, "");
+	}
+	pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+	if (NULL != pMeter && NULL != pMeter->pInstr)
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_WAVE, pMeter->pInstr->identifier);
+	}
+	else
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_WAVE, "");
 	}
 	return 0;
 }
@@ -147,7 +176,7 @@ int updateLED(int panel)
 	{
 		SetCtrlVal(panel, PANEL_LED_PICO, 1);
 	}
-    else 
+	else
 	{
 		SetCtrlVal(panel, PANEL_LED_PICO, 0);
 	}
@@ -156,7 +185,7 @@ int updateLED(int panel)
 	{
 		SetCtrlVal(panel, PANEL_LED_LCR, 1);
 	}
-    else 
+	else
 	{
 		SetCtrlVal(panel, PANEL_LED_LCR, 0);
 	}
@@ -164,13 +193,12 @@ int updateLED(int panel)
 	{
 		SetCtrlVal(panel, PANEL_LED_WAVE, 1);
 	}
-    else 
+	else
 	{
 		SetCtrlVal(panel, PANEL_LED_WAVE, 0);
 	}
 	return 0;
 }
-
 
 int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 						int eventData1, int eventData2)
@@ -178,11 +206,12 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	switch (event)
 	{
 	case EVENT_GOT_FOCUS:
-		{
-			 updateLED(panel);    
-		}
+	{
+		updateLED(panel);
+		updateStrings(panel);
+	}
 
-		break;
+	break;
 	case EVENT_LOST_FOCUS:
 
 		break;
