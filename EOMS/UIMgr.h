@@ -27,7 +27,7 @@ typedef struct
 
 	int (*ShowEntry)(int x);
 	int (*ShowGraph)(int x);
-
+    int (*ShowLCGraph)(int x);
 	
 }UIMgr;
 

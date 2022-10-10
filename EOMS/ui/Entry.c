@@ -129,7 +129,14 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 
 		System.LoadSettings(0);
 
-		UI.ShowGraph(0);
+		if (Signal_Picoammieter == SetMgr.signal)
+		{
+			UI.ShowLCGraph(0);
+		}
+		else
+		{
+			UI.ShowGraph(0);
+		}
 	}
 
 	break;

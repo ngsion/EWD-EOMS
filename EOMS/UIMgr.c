@@ -52,6 +52,18 @@ static int ShowEntry(int x)
 
 	return 0;
 }
+static int ShowLCGraph(int x)
+{
+	QuitUserInterface(0);
+	DiscardPanel(panelHandle);
+	
+	panelHandle = LoadPanel(0, "LCGraph.uir", PANEL);
+	/* display the panel and run the user interface */
+	DisplayPanel(panelHandle);
+	status = RunUserInterface();
+
+	return 0;
+}
 static int ShowGraph(int x)
 {
 	QuitUserInterface(0);
@@ -68,7 +80,9 @@ static int ShowGraph(int x)
 // Global variables
 UIMgr UI = {
 	.ShowEntry = ShowEntry,
-	.ShowGraph = ShowGraph};
+	.ShowGraph = ShowGraph,
+	.ShowLCGraph = ShowLCGraph
+	};
 
 int main(int argc, char *argv[])
 {
