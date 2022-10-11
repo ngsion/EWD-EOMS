@@ -176,35 +176,7 @@ static int Stop(Device *pDev)
 
 	return 0;
 }
-static int QueryID(Device *pDev)
-{
-	if (!pDev)
-	{
-		LOG_ERROR("error in Device QueryID");
-		return -1;
-	}
-	LCRMeter *pMeter = (LCRMeter *)pDev;
-	ViStatus status = VI_SUCCESS;
 
-	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
-	{
-		LOG_INFO("LCRMeter QueryID");
-
-		ViSession session = pMeter->device.pInstr->session;
-
-		// status = viPrintf(session, "*IDN?\n");
-	}
-	else
-	{
-		LOG_ERROR("LCRMeter Start failed null %d ", NULL == pMeter->device.pInstr);
-	}
-
-	if (status < VI_SUCCESS)
-	{
-		LOG_ERROR("status is %d.", status);
-	}
-	return 0;
-}
 //==============================================================================
 // Global variables
 
@@ -221,7 +193,6 @@ void LCRMeterInit(LCRMeter *pDev)
 	pDev->SetAttribute = SetAttribute;
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
-	pDev->device.QueryID = QueryID;
 	pDev->device.DoWithCommand = DoWithCommand;
 	pDev->device.Reset = Reset;
 }

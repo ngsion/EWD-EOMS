@@ -31,8 +31,6 @@
 //==============================================================================
 // Static global variables
 
-
-
 //==============================================================================
 // Static functions
 
@@ -69,13 +67,13 @@ int CVICALLBACK onOKBtb(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-	    if(true == System.isWorking) return 0;
+		if (true == System.isWorking)
+			return 0;
 
+		//	SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
 
-		SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
-	
-		SetAxisScalingMode( panel, PANEL_STRIPCHART_BOTTOM, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
-		
+		//	SetAxisScalingMode( panel, PANEL_STRIPCHART_BOTTOM, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
+
 		ClearStripChart(panel, PANEL_STRIPCHART_TOP);
 		ClearStripChart(panel, PANEL_STRIPCHART_BOTTOM);
 		SetCtrlAttribute(panel, PANEL_TIMER, ATTR_ENABLED, TRUE);
@@ -131,19 +129,27 @@ int CVICALLBACK UpdateTimer(int panel, int control, int event,
 				if (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter)
 				{
 					double oneData = 0;
-					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
 					{
-						LOG_INFO("queeu size %d , data is %f", MeasureMgr.pMeasureArray[i]->pDataQueue->size, oneData);
-						PlotStripChartPoint(panel, PANEL_STRIPCHART_TOP, oneData);
+						int size = MeasureMgr.pMeasureArray[i]->pDataQueue->size;
+						while (size > 0)
+						{
+							MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData);
+							PlotStripChartPoint(panel, PANEL_STRIPCHART_TOP, oneData);
+
+							--size;
+						}
 					}
 				}
 				else if (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter)
 				{
 					double oneData = 0;
-					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
+
+					int size = MeasureMgr.pMeasureArray[i]->pDataQueue->size;
+					while (size > 0)
 					{
-						LOG_INFO("queeu size %d , data is %f", MeasureMgr.pMeasureArray[i]->pDataQueue->size, oneData);
+						MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData);
 						PlotStripChartPoint(panel, PANEL_STRIPCHART_BOTTOM, oneData);
+						--size;
 					}
 				}
 			}

@@ -142,6 +142,7 @@ static int Stop(int x)
 {
 	System.isWorking = false;
 	MeasureMgr.Stop(x);
+	DevMgr.Reset(x);
 	DevMgr.Stop(x);
 	DataMgr.Stop(x);
 	return 0;
@@ -198,11 +199,11 @@ static int LoadSettings(int x)
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
+	Delay(1); 
 	if (Signal_Picoammieter == SetMgr.signal)
 	{
 			DevMgr.Start(0);
-	        DataMgr.Start(0);
-
+	       
 		Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
 		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
 
@@ -245,8 +246,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	{
 
 			DevMgr.Start(0);
-	       DataMgr.Start(0);
-
+	      
 		Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
 		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
 		if (NULL != pMeter && NULL != pMeasure)
@@ -298,7 +298,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	{
 
 		MeasureMgr.Start(0);
-	    DataMgr.Start(0);
+	    
 		
 		Delay(1); 
 		DevMgr.Start(0);
@@ -312,7 +312,8 @@ static int Start(int x)
 	System.isWorking = true;
     
 	DevMgr.Reset(x);
-   
+    DataMgr.Start(0);
+
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
 
 	return 0;

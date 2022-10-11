@@ -45,7 +45,7 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 		int num;
 		unsigned char buffer[80];
 		memset(buffer, 0, 80);
-		ViUInt32 retCount;
+		ViUInt32 retCount = 0;
 		status = viRead(session, buffer, 80, &retCount);
 		if (status < VI_SUCCESS)
 		{
