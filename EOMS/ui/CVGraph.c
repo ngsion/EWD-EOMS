@@ -31,6 +31,7 @@
 // Static global variables
 static double lastX = -1;
 static double lastY = -1;
+static bool shouldchange = false;
 //==============================================================================
 // Static functions
 
@@ -46,11 +47,10 @@ int CVICALLBACK OnPanelCV(int panel, int event, void *callbackData,
 	switch (event)
 	{
 	case EVENT_GOT_FOCUS:
-		{
-			
-		}
+	{
+	}
 
-		break;
+	break;
 	case EVENT_LOST_FOCUS:
 
 		break;
@@ -82,10 +82,11 @@ int CVICALLBACK OnStartCVBtn(int panel, int control, int event,
 
 		SetAxisScalingMode(panel, PANEL_GRAPH, VAL_LEFT_YAXIS, VAL_MANUAL, 4000, 10000);
 
-		DeleteGraphPlot(panel,PANEL_GRAPH,-1,VAL_IMMEDIATE_DRAW);  
+		DeleteGraphPlot(panel, PANEL_GRAPH, -1, VAL_IMMEDIATE_DRAW);
 
 		SetCtrlAttribute(panel, PANEL_TIMER_CV, ATTR_ENABLED, TRUE);
-		
+
+		shouldchange = false;
 
 		System.Start(0);
 
@@ -134,7 +135,18 @@ int CVICALLBACK UpdateTimerCV(int panel, int control, int event,
 				}
 				else
 				{
-					PlotLine(panel, PANEL_GRAPH, lastX, lastY, inData, oneData, VAL_DK_BLUE);
+					if (lastX >= 30)
+					{
+						shouldchange = true;
+					}
+					if (shouldchange)
+					{
+						PlotLine(panel, PANEL_GRAPH, lastX, lastY, inData, oneData, VAL_DK_RED);
+					}
+					else
+					{
+						PlotLine(panel, PANEL_GRAPH, lastX, lastY, inData, oneData, VAL_DK_BLUE);
+					}
 				}
 				lastX = inData;
 				lastY = oneData;
