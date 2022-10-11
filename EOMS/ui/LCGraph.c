@@ -20,6 +20,7 @@
 #include "Map.h"
 #include "SettingMgr.h"
 #include "UIMgr.h"
+#include "MeasurementMgr.h"
 
 //==============================================================================
 // Constants
@@ -112,23 +113,20 @@ int CVICALLBACK UpdateTimerLC(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_TIMER_TICK:
-		for (int i = 0; i < MEASURE_MAX_NUM; i++)
+	{
+		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
+
+		if (NULL != pMeasure)
 		{
-			if (NULL != MeasureMgr.pMeasureArray[i])
+			double oneData = 0;
+			if (true == pMeasure->pDataQueue->Pop(pMeasure->pDataQueue, &oneData))
 			{
-				if (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter)
-				{
-					double oneData = 0;
-					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
-					{
-						LOG_INFO("queeu size %d , data is %f", MeasureMgr.pMeasureArray[i]->pDataQueue->size, oneData);
-						PlotStripChartPoint(panel, PANEL_STRIPCHART, oneData);
-					}
-				}
+				LOG_INFO("queeu size %d , data is %f", pMeasure->pDataQueue->size, oneData);
+				PlotStripChartPoint(panel, PANEL_STRIPCHART, oneData);
 			}
 		}
-
-		break;
+	}
+	break;
 	}
 	return 0;
 }

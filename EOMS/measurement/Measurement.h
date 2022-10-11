@@ -33,6 +33,7 @@
 typedef struct Measurement
 {
     Instrument * pInstr;
+    Queue * pInDataQueue;
     Queue * pDataQueue;
     bool isCollector;
     int  jobId;
@@ -43,7 +44,7 @@ typedef struct Measurement
 
     int (*Start)(struct Measurement * pDev);
     int (*Stop)(struct Measurement * pDev);
-    int (*DoMeasureWithCommand)(struct Measurement * pDev, void * inData, void * outData);
+    int (*DoMeasureWithCommand)(struct Measurement * pDev, void * inData, void * outData1, void * outData2);
 
 }Measurement;
 

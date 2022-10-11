@@ -53,12 +53,13 @@ static int Init(int x)
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
 	Measurement *pMeasure = (Measurement *)functionData;
+	int count = 0;
 	while (true == isCollecting)
 	{
 		double value = 0;
 		double dvalue = 0;
 		LOG_INFO("before mesure");
-		if (0 == pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value))
+		if (0 == pMeasure->DoMeasureWithCommand(pMeasure, NULL , &value, &dvalue))
 		{
 			if(pMeasure->instrumentFlag == Instrument_Picoammeter)
 			{

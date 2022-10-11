@@ -29,7 +29,8 @@
 
 //==============================================================================
 // Static global variables
-
+static double lastX = -1;
+static double lastY = -1;
 //==============================================================================
 // Static functions
 
@@ -39,20 +40,22 @@
 //==============================================================================
 // Global functions
 
-
-int CVICALLBACK OnPanelCV (int panel, int event, void *callbackData,
-						   int eventData1, int eventData2)
+int CVICALLBACK OnPanelCV(int panel, int event, void *callbackData,
+						  int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_GOT_FOCUS:
+	case EVENT_GOT_FOCUS:
+		{
+			
+		}
 
-			break;
-		case EVENT_LOST_FOCUS:
+		break;
+	case EVENT_LOST_FOCUS:
 
-			break;
-		case EVENT_CLOSE:
-				{
+		break;
+	case EVENT_CLOSE:
+	{
 		if (true == System.isWorking)
 		{
 			System.Stop(0);
@@ -62,77 +65,84 @@ int CVICALLBACK OnPanelCV (int panel, int event, void *callbackData,
 		QuitUserInterface(0);
 	}
 
-
-			break;
+	break;
 	}
 	return 0;
 }
 
-int CVICALLBACK OnStartCVBtn (int panel, int control, int event,
-							void *callbackData, int eventData1, int eventData2)
+int CVICALLBACK OnStartCVBtn(int panel, int control, int event,
+							 void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_COMMIT:
-			
+	case EVENT_COMMIT:
+
 		if (true == System.isWorking)
 			return 0;
 
-		SetAxisScalingMode( panel, PANEL_STRIPCHART_CV, VAL_LEFT_YAXIS, VAL_MANUAL, 4000, 10000);  
+		SetAxisScalingMode(panel, PANEL_GRAPH, VAL_LEFT_YAXIS, VAL_MANUAL, 4000, 10000);
 
-		ClearStripChart(panel, PANEL_STRIPCHART_CV);
+		DeleteGraphPlot(panel,PANEL_GRAPH,-1,VAL_IMMEDIATE_DRAW);  
 
 		SetCtrlAttribute(panel, PANEL_TIMER_CV, ATTR_ENABLED, TRUE);
-		SetCtrlAttribute(panel, PANEL_STRIPCHART_CV, ATTR_SCROLL_MODE, VAL_CONTINUOUS);
+		
 
 		System.Start(0);
 
 		break;
-
-	
 	}
 	return 0;
 }
 
-int CVICALLBACK OnCVBack (int panel, int control, int event,
-						void *callbackData, int eventData1, int eventData2)
+int CVICALLBACK OnCVBack(int panel, int control, int event,
+						 void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_COMMIT:
-				SetCtrlAttribute(panel, PANEL_TIMER_CV, ATTR_ENABLED, FALSE);
+	case EVENT_COMMIT:
+		SetCtrlAttribute(panel, PANEL_TIMER_CV, ATTR_ENABLED, FALSE);
 		System.Stop(0);
 
 		UI.ShowEntry(0);
 
-			break;
+		break;
 	}
 	return 0;
 }
 
-int CVICALLBACK UpdateTimerCV (int panel, int control, int event,
-							   void *callbackData, int eventData1, int eventData2)
+int CVICALLBACK UpdateTimerCV(int panel, int control, int event,
+							  void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_TIMER_TICK:
-					for (int i = 0; i < MEASURE_MAX_NUM; i++)
+	case EVENT_TIMER_TICK:
+	{
+		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
+		if (NULL != pMeasure)
 		{
-			if (NULL != MeasureMgr.pMeasureArray[i])
+
+			int size = pMeasure->pDataQueue->size;
+			double oneData = 0;
+			double inData = 0;
+			while (size > 0)
 			{
-				if (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter)
+				pMeasure->pDataQueue->Pop(pMeasure->pDataQueue, &oneData);
+				pMeasure->pInDataQueue->Pop(pMeasure->pInDataQueue, &inData);
+
+				if (-1 == lastX && -1 == lastY)
 				{
-					double oneData = 0;
-					if (true == MeasureMgr.pMeasureArray[i]->pDataQueue->Pop(MeasureMgr.pMeasureArray[i]->pDataQueue, &oneData))
-					{
-						LOG_INFO("queeu size %d , data is %f", MeasureMgr.pMeasureArray[i]->pDataQueue->size, oneData);
-						PlotStripChartPoint(panel, PANEL_STRIPCHART_CV, oneData);
-					}
 				}
-			
+				else
+				{
+					PlotLine(panel, PANEL_GRAPH, lastX, lastY, inData, oneData, VAL_DK_BLUE);
+				}
+				lastX = inData;
+				lastY = oneData;
+				--size;
 			}
 		}
-			break;
+	}
+	break;
 	}
 	return 0;
 }

@@ -36,7 +36,7 @@ static int Stop(Measurement * pDev){
    return 0;
 }
 
- static int DoMeasureWithCommand(struct Measurement * pDev, void * inData, void * outData)
+ static int DoMeasureWithCommand(struct Measurement * pDev, void * inData, void * outData1, void * outData2)
  {
 	LOG_INFO("Measurement DoMeasureWithCommand");
     return 0;
@@ -58,11 +58,12 @@ void MeasurementInit(Measurement * pDev)
 	pDev->isCollector = false;
 	pDev->DoMeasureWithCommand = DoMeasureWithCommand;
 	pDev->pDataQueue = QueueAllocInit();
-
+    pDev->pInDataQueue = QueueAllocInit();
 }
 void MeasurementDeinit(Measurement * pDev)
 {
 	pDev->instrumentFlag = Instrument_Unknown; 
 	pDev->pInstr = NULL;
 	QueueDelloc(pDev->pDataQueue);
+	QueueDelloc(pDev->pInDataQueue);
 }

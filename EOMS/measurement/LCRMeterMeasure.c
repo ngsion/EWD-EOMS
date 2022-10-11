@@ -30,7 +30,7 @@
 
 //==============================================================================
 // Static functions
-static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *outData)
+static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *outData1, void *outData2)
 {
 	LCRMeterMeasure *pMeter = (LCRMeterMeasure *)pDev;
 	int result = -1;
@@ -56,8 +56,8 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			double CpValue = 0.0;
 			double DValue = 0.0;
 
-			double *pOutValue = (double *)outData;
-			double *pDValue = (double *)inData;   
+			double *pOutValue = (double *)outData1;
+			double *pDValue = (double *)outData2;
 			LOG_INFO("instrument %d return %d is: %*s\n", session, retCount, retCount, buffer);
 			char *p = NULL;
 			p = strtok(buffer, ",");
@@ -76,14 +76,19 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			{
 				num = Scan(p, "%s>%d", &result);
 			}
-		
+
 			if (0 == result)
 			{
 				*pOutValue = CpValue;
 				*pDValue = DValue;
 				pDev->pDataQueue->Push(pDev->pDataQueue, *pOutValue);
+				if (inData != NULL)
+				{
+					double *indat = (double *)inData;
+					pDev->pInDataQueue->Push(pDev->pInDataQueue, *indat);
+				}
 			}
-			LOG_INFO("num is %d , CpValue is %f DValue is %f queue size %d\n", num, CpValue, DValue,pDev->pDataQueue->size); 
+			LOG_INFO("num is %d , CpValue is %f DValue is %f queue size %d , inqueue size %d\n", num, CpValue, DValue, pDev->pDataQueue->size, pDev->pInDataQueue->size);
 		}
 	}
 	else
@@ -108,14 +113,12 @@ static int Start(Measurement *pDev)
 		LOG_INFO("LCRMeterMeasure starts");
 		ViStatus status;
 		ViSession session = pMeter->measure.pInstr->session;
-        status = viPrintf(session, "FUNC:IMP CPD\n");
+		status = viPrintf(session, "FUNC:IMP CPD\n");
 		status = viPrintf(session, "FREQ 1kHz\n");
 		status = viPrintf(session, "VOLT 1V\n");
-		status = viPrintf(session, "APERture FAST\n");
+		status = viPrintf(session, "APERture MED\n");
 		status = viPrintf(session, "BIAS:VOLT 0\n");
-		//status = viPrintf(session, "BIAS:STATE 0\n");
-		
-
+		// status = viPrintf(session, "BIAS:STATE 0\n");
 	}
 	else
 	{

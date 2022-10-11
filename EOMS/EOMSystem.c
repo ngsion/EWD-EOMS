@@ -210,14 +210,14 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		if (NULL != pMeter && NULL != pMeasure)
 		{
 			int index = 0;
-			float volt = 0;
+			double volt = 0;
 			double value = 0;
 			for (index = 0; index <= 15; index++)
 			{
-				float volt = index * 2;
+				double volt = index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
 				DataMgr.SaveInt("V", volt);
-				pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &value, NULL);
 				DataMgr.SaveDouble("I+", value);
 				Delay(1);
 			}
@@ -225,9 +225,9 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			Stack *pStack = StackAllocInit();
 			for (index = 0; index <= 15; index++)
 			{
-				float volt = 30 - index * 2;
+				double volt = 30 - index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
-				pMeasure->DoMeasureWithCommand(pMeasure, NULL, &value);
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &value, NULL);
 				pStack->InStack(pStack, value);
 				Delay(1);
 			}
@@ -245,7 +245,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	else if (Signal_LCRMeter == SetMgr.signal)
 	{
 
-			DevMgr.Start(0);
+		DevMgr.Start(0);
 	      
 		Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
 		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
@@ -254,13 +254,13 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			int index = 0;
 			double value = 0;
 			double dvalue = 0.0;
-			float volt = 0;
+			double volt = 0;
 			for (index = 0; index <= 15; index++)
 			{
 				volt = index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
 				DataMgr.SaveInt("V", volt);
-				pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value);
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt , &value, &dvalue);
 				DataMgr.SaveDouble("C(+)", value);
 				DataMgr.SaveKey("C(-)");
 				DataMgr.SaveDouble("D(+)", dvalue);
@@ -273,7 +273,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			{
 				volt = 30 - index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
-				pMeasure->DoMeasureWithCommand(pMeasure, &dvalue, &value);
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &value, &dvalue);
 				cStack->InStack(cStack,value);
 				dStack->InStack(dStack,dvalue);
 				Delay(0.5);

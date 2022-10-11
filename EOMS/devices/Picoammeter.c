@@ -38,7 +38,7 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 
-		float *pVolt = (float *)inData;
+		double *pVolt = (double *)inData;
 		LOG_INFO("before viPrintf %f",*pVolt);
 		status = viPrintf(session, ":SOUR1:VOLT %0.2f\n", *pVolt);
 		LOG_INFO("after viPrintf");

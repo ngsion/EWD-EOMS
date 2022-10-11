@@ -14,10 +14,10 @@
      /* Panels and Controls: */
 
 #define  PANEL                            1       /* callback function: OnPanelCV */
-#define  PANEL_STRIPCHART_CV              2       /* control type: strip, callback function: (none) */
-#define  PANEL_COMMANDBUTTON              3       /* control type: command, callback function: OnStartCVBtn */
-#define  PANEL_COMMANDBUTTON_2            4       /* control type: command, callback function: OnCVBack */
-#define  PANEL_TIMER_CV                   5       /* control type: timer, callback function: UpdateTimerCV */
+#define  PANEL_COMMANDBUTTON              2       /* control type: command, callback function: OnStartCVBtn */
+#define  PANEL_COMMANDBUTTON_2            3       /* control type: command, callback function: OnCVBack */
+#define  PANEL_TIMER_CV                   4       /* control type: timer, callback function: UpdateTimerCV */
+#define  PANEL_GRAPH                      5       /* control type: graph, callback function: (none) */
 
 
      /* Control Arrays: */

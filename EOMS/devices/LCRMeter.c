@@ -52,7 +52,7 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 	LCRMeter *pMeter = (LCRMeter *)pDev;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
-        float *pVolt = (float *)inData;
+        double *pVolt = (double *)inData;
 		ViStatus status;
 		ViSession session = pMeter->device.pInstr->session;
 		status = viPrintf(session, "BIAS:VOLT %0.2f\n",*pVolt);
