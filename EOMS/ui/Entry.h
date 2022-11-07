@@ -25,12 +25,15 @@
 #define  PANEL_LED_PICO                   10      /* control type: LED, callback function: (none) */
 #define  PANEL_TEXTBOX_PICO               11      /* control type: textBox, callback function: (none) */
 #define  PANEL_TEXTBOX_LCR                12      /* control type: textBox, callback function: (none) */
-#define  PANEL_TEXTBOX_WAVE               13      /* control type: textBox, callback function: (none) */
-#define  PANEL_TEXTMSG                    14      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_2                  15      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_3                  16      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_4                  17      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_5                  18      /* control type: textMsg, callback function: (none) */
+#define  PANEL_TEXTBOX_ADMESY             13      /* control type: textBox, callback function: (none) */
+#define  PANEL_TEXTBOX_WAVE               14      /* control type: textBox, callback function: (none) */
+#define  PANEL_TEXTMSG                    15      /* control type: textMsg, callback function: (none) */
+#define  PANEL_TEXTMSG_2                  16      /* control type: textMsg, callback function: (none) */
+#define  PANEL_TEXTMSG_3                  17      /* control type: textMsg, callback function: (none) */
+#define  PANEL_TEXTMSG_4                  18      /* control type: textMsg, callback function: (none) */
+#define  PANEL_TEXTMSG_5                  19      /* control type: textMsg, callback function: (none) */
+#define  PANEL_LED_ADMESY                 20      /* control type: LED, callback function: (none) */
+#define  PANEL_TEXTMSG_6                  21      /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */

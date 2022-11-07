@@ -18,6 +18,7 @@
 #include "WaveformGenerator.h"
 #include "logger.h"
 #include "LCRMeter.h"
+#include "Admesy.h"
 
 //==============================================================================
 // Constants
@@ -47,6 +48,9 @@ static int Init(int x)
 
 	defaultDeviceArray[2] = (Device *)malloc(sizeof(LCRMeter));
 	LCRMeterInit((LCRMeter *)defaultDeviceArray[2]);
+   
+	defaultDeviceArray[3] = (Device *)malloc(sizeof(Admesy));
+	AdmesyInit((Admesy *)defaultDeviceArray[3]);
 
 	return 0;
 }

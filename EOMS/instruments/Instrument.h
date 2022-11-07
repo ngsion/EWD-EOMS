@@ -35,7 +35,8 @@ typedef enum{
     Instrument_Unknown = 0,
     Instrument_Picoammeter = 1,
     Instrument_LCRMeter,
-    Instrument_WaveformGenerator
+    Instrument_WaveformGenerator,
+    Instrument_Admesy
 };
 
     typedef enum

@@ -83,7 +83,7 @@ static int Start(Device *pDev)
 		ViSession session = pMeter->device.pInstr->session;
 		status = viPrintf(session, "FUNC:IMP CPD\n");
 		status = viPrintf(session, "FREQ 1kHz\n");
-		status = viPrintf(session, "VOLT 1V\n");
+		status = viPrintf(session, "VOLT 0.5V\n");
 		status = viPrintf(session, "APERture FAST\n");
 		status = viPrintf(session, "BIAS:VOLT 0\n");
 		status = viPrintf(session, "BIAS:STATE 1\n");

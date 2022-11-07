@@ -179,6 +179,15 @@ int updateStrings(int panel)
 	{
 		SetCtrlVal(panel, PANEL_TEXTBOX_WAVE, "");
 	}
+	pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
+	if (NULL != pMeter && NULL != pMeter->pInstr)
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_ADMESY, pMeter->pInstr->identifier);
+	}
+	else
+	{
+		SetCtrlVal(panel, PANEL_TEXTBOX_ADMESY, "");
+	}
 	return 0;
 }
 
@@ -208,6 +217,14 @@ int updateLED(int panel)
 	else
 	{
 		SetCtrlVal(panel, PANEL_LED_WAVE, 0);
+	}
+	if (SetMgr.online & Online_Admesy)
+	{
+		SetCtrlVal(panel, PANEL_LED_ADMESY, 1);
+	}
+	else
+	{
+		SetCtrlVal(panel, PANEL_LED_ADMESY, 0);
 	}
 	return 0;
 }

@@ -49,7 +49,7 @@ int CVICALLBACK OnStartBtn(int panel, int control, int event,
 		if (true == System.isWorking)
 			return 0;
 
-		SetAxisScalingMode(panel, PANEL_STRIPCHART, VAL_LEFT_YAXIS, VAL_MANUAL, -1000, 1500);
+//		SetAxisScalingMode(panel, PANEL_STRIPCHART, VAL_LEFT_YAXIS, VAL_MANUAL, -1000, 1500);
 
 		ClearStripChart(panel, PANEL_STRIPCHART);
 

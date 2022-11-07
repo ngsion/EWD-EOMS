@@ -58,7 +58,7 @@ static int sFindResource()
 		viClose(defaultRM);
 		return -1;
 	}
-	LOG_INFO(" %d instruments are detected. defaultRM is %d", numInstrs,defaultRM);
+	LOG_INFO(" %d instruments are detected. defaultRM is %d", numInstrs, defaultRM);
 
 	unsigned short intfType;
 	unsigned short intfNum;
@@ -70,7 +70,8 @@ static int sFindResource()
 
 		LOG_INFO("instrument %s is connected, intfType is %d,intfNum is %d.", instrResourceString, intfType, intfNum);
 
-		if( intfType != VI_INTF_ASRL && intfType != VI_INTF_USB && intfType != VI_INTF_GPIB){
+		if (intfType != VI_INTF_ASRL && intfType != VI_INTF_USB && intfType != VI_INTF_GPIB)
+		{
 			--i;
 			continue;
 		}
@@ -101,14 +102,44 @@ static int sFindResource()
 
 static int Init(int x)
 {
-	
 	return sFindResource(x);
+}
+static int Open(InstrumentMgr *pMgr)
+{
+	InstrumentListNode *cur = *(pMgr->plist);
+	InstrumentListNode *next = NULL;
+	while (NULL != cur)
+	{
+		next = cur->next;
+		cur->pInstr->Open(cur->pInstr);
+		cur = next;
+	}
+
+	return 0;
+}
+static int QueryID(InstrumentMgr *pMgr)
+{
+	InstrumentListNode *cur = *(pMgr->plist);
+	InstrumentListNode *next = NULL;
+	while (NULL != cur)
+	{
+		next = cur->next;
+
+		if (cur->pInstr->type == Instrument_Type_USB)
+		{
+			cur->pInstr->QueryID(cur->pInstr);
+		}
+
+		cur = next;
+	}
+	
+	return 0;
 }
 static int Shutdown(int x)
 {
 	if (NULL != defaultRM)
 	{
-	//	viClose(defaultRM);
+		//	viClose(defaultRM);
 	}
 	InstrumentListClear(&defaultInstrList);
 	return 0;
@@ -119,7 +150,9 @@ static int Shutdown(int x)
 
 InstrumentMgr InstrMgr = {
 	.plist = &defaultInstrList,
+	.Open = Open,
 	.Init = Init,
+	.QueryID = QueryID,
 	.Shutdown = Shutdown
 
 };

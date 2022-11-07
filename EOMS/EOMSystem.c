@@ -57,15 +57,48 @@ static int Init(int x)
 	MeasureMgr.Init(x);
 	SetMgr.Init(x);
 
+	InstrMgr.Open(&InstrMgr);
+
+	InstrMgr.QueryID(&InstrMgr);
+
 	InstrumentListNode *pHead = *InstrMgr.plist;
 	while (pHead != NULL)
 	{
 		InstrumentListNode *pNode = pHead;
-		LOG_INFO("Init one instrument is %s", pNode->pInstr->address);
-		pNode->pInstr->Open(pNode->pInstr);
+		LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+
 		Device *pMeter = NULL;
 		Measurement *pMeasure = NULL;
-		if (Instrument_Type_ASRL == pNode->pInstr->type)
+		if (Instrument_Type_GPIB == pNode->pInstr->type)
+		{
+			pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
+			SetMgr.online |= Online_LCRMeter;
+			pMeter->pInstr = pNode->pInstr;
+
+			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
+			pMeasure->pInstr = pNode->pInstr;
+		}
+		else if (Instrument_Type_USB == pNode->pInstr->type)
+		{
+
+			if (NULL != strstr(pNode->pInstr->identifier, "Agilent"))
+			{
+				pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+				SetMgr.online |= Online_WaveformGenerator;
+				pMeter->pInstr = pNode->pInstr;
+
+				pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+				pMeasure->pInstr = pNode->pInstr;
+			}
+			else if (NULL != strstr(pNode->pInstr->identifier, "Admesy"))
+			{
+				pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
+				SetMgr.online |= Online_Admesy;
+				pMeter->pInstr = pNode->pInstr;
+
+			}
+		}
+		else if (Instrument_Type_ASRL == pNode->pInstr->type)
 		{
 			pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
 			if (NULL != pMeter)
@@ -80,41 +113,11 @@ static int Init(int x)
 				pMeasure->pInstr = pNode->pInstr;
 			}
 		}
-		else if (Instrument_Type_USB == pNode->pInstr->type)
-		{
 
-			pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
-			if (NULL != pMeter)
-			{
-				SetMgr.online |= Online_WaveformGenerator;
-				pMeter->pInstr = pNode->pInstr;
-			}
-
-			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
-			if (NULL != pMeasure)
-			{
-				pMeasure->pInstr = pNode->pInstr;
-			}
-		}
-		else if (Instrument_Type_GPIB == pNode->pInstr->type)
-		{
-			pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
-			if (NULL != pMeter)
-			{
-				SetMgr.online |= Online_LCRMeter;
-				pMeter->pInstr = pNode->pInstr;
-			}
-
-			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
-			if (NULL != pMeasure)
-			{
-				pMeasure->pInstr = pNode->pInstr;
-			}
-		}
 		pHead = pNode->next;
 	}
 
-	DevMgr.AfterInit(0);
+	// DevMgr.AfterInit(0);
 	return 0;
 }
 static int Shutdown(int x)
@@ -193,17 +196,16 @@ static int LoadSettings(int x)
 		}
 	}
 
-
 	return 0;
 }
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
-	Delay(1); 
+	Delay(1);
 	if (Signal_Picoammieter == SetMgr.signal)
 	{
-			DevMgr.Start(0);
-	       
+		DevMgr.Start(0);
+
 		Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
 		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
 
@@ -246,7 +248,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	{
 
 		DevMgr.Start(0);
-	      
+
 		Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
 		Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
 		if (NULL != pMeter && NULL != pMeasure)
@@ -260,7 +262,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 				volt = index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
 				DataMgr.SaveInt("V", volt);
-				pMeasure->DoMeasureWithCommand(pMeasure, &volt , &value, &dvalue);
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &value, &dvalue);
 				DataMgr.SaveDouble("C(+)", value);
 				DataMgr.SaveKey("C(-)");
 				DataMgr.SaveDouble("D(+)", dvalue);
@@ -274,8 +276,8 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 				volt = 30 - index * 2;
 				pMeter->DoWithCommand(pMeter, &volt, NULL);
 				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &value, &dvalue);
-				cStack->InStack(cStack,value);
-				dStack->InStack(dStack,dvalue);
+				cStack->InStack(cStack, value);
+				dStack->InStack(dStack, dvalue);
 				Delay(0.5);
 			}
 			while (cStack->Size(cStack) > 0)
@@ -298,11 +300,9 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	{
 
 		MeasureMgr.Start(0);
-	    
-		
-		Delay(1); 
-		DevMgr.Start(0);
 
+		Delay(1);
+		DevMgr.Start(0);
 	}
 	return 0;
 }
@@ -310,9 +310,9 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 static int Start(int x)
 {
 	System.isWorking = true;
-    
+
 	DevMgr.Reset(x);
-    DataMgr.Start(0);
+	DataMgr.Start(0);
 
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
 

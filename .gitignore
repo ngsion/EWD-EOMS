@@ -53,6 +53,7 @@ Mkfile.old
 dkms.conf
 
 cvibuild.EOMS/
+cvidistkit.EWD-EOMS/
 log/
 data/
 .vscode/

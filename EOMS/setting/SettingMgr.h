@@ -36,7 +36,8 @@ typedef enum{
     Online_Picoammieter = 1 << 0,
     Online_WaveformGenerator= 1 << 1,
     Online_LCRMeter = 1 << 2,
-    Online_All = Signal_Picoammieter | Signal_WaveformGenerator | Signal_LCRMeter
+    Online_Admesy = 1 << 3,
+    Online_All = Signal_Picoammieter | Signal_WaveformGenerator | Signal_LCRMeter | Online_Admesy
 };
 
 typedef enum{

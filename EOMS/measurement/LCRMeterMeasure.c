@@ -115,7 +115,7 @@ static int Start(Measurement *pDev)
 		ViSession session = pMeter->measure.pInstr->session;
 		status = viPrintf(session, "FUNC:IMP CPD\n");
 		status = viPrintf(session, "FREQ 1kHz\n");
-		status = viPrintf(session, "VOLT 1V\n");
+		status = viPrintf(session, "VOLT 0V\n");
 		status = viPrintf(session, "APERture MED\n");
 		status = viPrintf(session, "BIAS:VOLT 0\n");
 		// status = viPrintf(session, "BIAS:STATE 0\n");

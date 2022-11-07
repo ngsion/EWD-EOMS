@@ -80,7 +80,9 @@ int CVICALLBACK OnStartCVBtn(int panel, int control, int event,
 		if (true == System.isWorking)
 			return 0;
 
-		SetAxisScalingMode(panel, PANEL_GRAPH, VAL_LEFT_YAXIS, VAL_MANUAL, 4000, 10000);
+	//	SetPlotAttribute(panel, PANEL_GRAPH,  ATTR_LINE_STYLE, VAL_SOLID);  
+		
+	///	SetAxisScalingMode(panel, PANEL_GRAPH, VAL_LEFT_YAXIS, VAL_MANUAL, 4000, 10000);
 
 		DeleteGraphPlot(panel, PANEL_GRAPH, -1, VAL_IMMEDIATE_DRAW);
 
