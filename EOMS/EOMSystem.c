@@ -87,8 +87,6 @@ static int Init(int x)
 				SetMgr.online |= Online_WaveformGenerator;
 				pMeter->pInstr = pNode->pInstr;
 
-				pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
-				pMeasure->pInstr = pNode->pInstr;
 			}
 			else if (NULL != strstr(pNode->pInstr->identifier, "Admesy"))
 			{
