@@ -55,6 +55,11 @@ static int Stop(Device *pDev)
 	LOG_INFO("Device Stops");
 	return 0;
 }
+static int SetAttribute(Device *pDev)
+{
+   LOG_INFO("Device SetAttribute");
+   return 0;
+}
 static int QueryID(Device *pDev)
 {
 	if (!pDev)
@@ -94,6 +99,7 @@ void DeviceInit(Device *pDev)
 	pDev->Start = Start;
 	pDev->Stop = Stop;
 	pDev->QueryID = QueryID;
+	pDev->SetAttribute = SetAttribute;
 	pDev->DoWithCommand = DoWithCommand;
 	pDev->Reset = Reset;
 }

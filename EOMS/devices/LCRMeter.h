@@ -29,8 +29,6 @@ typedef struct LCRMeter
 {
     Device device;
    
-    int (*SetAttribute)(struct Device * pDev);
-
 }LCRMeter;
 
 

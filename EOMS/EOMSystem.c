@@ -59,9 +59,33 @@ static int Init(int x)
 
 	InstrMgr.Open(&InstrMgr);
 
+	InstrumentListNode *pHead = *InstrMgr.plist;
+
+	while (pHead != NULL)
+	{
+		InstrumentListNode *pNode = pHead;
+		
+		Device *pMeter = NULL;
+		Measurement *pMeasure = NULL;
+		
+		if (Instrument_Type_ASRL == pNode->pInstr->type)
+		{
+			pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+			SetMgr.online |= Online_Picoammieter;
+			pMeter->pInstr = pNode->pInstr;
+
+			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
+			pMeasure->pInstr = pNode->pInstr;
+			break;
+		}
+		pHead = pNode->next;
+	}
+
+	DevMgr.SetAttribute(0);
+
 	InstrMgr.QueryID(&InstrMgr);
 
-	InstrumentListNode *pHead = *InstrMgr.plist;
+	pHead = *InstrMgr.plist;
 	while (pHead != NULL)
 	{
 		InstrumentListNode *pNode = pHead;
@@ -86,36 +110,18 @@ static int Init(int x)
 				pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
 				SetMgr.online |= Online_WaveformGenerator;
 				pMeter->pInstr = pNode->pInstr;
-
 			}
 			else if (NULL != strstr(pNode->pInstr->identifier, "Admesy"))
 			{
 				pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
 				SetMgr.online |= Online_Admesy;
 				pMeter->pInstr = pNode->pInstr;
-
 			}
 		}
-		else if (Instrument_Type_ASRL == pNode->pInstr->type)
-		{
-			pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
-			if (NULL != pMeter)
-			{
-				SetMgr.online |= Online_Picoammieter;
-				pMeter->pInstr = pNode->pInstr;
-			}
-
-			pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
-			if (NULL != pMeasure)
-			{
-				pMeasure->pInstr = pNode->pInstr;
-			}
-		}
-
+		
 		pHead = pNode->next;
 	}
 
-	// DevMgr.AfterInit(0);
 	return 0;
 }
 static int Shutdown(int x)

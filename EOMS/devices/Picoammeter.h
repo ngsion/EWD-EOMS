@@ -30,8 +30,6 @@
 typedef struct Picoammeter
 {
     Device device;
-    
-    int (*SetAttribute)(struct Device * pDev);
 
 }Picoammeter;
 

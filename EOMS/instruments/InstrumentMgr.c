@@ -117,6 +117,7 @@ static int Open(InstrumentMgr *pMgr)
 
 	return 0;
 }
+
 static int QueryID(InstrumentMgr *pMgr)
 {
 	InstrumentListNode *cur = *(pMgr->plist);
@@ -124,17 +125,13 @@ static int QueryID(InstrumentMgr *pMgr)
 	while (NULL != cur)
 	{
 		next = cur->next;
-
-		if (cur->pInstr->type == Instrument_Type_USB)
-		{
-			cur->pInstr->QueryID(cur->pInstr);
-		}
-
+		cur->pInstr->QueryID(cur->pInstr);
 		cur = next;
 	}
-	
+
 	return 0;
 }
+
 static int Shutdown(int x)
 {
 	if (NULL != defaultRM)
@@ -151,8 +148,8 @@ static int Shutdown(int x)
 InstrumentMgr InstrMgr = {
 	.plist = &defaultInstrList,
 	.Open = Open,
-	.Init = Init,
 	.QueryID = QueryID,
+	.Init = Init,
 	.Shutdown = Shutdown
 
 };

@@ -30,7 +30,6 @@
 // Static global variables
 static Device *defaultDeviceArray[DEVICE_MAX_NUM];
 
-
 //==============================================================================
 // Static functions
 static int Init(int x)
@@ -48,37 +47,33 @@ static int Init(int x)
 
 	defaultDeviceArray[2] = (Device *)malloc(sizeof(LCRMeter));
 	LCRMeterInit((LCRMeter *)defaultDeviceArray[2]);
-   
+
 	defaultDeviceArray[3] = (Device *)malloc(sizeof(Admesy));
 	AdmesyInit((Admesy *)defaultDeviceArray[3]);
 
 	return 0;
 }
 
-static int AfterInit(int x)
+static int SetAttribute(int x)
 {
-	int i = 0;
-	for (i = 0; i < DEVICE_MAX_NUM; i++)
+	
+	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-			if (defaultDeviceArray[i]->instrumentFlag == Instrument_Picoammeter)
-			{
-				Picoammeter *pMeter = defaultDeviceArray[i];
-				pMeter->SetAttribute(pMeter);
-			}
-
-			defaultDeviceArray[i]->QueryID(defaultDeviceArray[i]);
+			defaultDeviceArray[i]->SetAttribute(defaultDeviceArray[i]);
 		}
 	}
 
 	return 0;
 }
 
+
+
 static int Reset(int x)
 {
-   	
-	for ( int i = 0; i < DEVICE_MAX_NUM; i++)
+
+	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
@@ -90,7 +85,7 @@ static int Reset(int x)
 static int Start(int x)
 {
 
-	for ( int i = 0; i < DEVICE_MAX_NUM; i++)
+	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
 		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
 		{
@@ -145,7 +140,7 @@ static Device *FindWithInstrFlag(int flag)
 
 DeviceMgr DevMgr = {
 	.pDevArray = &defaultDeviceArray,
-	.AfterInit = AfterInit,
+	.SetAttribute = SetAttribute,
 	.Init = Init,
 	.Shutdown = Shutdown,
 	.Reset = Reset,
