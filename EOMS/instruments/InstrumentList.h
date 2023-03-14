@@ -41,6 +41,8 @@ typedef struct InstrumentListNode
 
 void InstrumentListPushBack(InstrumentListNode ** pList, Instrument *pInstr);
 
+void InstrumentListDeleteOne(InstrumentListNode ** pList, Instrument *pInstr);
+
 void InstrumentListClear(InstrumentListNode ** pList);
 
 #ifdef __cplusplus

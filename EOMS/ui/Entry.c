@@ -258,3 +258,15 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	}
 	return 0;
 }
+
+int CVICALLBACK OnRefreshBtn (int panel, int control, int event,
+							  void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+
+			break;
+	}
+	return 0;
+}

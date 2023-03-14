@@ -30,10 +30,11 @@
 #define  PANEL_TEXTMSG                    15      /* control type: textMsg, callback function: (none) */
 #define  PANEL_TEXTMSG_2                  16      /* control type: textMsg, callback function: (none) */
 #define  PANEL_TEXTMSG_3                  17      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_4                  18      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_5                  19      /* control type: textMsg, callback function: (none) */
-#define  PANEL_LED_ADMESY                 20      /* control type: LED, callback function: (none) */
-#define  PANEL_TEXTMSG_6                  21      /* control type: textMsg, callback function: (none) */
+#define  PANEL_TEXTMSG_5                  18      /* control type: textMsg, callback function: (none) */
+#define  PANEL_LED_ADMESY                 19      /* control type: LED, callback function: (none) */
+#define  PANEL_TEXTMSG_6                  20      /* control type: textMsg, callback function: (none) */
+#define  PANEL_COMMANDBUTTON_REFRESH      21      /* control type: command, callback function: OnRefreshBtn */
+#define  PANEL_TEXTMSG_4                  22      /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */
@@ -53,6 +54,7 @@ int  CVICALLBACK OnPanel(int panel, int event, void *callbackData, int eventData
 int  CVICALLBACK OnRadioLCR(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRadioPico(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRadioWave(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
+int  CVICALLBACK OnRefreshBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 
 
 #ifdef __cplusplus

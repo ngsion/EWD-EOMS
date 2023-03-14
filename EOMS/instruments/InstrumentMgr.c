@@ -111,7 +111,11 @@ static int Open(InstrumentMgr *pMgr)
 	while (NULL != cur)
 	{
 		next = cur->next;
-		cur->pInstr->Open(cur->pInstr);
+		if(-1 == cur->pInstr->Open(cur->pInstr))
+		{
+			LOG_ERROR("Error open %s. delete it", cur->pInstr->address);
+			InstrumentListDeleteOne(pMgr->plist,cur->pInstr);
+		}
 		cur = next;
 	}
 
