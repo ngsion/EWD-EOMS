@@ -27,13 +27,13 @@
 #define  PANEL_TEXTBOX_LCR                12      /* control type: textBox, callback function: (none) */
 #define  PANEL_TEXTBOX_ADMESY             13      /* control type: textBox, callback function: (none) */
 #define  PANEL_TEXTBOX_WAVE               14      /* control type: textBox, callback function: (none) */
-#define  PANEL_TEXTMSG                    15      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_2                  16      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_3                  17      /* control type: textMsg, callback function: (none) */
-#define  PANEL_TEXTMSG_5                  18      /* control type: textMsg, callback function: (none) */
-#define  PANEL_LED_ADMESY                 19      /* control type: LED, callback function: (none) */
-#define  PANEL_TEXTMSG_6                  20      /* control type: textMsg, callback function: (none) */
-#define  PANEL_COMMANDBUTTON_REFRESH      21      /* control type: command, callback function: OnRefreshBtn */
+#define  PANEL_TEXTMSG_3                  15      /* control type: textMsg, callback function: (none) */
+#define  PANEL_LED_ADMESY                 16      /* control type: LED, callback function: (none) */
+#define  PANEL_TEXTMSG_6                  17      /* control type: textMsg, callback function: (none) */
+#define  PANEL_COMMANDBUTTON_REFRESH      18      /* control type: command, callback function: OnRefreshBtn */
+#define  PANEL_RING_PICO                  19      /* control type: ring, callback function: (none) */
+#define  PANEL_RING_LCR                   20      /* control type: ring, callback function: (none) */
+#define  PANEL_RING_WAVE                  21      /* control type: ring, callback function: (none) */
 #define  PANEL_TEXTMSG_4                  22      /* control type: textMsg, callback function: (none) */
 
 

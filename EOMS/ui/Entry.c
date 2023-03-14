@@ -32,12 +32,137 @@
 
 //==============================================================================
 // Static functions
+int updateStrings(int panel);
+int updateLED(int panel);
 
 //==============================================================================
 // Global variables
 
 //==============================================================================
 // Global functions
+int ConnectPico(int panel)
+{
+	int ringIdx;
+	GetCtrlIndex(panel, PANEL_RING_PICO, &ringIdx);
+	LOG_INFO("PICO INDEX %d", ringIdx);
+	InstrumentListNode *pHead = *InstrMgr.plist;
+	int index = 0;
+
+	while (pHead != NULL)
+	{
+		InstrumentListNode *pNode = pHead;
+
+		if (index == ringIdx && Instrument_Type_ASRL == pNode->pInstr->type)
+		{
+			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			{
+				LOG_ERROR("Error open %s", pNode->pInstr->address);
+			}
+			else
+			{
+				Device *pMeter = NULL;
+				Measurement *pMeasure = NULL;
+
+				pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+				pMeter->pInstr = pNode->pInstr;
+
+				pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
+				pMeasure->pInstr = pNode->pInstr;
+
+				SetMgr.online |= Online_Picoammieter;
+
+				pMeter->SetAttribute(pMeter);
+
+				pNode->pInstr->QueryID(pNode->pInstr);
+				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+			}
+
+			break;
+		}
+		++index;
+		pHead = pNode->next;
+	}
+	return 0;
+}
+int ConnectLCR(int panel)
+{
+	int ringIdx;
+	GetCtrlIndex(panel, PANEL_RING_LCR, &ringIdx);
+	LOG_INFO("LCR INDEX %d", ringIdx);
+	InstrumentListNode *pHead = *InstrMgr.plist;
+	int index = 0;
+
+	while (pHead != NULL)
+	{
+		InstrumentListNode *pNode = pHead;
+
+		if (index == ringIdx && Instrument_Type_GPIB == pNode->pInstr->type)
+		{
+			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			{
+				LOG_ERROR("Error open %s", pNode->pInstr->address);
+			}
+			else
+			{
+				Device *pMeter = NULL;
+				Measurement *pMeasure = NULL;
+
+				pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
+				pMeter->pInstr = pNode->pInstr;
+
+				pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
+				pMeasure->pInstr = pNode->pInstr;
+
+				SetMgr.online |= Online_LCRMeter;
+
+				pNode->pInstr->QueryID(pNode->pInstr);
+				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+			}
+		}
+		++index;
+		pHead = pNode->next;
+	}
+	return 0;
+}
+int ConnectWave(int panel)
+{
+	int ringIdx;
+	GetCtrlIndex(panel, PANEL_RING_WAVE, &ringIdx);
+	LOG_INFO("wave INDEX %d", ringIdx);
+	InstrumentListNode *pHead = *InstrMgr.plist;
+	int index = 0;
+
+	while (pHead != NULL)
+	{
+		InstrumentListNode *pNode = pHead;
+
+		if (index == ringIdx && Instrument_Type_USB == pNode->pInstr->type)
+		{
+			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			{
+				LOG_ERROR("Error open %s", pNode->pInstr->address);
+			}
+			else
+			{
+				pNode->pInstr->QueryID(pNode->pInstr);
+				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+
+				Device *pMeter = NULL;
+			
+				if (NULL != strstr(pNode->pInstr->identifier, "Agilent"))
+				{
+					pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+					pMeter->pInstr = pNode->pInstr;
+
+					SetMgr.online |= Online_WaveformGenerator;
+				}
+			}
+		}
+		++index;
+		pHead = pNode->next;
+	}
+	return 0;
+}
 
 int CVICALLBACK OnRadioWave(int panel, int control, int event,
 							void *callbackData, int eventData1, int eventData2)
@@ -91,6 +216,7 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 	{
+
 		int lcrSource = 0;
 		int picoSource = 0;
 		int waveSource = 0;
@@ -100,14 +226,41 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		if (lcrSource)
 		{
 			SetMgr.signal = Signal_LCRMeter;
+			if (0 != ConnectLCR(panel))
+			{
+				break;
+			}
+			else
+			{
+				updateLED(panel);
+				updateStrings(panel);
+			}
 		}
 		else if (picoSource)
 		{
 			SetMgr.signal = Signal_Picoammieter;
+			if (0 != ConnectPico(panel))
+			{
+				break;
+			}
+			else
+			{
+				updateLED(panel);
+				updateStrings(panel);
+			}
 		}
 		else if (waveSource)
 		{
 			SetMgr.signal = Signal_WaveformGenerator;
+			if (0 != ConnectWave(panel))
+			{
+				break;
+			}
+			else
+			{
+				updateLED(panel);
+				updateStrings(panel);
+			}
 		}
 
 		SetMgr.data = Data_None;
@@ -125,10 +278,7 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 			SetMgr.data |= Data_Current;
 		}
 
-
-
 		System.LoadSettings(0);
-
 
 		if (Signal_Picoammieter == SetMgr.signal)
 		{
@@ -236,8 +386,26 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	{
 	case EVENT_GOT_FOCUS:
 	{
-		updateLED(panel);
-		updateStrings(panel);
+
+		ClearListCtrl(panel, PANEL_RING_PICO);
+
+		//	SetCtrlIndex (panel, PANEL_RING_PICO, 2); // Based on index
+		InstrumentListNode *pHead = *InstrMgr.plist;
+		int index = 0;
+		int count = 1;
+
+		while (pHead != NULL)
+		{
+			InstrumentListNode *pNode = pHead;
+
+			InsertListItem(panel, PANEL_RING_PICO, index, pNode->pInstr->address, count);
+			InsertListItem(panel, PANEL_RING_LCR, index, pNode->pInstr->address, count);
+			InsertListItem(panel, PANEL_RING_WAVE, index, pNode->pInstr->address, count);
+
+			index = -1;
+			++count;
+			pHead = pNode->next;
+		}
 	}
 
 	break;
@@ -259,14 +427,14 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	return 0;
 }
 
-int CVICALLBACK OnRefreshBtn (int panel, int control, int event,
-							  void *callbackData, int eventData1, int eventData2)
+int CVICALLBACK OnRefreshBtn(int panel, int control, int event,
+							 void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_COMMIT:
+	case EVENT_COMMIT:
 
-			break;
+		break;
 	}
 	return 0;
 }

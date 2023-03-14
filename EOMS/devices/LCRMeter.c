@@ -102,60 +102,6 @@ static int Start(Device *pDev)
 	return 0;
 }
 
-static int SetAttribute(struct Device *pDev)
-{
-	LCRMeter *pMeter = (LCRMeter *)pDev;
-
-	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
-	{
-		LOG_INFO("LCRMeter SetAttribute");
-		ViStatus status;
-		ViSession session = pMeter->device.pInstr->session;
-
-		/* Set the timeout to 5 seconds (10000 milliseconds). */
-		status = viSetAttribute(session, VI_ATTR_TMO_VALUE, 10000);
-
-		/* Set the baud rate to 38400 (default is 9600). */
-		status = viSetAttribute(session, VI_ATTR_ASRL_BAUD, 38400);
-
-		/* Set the number of data bits contained in each frame (from 5 to 8).
-		 * The data bits for  each frame are located in the low-order bits of
-		 * every byte stored in memory.
-		 */
-		status = viSetAttribute(session, VI_ATTR_ASRL_DATA_BITS, 8);
-
-		/* Specify parity. Options:
-		 * VI_ASRL_PAR_NONE  - No parity bit exists,
-		 * VI_ASRL_PAR_ODD   - Odd parity should be used,
-		 * VI_ASRL_PAR_EVEN  - Even parity should be used,
-		 * VI_ASRL_PAR_MARK  - Parity bit exists and is always 1,
-		 * VI_ASRL_PAR_SPACE - Parity bit exists and is always 0.
-		 */
-		status = viSetAttribute(session, VI_ATTR_ASRL_PARITY, VI_ASRL_PAR_NONE);
-
-		/* Specify stop bit. Options:
-		 * VI_ASRL_STOP_ONE   - 1 stop bit is used per frame,
-		 * VI_ASRL_STOP_ONE_5 - 1.5 stop bits are used per frame,
-		 * VI_ASRL_STOP_TWO   - 2 stop bits are used per frame.
-		 */
-		status = viSetAttribute(session, VI_ATTR_ASRL_STOP_BITS, VI_ASRL_STOP_ONE);
-
-		/* Specify that the read operation should terminate when a termination
-		 * character is received.
-		 */
-		status = viSetAttribute(session, VI_ATTR_TERMCHAR_EN, VI_TRUE);
-
-		/* Set the termination character to 0xA , \n
-		 */
-		status = viSetAttribute(session, VI_ATTR_TERMCHAR, 0xA);
-	}
-	else
-	{
-		LOG_ERROR("LCRMeter SetAttribute failed null %d ", NULL == pMeter->device.pInstr);
-	}
-
-	return 0;
-}
 static int Stop(Device *pDev)
 {
 
