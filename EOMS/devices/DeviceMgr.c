@@ -54,19 +54,6 @@ static int Init(int x)
 	return 0;
 }
 
-static int SetAttribute(int x)
-{
-	
-	for (int i = 0; i < DEVICE_MAX_NUM; i++)
-	{
-		if (NULL != defaultDeviceArray[i])
-		{
-			defaultDeviceArray[i]->SetAttribute(defaultDeviceArray[i]);
-		}
-	}
-
-	return 0;
-}
 
 
 
@@ -140,7 +127,6 @@ static Device *FindWithInstrFlag(int flag)
 
 DeviceMgr DevMgr = {
 	.pDevArray = &defaultDeviceArray,
-	.SetAttribute = SetAttribute,
 	.Init = Init,
 	.Shutdown = Shutdown,
 	.Reset = Reset,

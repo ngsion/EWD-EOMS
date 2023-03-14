@@ -32,7 +32,6 @@ typedef struct DeviceMgr
     Device ** pDevArray;
     
 	int (*Init)(int x);
-    int (*SetAttribute)(int x);
     int (*Reset)(int x); 
 	int (*Start)(int x);
 	int (*Stop)(int x);

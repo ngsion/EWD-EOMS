@@ -75,10 +75,10 @@ int ConnectPico(int panel)
 
 				pNode->pInstr->QueryID(pNode->pInstr);
 				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
-				
+
 				updateLED(panel);
-	        	updateStrings(panel);
-				
+				updateStrings(panel);
+
 				return 0;
 			}
 
@@ -122,12 +122,13 @@ int ConnectLCR(int panel)
 
 				pNode->pInstr->QueryID(pNode->pInstr);
 				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
-				
+
 				updateLED(panel);
-	        	updateStrings(panel);
-				
+				updateStrings(panel);
+
 				return 0;
 			}
+			break;
 		}
 		++index;
 		pHead = pNode->next;
@@ -165,13 +166,60 @@ int ConnectWave(int panel)
 					pMeter->pInstr = pNode->pInstr;
 
 					SetMgr.online |= Online_WaveformGenerator;
-				}
-				
+
 					updateLED(panel);
-	        	updateStrings(panel);
-				
-				return 0;
+					updateStrings(panel);
+
+					return 0;
+				}
 			}
+			break;
+		}
+		++index;
+		pHead = pNode->next;
+	}
+	return -1;
+}
+
+int ConnectAdmesy(int panel)
+{
+	int ringIdx;
+	GetCtrlIndex(panel, PANEL_RING_ADMESY, &ringIdx);
+	LOG_INFO("ADMESY INDEX %d", ringIdx);
+	InstrumentListNode *pHead = *InstrMgr.plist;
+	int index = 0;
+
+	while (pHead != NULL)
+	{
+		InstrumentListNode *pNode = pHead;
+
+		if (index == ringIdx && Instrument_Type_USB == pNode->pInstr->type)
+		{
+			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			{
+				LOG_ERROR("Error open %s", pNode->pInstr->address);
+			}
+			else
+			{
+				pNode->pInstr->QueryID(pNode->pInstr);
+				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+
+				Device *pMeter = NULL;
+
+				if (NULL != strstr(pNode->pInstr->identifier, "Agilent"))
+				{
+					pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
+					pMeter->pInstr = pNode->pInstr;
+
+					SetMgr.online |= Online_WaveformGenerator;
+
+					updateLED(panel);
+					updateStrings(panel);
+
+					return 0;
+				}
+			}
+			break;
 		}
 		++index;
 		pHead = pNode->next;
@@ -267,33 +315,33 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		}
 		//////////////////////////////////////////
 
-	/*	if (SetMgr.signal & Signal_LCRMeter || SetMgr.data & Data_D)
-		{
-			if (0 != ConnectLCR(panel))
+		/*	if (SetMgr.signal & Signal_LCRMeter || SetMgr.data & Data_D)
 			{
-				break;
+				if (0 != ConnectLCR(panel))
+				{
+					break;
+				}
 			}
-		}
 
-		if (SetMgr.signal & Signal_Picoammieter || SetMgr.data & Data_Current)
-		{
-			SetMgr.signal = Signal_Picoammieter;
-			if (0 != ConnectPico(panel))
+			if (SetMgr.signal & Signal_Picoammieter || SetMgr.data & Data_Current)
 			{
-				break;
+				SetMgr.signal = Signal_Picoammieter;
+				if (0 != ConnectPico(panel))
+				{
+					break;
+				}
 			}
-		}
 
-		if (SetMgr.signal & Signal_WaveformGenerator)
-		{
-			if (0 != ConnectWave(panel))
+			if (SetMgr.signal & Signal_WaveformGenerator)
 			{
-				break;
+				if (0 != ConnectWave(panel))
+				{
+					break;
+				}
 			}
-		}
 
-		updateLED(panel);
-		updateStrings(panel);  */
+			updateLED(panel);
+			updateStrings(panel);  */
 
 		System.LoadSettings(0);
 
@@ -405,14 +453,21 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	{
 
 		ClearListCtrl(panel, PANEL_RING_PICO);
-		ClearListCtrl(panel, PANEL_RING_LCR); 
-			ClearListCtrl(panel, PANEL_RING_WAVE); 
+		ClearListCtrl(panel, PANEL_RING_LCR);
+		ClearListCtrl(panel, PANEL_RING_WAVE);
+		ClearListCtrl(panel, PANEL_RING_ADMESY);
 
 		//	SetCtrlIndex (panel, PANEL_RING_PICO, 2); // Based on index
 		InstrumentListNode *pHead = *InstrMgr.plist;
 		int index = 0;
 		int count = 1;
 
+		InsertListItem(panel, PANEL_RING_PICO, index, "None", count);
+		InsertListItem(panel, PANEL_RING_LCR, index, "None", count);
+		InsertListItem(panel, PANEL_RING_WAVE, index, "None", count);
+		InsertListItem(panel, PANEL_RING_ADMESY, index, "None", count);
+		index = -1;
+		++count;
 		while (pHead != NULL)
 		{
 			InstrumentListNode *pNode = pHead;
@@ -420,12 +475,12 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 			InsertListItem(panel, PANEL_RING_PICO, index, pNode->pInstr->address, count);
 			InsertListItem(panel, PANEL_RING_LCR, index, pNode->pInstr->address, count);
 			InsertListItem(panel, PANEL_RING_WAVE, index, pNode->pInstr->address, count);
+			InsertListItem(panel, PANEL_RING_ADMESY, index, pNode->pInstr->address, count);
 
-			index = -1;
 			++count;
 			pHead = pNode->next;
 		}
-		
+
 		updateLED(panel);
 		updateStrings(panel);
 	}
@@ -455,44 +510,56 @@ int CVICALLBACK OnRefreshBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-		 
+
 		break;
 	}
 	return 0;
 }
 
-int CVICALLBACK OnPicoRing (int panel, int control, int event,
-							void *callbackData, int eventData1, int eventData2)
-{
-	switch (event)
-	{
-		case EVENT_VAL_CHANGED:
-			 ConnectPico(panel);  
-			break;
-	}
-	return 0;
-}
-
-int CVICALLBACK OnLCRRing (int panel, int control, int event,
+int CVICALLBACK OnPicoRing(int panel, int control, int event,
 						   void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_VAL_CHANGED:
-			 ConnectLCR(panel);  
-			break;
+	case EVENT_VAL_CHANGED:
+		ConnectPico(panel);
+		break;
 	}
 	return 0;
 }
 
-int CVICALLBACK OnWaveRing (int panel, int control, int event,
-							void *callbackData, int eventData1, int eventData2)
+int CVICALLBACK OnLCRRing(int panel, int control, int event,
+						  void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_COMMIT:
-			  ConnectWave(panel);
-			break;
+	case EVENT_VAL_CHANGED:
+		ConnectLCR(panel);
+		break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnWaveRing(int panel, int control, int event,
+						   void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+	case EVENT_VAL_CHANGED:
+		ConnectWave(panel);
+		break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnAdmesy(int panel, int control, int event,
+						 void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+	case EVENT_VAL_CHANGED:
+		ConnectAdmesy(panel);
+		break;
 	}
 	return 0;
 }

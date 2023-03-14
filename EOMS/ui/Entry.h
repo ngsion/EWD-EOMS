@@ -29,11 +29,11 @@
 #define  PANEL_TEXTBOX_WAVE               14      /* control type: textBox, callback function: (none) */
 #define  PANEL_TEXTMSG_3                  15      /* control type: textMsg, callback function: (none) */
 #define  PANEL_LED_ADMESY                 16      /* control type: LED, callback function: (none) */
-#define  PANEL_TEXTMSG_6                  17      /* control type: textMsg, callback function: (none) */
-#define  PANEL_COMMANDBUTTON_REFRESH      18      /* control type: command, callback function: OnRefreshBtn */
-#define  PANEL_RING_PICO                  19      /* control type: ring, callback function: OnPicoRing */
-#define  PANEL_RING_LCR                   20      /* control type: ring, callback function: OnLCRRing */
-#define  PANEL_RING_WAVE                  21      /* control type: ring, callback function: OnWaveRing */
+#define  PANEL_COMMANDBUTTON_REFRESH      17      /* control type: command, callback function: OnRefreshBtn */
+#define  PANEL_RING_PICO                  18      /* control type: ring, callback function: OnPicoRing */
+#define  PANEL_RING_LCR                   19      /* control type: ring, callback function: OnLCRRing */
+#define  PANEL_RING_WAVE                  20      /* control type: ring, callback function: OnWaveRing */
+#define  PANEL_RING_ADMESY                21      /* control type: ring, callback function: OnAdmesy */
 #define  PANEL_TEXTMSG_4                  22      /* control type: textMsg, callback function: (none) */
 
 
@@ -49,6 +49,7 @@
 
      /* Callback Prototypes: */
 
+int  CVICALLBACK OnAdmesy(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnLCRRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnOkBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnPanel(int panel, int event, void *callbackData, int eventData1, int eventData2);
