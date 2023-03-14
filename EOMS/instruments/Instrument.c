@@ -117,7 +117,7 @@ int Close(struct Instrument *pInstr)
 	ViStatus status = viClose(pInstr->session);
 	if (VI_SUCCESS == status)
 	{
-		pInstr->status = Instrument_Status_Connected;
+		pInstr->status = Instrument_Status_Disconnected;
 	}
 	return 0;
 }

@@ -75,6 +75,11 @@ int ConnectPico(int panel)
 
 				pNode->pInstr->QueryID(pNode->pInstr);
 				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+				
+				updateLED(panel);
+	        	updateStrings(panel);
+				
+				return 0;
 			}
 
 			break;
@@ -82,7 +87,7 @@ int ConnectPico(int panel)
 		++index;
 		pHead = pNode->next;
 	}
-	return 0;
+	return -1;
 }
 int ConnectLCR(int panel)
 {
@@ -117,12 +122,17 @@ int ConnectLCR(int panel)
 
 				pNode->pInstr->QueryID(pNode->pInstr);
 				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+				
+				updateLED(panel);
+	        	updateStrings(panel);
+				
+				return 0;
 			}
 		}
 		++index;
 		pHead = pNode->next;
 	}
-	return 0;
+	return -1;
 }
 int ConnectWave(int panel)
 {
@@ -148,7 +158,7 @@ int ConnectWave(int panel)
 				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
 
 				Device *pMeter = NULL;
-			
+
 				if (NULL != strstr(pNode->pInstr->identifier, "Agilent"))
 				{
 					pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
@@ -156,12 +166,17 @@ int ConnectWave(int panel)
 
 					SetMgr.online |= Online_WaveformGenerator;
 				}
+				
+					updateLED(panel);
+	        	updateStrings(panel);
+				
+				return 0;
 			}
 		}
 		++index;
 		pHead = pNode->next;
 	}
-	return 0;
+	return -1;
 }
 
 int CVICALLBACK OnRadioWave(int panel, int control, int event,
@@ -226,41 +241,14 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		if (lcrSource)
 		{
 			SetMgr.signal = Signal_LCRMeter;
-			if (0 != ConnectLCR(panel))
-			{
-				break;
-			}
-			else
-			{
-				updateLED(panel);
-				updateStrings(panel);
-			}
 		}
 		else if (picoSource)
 		{
 			SetMgr.signal = Signal_Picoammieter;
-			if (0 != ConnectPico(panel))
-			{
-				break;
-			}
-			else
-			{
-				updateLED(panel);
-				updateStrings(panel);
-			}
 		}
 		else if (waveSource)
 		{
 			SetMgr.signal = Signal_WaveformGenerator;
-			if (0 != ConnectWave(panel))
-			{
-				break;
-			}
-			else
-			{
-				updateLED(panel);
-				updateStrings(panel);
-			}
 		}
 
 		SetMgr.data = Data_None;
@@ -277,6 +265,35 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		{
 			SetMgr.data |= Data_Current;
 		}
+		//////////////////////////////////////////
+
+	/*	if (SetMgr.signal & Signal_LCRMeter || SetMgr.data & Data_D)
+		{
+			if (0 != ConnectLCR(panel))
+			{
+				break;
+			}
+		}
+
+		if (SetMgr.signal & Signal_Picoammieter || SetMgr.data & Data_Current)
+		{
+			SetMgr.signal = Signal_Picoammieter;
+			if (0 != ConnectPico(panel))
+			{
+				break;
+			}
+		}
+
+		if (SetMgr.signal & Signal_WaveformGenerator)
+		{
+			if (0 != ConnectWave(panel))
+			{
+				break;
+			}
+		}
+
+		updateLED(panel);
+		updateStrings(panel);  */
 
 		System.LoadSettings(0);
 
@@ -305,38 +322,38 @@ int updateStrings(int panel)
 	Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
 	if (NULL != pMeter && NULL != pMeter->pInstr)
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_PICO, pMeter->pInstr->identifier);
+		ResetTextBox(panel, PANEL_TEXTBOX_PICO, pMeter->pInstr->identifier);
 	}
 	else
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_PICO, "");
+		ResetTextBox(panel, PANEL_TEXTBOX_PICO, "");
 	}
 	pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
 	if (NULL != pMeter && NULL != pMeter->pInstr)
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_LCR, pMeter->pInstr->identifier);
+		ResetTextBox(panel, PANEL_TEXTBOX_LCR, pMeter->pInstr->identifier);
 	}
 	else
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_LCR, "");
+		ResetTextBox(panel, PANEL_TEXTBOX_LCR, "");
 	}
 	pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
 	if (NULL != pMeter && NULL != pMeter->pInstr)
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_WAVE, pMeter->pInstr->identifier);
+		ResetTextBox(panel, PANEL_TEXTBOX_WAVE, pMeter->pInstr->identifier);
 	}
 	else
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_WAVE, "");
+		ResetTextBox(panel, PANEL_TEXTBOX_WAVE, "");
 	}
 	pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
 	if (NULL != pMeter && NULL != pMeter->pInstr)
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_ADMESY, pMeter->pInstr->identifier);
+		ResetTextBox(panel, PANEL_TEXTBOX_ADMESY, pMeter->pInstr->identifier);
 	}
 	else
 	{
-		SetCtrlVal(panel, PANEL_TEXTBOX_ADMESY, "");
+		ResetTextBox(panel, PANEL_TEXTBOX_ADMESY, "");
 	}
 	return 0;
 }
@@ -388,6 +405,8 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	{
 
 		ClearListCtrl(panel, PANEL_RING_PICO);
+		ClearListCtrl(panel, PANEL_RING_LCR); 
+			ClearListCtrl(panel, PANEL_RING_WAVE); 
 
 		//	SetCtrlIndex (panel, PANEL_RING_PICO, 2); // Based on index
 		InstrumentListNode *pHead = *InstrMgr.plist;
@@ -406,6 +425,9 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 			++count;
 			pHead = pNode->next;
 		}
+		
+		updateLED(panel);
+		updateStrings(panel);
 	}
 
 	break;
@@ -433,8 +455,44 @@ int CVICALLBACK OnRefreshBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-
+		 
 		break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnPicoRing (int panel, int control, int event,
+							void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_VAL_CHANGED:
+			 ConnectPico(panel);  
+			break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnLCRRing (int panel, int control, int event,
+						   void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_VAL_CHANGED:
+			 ConnectLCR(panel);  
+			break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnWaveRing (int panel, int control, int event,
+							void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+			  ConnectWave(panel);
+			break;
 	}
 	return 0;
 }

@@ -104,37 +104,8 @@ static int Init(int x)
 {
 	return sFindResource(x);
 }
-static int Open(InstrumentMgr *pMgr)
-{
-	InstrumentListNode *cur = *(pMgr->plist);
-	InstrumentListNode *next = NULL;
-	while (NULL != cur)
-	{
-		next = cur->next;
-		if(-1 == cur->pInstr->Open(cur->pInstr))
-		{
-			LOG_ERROR("Error open %s. delete it", cur->pInstr->address);
-			InstrumentListDeleteOne(pMgr->plist,cur->pInstr);
-		}
-		cur = next;
-	}
 
-	return 0;
-}
 
-static int QueryID(InstrumentMgr *pMgr)
-{
-	InstrumentListNode *cur = *(pMgr->plist);
-	InstrumentListNode *next = NULL;
-	while (NULL != cur)
-	{
-		next = cur->next;
-		cur->pInstr->QueryID(cur->pInstr);
-		cur = next;
-	}
-
-	return 0;
-}
 
 static int Shutdown(int x)
 {
@@ -151,8 +122,6 @@ static int Shutdown(int x)
 
 InstrumentMgr InstrMgr = {
 	.plist = &defaultInstrList,
-	.Open = Open,
-	.QueryID = QueryID,
 	.Init = Init,
 	.Shutdown = Shutdown
 

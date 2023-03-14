@@ -31,9 +31,9 @@
 #define  PANEL_LED_ADMESY                 16      /* control type: LED, callback function: (none) */
 #define  PANEL_TEXTMSG_6                  17      /* control type: textMsg, callback function: (none) */
 #define  PANEL_COMMANDBUTTON_REFRESH      18      /* control type: command, callback function: OnRefreshBtn */
-#define  PANEL_RING_PICO                  19      /* control type: ring, callback function: (none) */
-#define  PANEL_RING_LCR                   20      /* control type: ring, callback function: (none) */
-#define  PANEL_RING_WAVE                  21      /* control type: ring, callback function: (none) */
+#define  PANEL_RING_PICO                  19      /* control type: ring, callback function: OnPicoRing */
+#define  PANEL_RING_LCR                   20      /* control type: ring, callback function: OnLCRRing */
+#define  PANEL_RING_WAVE                  21      /* control type: ring, callback function: OnWaveRing */
 #define  PANEL_TEXTMSG_4                  22      /* control type: textMsg, callback function: (none) */
 
 
@@ -49,12 +49,15 @@
 
      /* Callback Prototypes: */
 
+int  CVICALLBACK OnLCRRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnOkBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnPanel(int panel, int event, void *callbackData, int eventData1, int eventData2);
+int  CVICALLBACK OnPicoRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRadioLCR(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRadioPico(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRadioWave(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRefreshBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
+int  CVICALLBACK OnWaveRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 
 
 #ifdef __cplusplus

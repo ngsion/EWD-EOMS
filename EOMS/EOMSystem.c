@@ -87,6 +87,7 @@ static int Stop(int x)
 	DevMgr.Reset(x);
 	DevMgr.Stop(x);
 	DataMgr.Stop(x);
+	SetMgr.Init(x);
 	return 0;
 }
 

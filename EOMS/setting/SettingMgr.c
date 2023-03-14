@@ -31,6 +31,8 @@ static int Init(int x)
 	return 0;
 }
 
+
+
 static int Shutdown(int x)
 {
 	
@@ -47,4 +49,5 @@ SettingMgr SetMgr = {
 	.Init = Init,
 	.signal = Signal_Picoammieter,
 	.data = Data_Current,
+	.online = Online_None,
 	.Shutdown = Shutdown};

@@ -119,7 +119,7 @@ static int Stop(Device *pDev)
 	{
 		LOG_ERROR("LCRMeter Stop failed null %d ", NULL == pMeter->device.pInstr);
 	}
-
+   
 	return 0;
 }
 

@@ -6,28 +6,28 @@
 		<workingdir>workspacedir</workingdir>
 		<actions></actions></postbuild>
 	<msi GUID="{88548FF6-4DEF-450E-96D8-A4BC9B223BF0}">
-		<general appName="EWD-EOMS" outputLocation="f:\EWD-EOMS\EWD-EOMS\EOMS\cvidistkit.EWD-EOMS" relOutputLocation="cvidistkit.EWD-EOMS" outputLocationWithVars="f:\EWD-EOMS\EWD-EOMS\EOMS\cvidistkit.%name" relOutputLocationWithVars="cvidistkit.%name" upgradeBehavior="1" autoIncrement="true" version="1.0.4">
+		<general appName="EWD-EOMS" outputLocation="f:\EWD-EOMS\EWD-EOMS\EOMS\cvidistkit.EWD-EOMS" relOutputLocation="cvidistkit.EWD-EOMS" outputLocationWithVars="f:\EWD-EOMS\EWD-EOMS\EOMS\cvidistkit.%name" relOutputLocationWithVars="cvidistkit.%name" upgradeBehavior="1" autoIncrement="true" version="1.0.5">
 			<arp company="华南师范大学彩色动态电子纸显示技术研究所" companyURL="" supportURL="" contact="" phone="" comments=""/>
 			<summary title="" subject="" keyWords="" comments="" author=""/></general>
 		<userinterface language="Chinese (Simplified)" showPaths="true" showRuntimeOnly="true" readMe="" license="">
 			<dlgstrings welcomeTitle="EWD-EOMS" welcomeText=""/></userinterface>
 		<dirs appDirID="100">
-			<installDir name="EWD-EOMS" dirID="100" parentID="2" isMSIDir="false" visible="true" unlock="false"/>
-			<installDir name="EWD-EOMS" dirID="101" parentID="7" isMSIDir="false" visible="true" unlock="false"/>
+			<installDir name="[Program Files]" dirID="2" parentID="-1" isMSIDir="true" visible="true" unlock="false"/>
 			<installDir name="[Start&gt;&gt;Programs]" dirID="7" parentID="-1" isMSIDir="true" visible="true" unlock="false"/>
-			<installDir name="[Program Files]" dirID="2" parentID="-1" isMSIDir="true" visible="true" unlock="false"/></dirs>
+			<installDir name="EWD-EOMS" dirID="100" parentID="2" isMSIDir="false" visible="true" unlock="false"/>
+			<installDir name="EWD-EOMS" dirID="101" parentID="7" isMSIDir="false" visible="true" unlock="false"/></dirs>
 		<files>
-			<simpleFile fileID="0" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\ui\EOMS.uir" relSourcePath="ui\EOMS.uir" relSourceBase="0" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/>
-			<simpleFile fileID="1" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\cvibuild.EOMS\Release\EOMS.exe" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/>
-			<simpleFile fileID="2" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\ui\LCGraph.uir" relSourcePath="ui\LCGraph.uir" relSourceBase="0" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/>
+			<simpleFile fileID="0" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\cvibuild.EOMS\Release\EOMS.exe" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/>
+			<simpleFile fileID="1" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\ui\EOMS.uir" relSourcePath="ui\EOMS.uir" relSourceBase="0" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/>
+			<simpleFile fileID="2" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\ui\CVGraph.uir" relSourcePath="ui\CVGraph.uir" relSourceBase="0" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/>
 			<simpleFile fileID="3" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\ui\Entry.uir" relSourcePath="ui\Entry.uir" relSourceBase="0" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/>
-			<simpleFile fileID="4" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\ui\CVGraph.uir" relSourcePath="ui\CVGraph.uir" relSourceBase="0" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/></files>
+			<simpleFile fileID="4" sourcePath="f:\EWD-EOMS\EWD-EOMS\EOMS\ui\LCGraph.uir" relSourcePath="ui\LCGraph.uir" relSourceBase="0" targetDir="100" readonly="false" hidden="false" system="false" regActiveX="false" runAfterInstallStyle="IMMEDIATELY_RESUME_INSTALL" cmdLineArgs="" runAfterInstall="false" uninstCmdLnArgs="" runUninst="false"/></files>
 		<fileGroups>
 			<projectOutput targetType="0" dirID="100" projectID="0">
-				<fileID>1</fileID></projectOutput>
+				<fileID>0</fileID></projectOutput>
 			<projectDependencies dirID="100" projectID="0"/></fileGroups>
 		<shortcuts>
-			<shortcut name="EOMS" targetFileID="1" destDirID="101" cmdLineArgs="" description="" runStyle="NORMAL"/></shortcuts>
+			<shortcut name="EOMS" targetFileID="0" destDirID="101" cmdLineArgs="" description="" runStyle="NORMAL"/></shortcuts>
 		<mergemodules/>
 		<products/>
 		<runtimeEngine installToAppDir="false" activeXsup="false" analysis="true" cvirte="true" dotnetsup="true" instrsup="true" lowlevelsup="false" lvrt="true" netvarsup="true" rtutilsup="false">
@@ -39,7 +39,7 @@
 			</doNotAutoSelect></runtimeEngine><sxsRuntimeEngine>
 			<selected>false</selected>
 			<doNotAutoSelect>false</doNotAutoSelect></sxsRuntimeEngine>
-		<advanced mediaSize="650">
+		<advanced mediaSize="2048">
 			<launchConditions>
 				<condition>MINOS_WIN7_SP1</condition>
 			</launchConditions>
@@ -128,14 +128,14 @@
 					<productID>{FB67912C-BB8D-4FE2-B64E-7712EB90DEA4}</productID></dependencies></product></baselineProducts>
 		<Projects NumProjects="1">
 			<Project000 ProjectID="0" ProjectAbsolutePath="f:\EWD-EOMS\EWD-EOMS\EOMS\EOMS.prj" ProjectRelativePath="EOMS.prj"/></Projects>
-		<buildData progressBarRate="0.737277839570672">
+		<buildData progressBarRate="0.835628529843756">
 			<progressTimes>
 				<Begin>0.000000000000000</Begin>
-				<ProductsAdded>1.521273875000000</ProductsAdded>
-				<DPConfigured>2.461964687500000</DPConfigured>
-				<DPMergeModulesAdded>3.397622875000000</DPMergeModulesAdded>
-				<DPClosed>7.106271687500000</DPClosed>
-				<DistributionsCopied>8.434094874999998</DistributionsCopied>
-				<End>135.634077999999988</End></progressTimes></buildData>
+				<ProductsAdded>1.788566937500000</ProductsAdded>
+				<DPConfigured>2.683911343750000</DPConfigured>
+				<DPMergeModulesAdded>3.501741437500000</DPMergeModulesAdded>
+				<DPClosed>6.406149343749998</DPClosed>
+				<DistributionsCopied>7.145114937499998</DistributionsCopied>
+				<End>119.670399500000002</End></progressTimes></buildData>
 	</msi>
 </distribution>

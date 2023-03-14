@@ -139,7 +139,7 @@ static int Stop(Device *pDev)
 	{
 		LOG_ERROR("Picoammeter Stop failed null %d ", NULL == pMeter->device.pInstr);
 	}
-
+    
 	return 0;
 }
 //==============================================================================

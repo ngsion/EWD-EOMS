@@ -31,8 +31,6 @@ typedef struct InstrumentMgr
 	InstrumentListNode ** plist;
 
 	int (*Init)(int x);
-	int (*Open)(struct InstrumentMgr * pMgr);
-    int (*QueryID)(struct InstrumentMgr * pMgr);
 	int (*Shutdown)(int x);
 	
 	
