@@ -33,16 +33,6 @@ static InstrumentListNode *defaultInstrList = NULL;
 static int sFindResource()
 {
 	ViStatus status;
-	/*
-	 * First we must call viOpenDefaultRM to get the manager
-	 * handle.  We will store this handle in defaultRM.
-	 */
-	status = viOpenDefaultRM(&defaultRM);
-	if (status < VI_SUCCESS)
-	{
-		LOG_FATAL("Could not open a session to the VISA Resource Manager!");
-		return -1;
-	}
 
 	ViUInt32 numInstrs;
 	ViFindList findList;
@@ -56,6 +46,7 @@ static int sFindResource()
 	{
 		LOG_FATAL("An error occurred while finding resources.");
 		viClose(defaultRM);
+		defaultRM = 0;
 		return -1;
 	}
 	LOG_INFO(" %d instruments are detected. defaultRM is %d", numInstrs, defaultRM);
@@ -102,16 +93,36 @@ static int sFindResource()
 
 static int Init(int x)
 {
+	if (0 == defaultRM)
+	{
+		/*
+		 * First we must call viOpenDefaultRM to get the manager
+		 * handle.  We will store this handle in defaultRM.
+		 */
+
+		ViStatus status = viOpenDefaultRM(&defaultRM);
+		if (status < VI_SUCCESS)
+		{
+			LOG_FATAL("Could not open a session to the VISA Resource Manager!");
+			return -1;
+		}
+	}
+
+	return 0;
+}
+
+static int Scan(int x)
+{
+	InstrumentListClear(&defaultInstrList);
 	return sFindResource(x);
 }
 
-
-
 static int Shutdown(int x)
 {
-	if (NULL != defaultRM)
+	if (0 != defaultRM)
 	{
-		//	viClose(defaultRM);
+		viClose(defaultRM);
+		defaultRM = 0;
 	}
 	InstrumentListClear(&defaultInstrList);
 	return 0;
@@ -123,6 +134,7 @@ static int Shutdown(int x)
 InstrumentMgr InstrMgr = {
 	.plist = &defaultInstrList,
 	.Init = Init,
+	.Scan = Scan,
 	.Shutdown = Shutdown
 
 };

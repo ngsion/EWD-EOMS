@@ -510,6 +510,7 @@ int CVICALLBACK OnRefreshBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
+		InstrMgr.Scan(0);
 
 		break;
 	}

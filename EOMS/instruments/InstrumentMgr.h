@@ -31,6 +31,7 @@ typedef struct InstrumentMgr
 	InstrumentListNode ** plist;
 
 	int (*Init)(int x);
+	int (*Scan)(int x);
 	int (*Shutdown)(int x);
 	
 	
