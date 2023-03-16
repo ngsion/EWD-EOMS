@@ -12,37 +12,39 @@
 #define __WaveformGenerator_H__
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C"
+{
 #endif
 
-//==============================================================================
-// Include files
+    //==============================================================================
+    // Include files
 
 #include "cvidef.h"
 #include "Device.h"
-//==============================================================================
-// Constants
+#include "WaveformSetting.h"
+    //==============================================================================
+    // Constants
 
-//==============================================================================
-// Types
-typedef struct WaveformGenerator
-{
-    Device device;
+    //==============================================================================
+    // Types
+    typedef struct WaveformGenerator
+    {
+        Device device;
 
+        WaveformSetting *pSetting;
 
-}WaveformGenerator;
+    } WaveformGenerator;
 
+    //==============================================================================
+    // External variables
 
-//==============================================================================
-// External variables
-
-//==============================================================================
-// Global functions
-void WaveformGeneratorInit(WaveformGenerator * pDev);
-void WaveformGeneratorDeinit(WaveformGenerator * pDev);
+    //==============================================================================
+    // Global functions
+    void WaveformGeneratorInit(WaveformGenerator *pDev);
+    void WaveformGeneratorDeinit(WaveformGenerator *pDev);
 
 #ifdef __cplusplus
-    }
+}
 #endif
 
-#endif  /* ndef __WaveformGenerator_H__ */
+#endif /* ndef __WaveformGenerator_H__ */

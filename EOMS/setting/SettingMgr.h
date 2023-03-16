@@ -22,6 +22,9 @@
 
 //==============================================================================
 // Constants
+
+#define SETTING_MAX_NUM 12
+
 typedef enum{
     Signal_None = 0,
     Signal_Picoammieter = 1 << 0,
@@ -53,12 +56,16 @@ typedef enum{
 // Types
 typedef struct SettingMgr
 {
+   
     unsigned int signal;
     unsigned int data;
     unsigned int online;
     
     int (*Init)(int x);
 	int (*Shutdown)(int x);
+    int (*Start)(int x);
+	int (*Stop)(int x);
+    Setting * (*FindWithInstrFlag)(int flag);
 
 }SettingMgr;
 

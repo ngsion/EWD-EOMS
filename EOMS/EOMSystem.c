@@ -87,7 +87,7 @@ static int Stop(int x)
 	DevMgr.Reset(x);
 	DevMgr.Stop(x);
 	DataMgr.Stop(x);
-	SetMgr.Init(x);
+	SetMgr.Stop(x);
 	return 0;
 }
 
@@ -253,7 +253,8 @@ static int Start(int x)
 
 	DevMgr.Reset(x);
 	DataMgr.Start(0);
-
+    SetMgr.Start(0);
+	
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
 
 	return 0;

@@ -54,7 +54,6 @@ int Open(struct Instrument *pInstr)
 		pInstr->status = Instrument_Status_Open;
 	}
 
-
 	return 0;
 }
 
@@ -146,6 +145,11 @@ Instrument *InstrumentAllocInit()
 
 void InstrumentDelloc(Instrument *pInstr)
 {
+	if (pInstr->status > Instrument_Status_Connected)
+	{
+		pInstr->Close(pInstr);
+	}
+
 	if (NULL != pInstr)
 	{
 		free(pInstr);

@@ -159,10 +159,12 @@ void PicoammeterInit(Picoammeter *pDev)
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
+	pDev->pSetting = NULL;
 
 }
 void PicoammeterDeinit(Picoammeter *pDev)
 {
 	pDev->device.instrumentFlag = Instrument_Picoammeter;   
 	DeviceDeinit(&pDev->device);
+	pDev->pSetting = NULL;
 }

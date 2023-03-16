@@ -20,6 +20,7 @@
 
 #include "cvidef.h"
 #include "Device.h"
+#include "PicoSetting.h"
 
 
 //==============================================================================
@@ -31,6 +32,8 @@ typedef struct Picoammeter
 {
     Device device;
 
+    PicoSetting * pSetting;
+    
 }Picoammeter;
 
 

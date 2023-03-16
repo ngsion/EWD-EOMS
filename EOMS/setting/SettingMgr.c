@@ -12,34 +12,91 @@
 // Include files
 
 #include "SettingMgr.h"
+#include "PicoSetting.h"
+#include "LCRSetting.h"
+#include "WaveformSetting.h"
 
 //==============================================================================
 // Constants
-
 
 //==============================================================================
 // Types
 
 //==============================================================================
 // Static global variables
+static Setting *defaultSettingArray[SETTING_MAX_NUM];
 
 //==============================================================================
 // Static functions
 static int Init(int x)
 {
-	
+	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	{
+		defaultSettingArray[i] = NULL;
+	}
+
+	defaultSettingArray[0] = (Setting *)malloc(sizeof(PicoSetting));
+	PicoSettingInit((PicoSetting *)defaultSettingArray[0]);
+
+	defaultSettingArray[1] = (Setting *)malloc(sizeof(WaveformSetting));
+	WaveformSettingInit((WaveformSetting *)defaultSettingArray[1]);
+
+	defaultSettingArray[2] = (Setting *)malloc(sizeof(LCRSetting));
+	LCRSettingInit((LCRSetting *)defaultSettingArray[2]);
+
 	return 0;
 }
 
+static int Start(int x)
+{
+	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	{
+		if (NULL != defaultSettingArray[i])
+		{
+			defaultSettingArray[i]->Start(defaultSettingArray[i]);
+		}
+	}
+	return 0;
+}
+static int Stop(int x)
+{
+	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	{
+		if (NULL != defaultSettingArray[i])
+		{
+			defaultSettingArray[i]->Stop(defaultSettingArray[i]);
+		}
+	}
 
+	return 0;
+}
 
 static int Shutdown(int x)
 {
-	
+	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	{
+		if (NULL != defaultSettingArray[i])
+		{
+			free(defaultSettingArray[i]);
+			defaultSettingArray[i] = NULL;
+		}
+	}
 
 	return 0;
 }
-
+static Device *FindWithInstrFlag(int flag)
+{
+	Setting *pSet = NULL;
+	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	{
+		if (NULL != defaultSettingArray[i] && (defaultSettingArray[i]->instrumentFlag == flag))
+		{
+			pSet = defaultSettingArray[i];
+			break;
+		}
+	}
+	return pSet;
+}
 //==============================================================================
 // Global variables
 
@@ -47,7 +104,7 @@ static int Shutdown(int x)
 // Global functions
 SettingMgr SetMgr = {
 	.Init = Init,
-	.signal = Signal_Picoammieter,
-	.data = Data_Current,
-	.online = Online_None,
-	.Shutdown = Shutdown};
+	.Start = Start,
+	.Stop = Stop,
+	.Shutdown = Shutdown,
+	.FindWithInstrFlag = FindWithInstrFlag};

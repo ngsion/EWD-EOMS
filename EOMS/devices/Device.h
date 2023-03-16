@@ -34,6 +34,7 @@ typedef struct Device
     char  title[DEVICE_TITLE_LENGTH]; ///chinese name
     Instrument * pInstr;
     bool isSignal;
+    bool isColector;
 
 
 

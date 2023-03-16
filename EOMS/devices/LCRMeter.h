@@ -20,6 +20,7 @@
 
 #include "cvidef.h"
 #include "Device.h"
+#include "LCRSetting.h"
 //==============================================================================
 // Constants
 
@@ -28,6 +29,7 @@
 typedef struct LCRMeter
 {
     Device device;
+    LCRSetting  * pSetting;
    
 }LCRMeter;
 
