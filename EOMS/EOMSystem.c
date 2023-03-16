@@ -28,7 +28,7 @@
 
 //==============================================================================
 // Static global variables
-static FILE *fp = NULL;
+
 
 void setupLogger()
 {
@@ -61,22 +61,11 @@ static int Init(int x)
 }
 static int Shutdown(int x)
 {
-	if (NULL != fp)
-	{
-		// fclose(fp);
-	}
-	InstrumentListNode *pHead = *InstrMgr.plist;
-	while (pHead != NULL)
-	{
-		InstrumentListNode *pNode = pHead;
-		LOG_INFO("Shutdown one instrument is %s", pNode->pInstr->address);
-		pNode->pInstr->Close(pNode->pInstr);
-		pHead = pNode->next;
-	}
-	InstrMgr.Shutdown(x);
 	DevMgr.Shutdown(x);
 	MeasureMgr.Shutdown(x);
+	InstrMgr.Shutdown(x);
 	SetMgr.Shutdown(x);
+	logger_flush();
 	return 0;
 }
 
@@ -91,53 +80,6 @@ static int Stop(int x)
 	return 0;
 }
 
-static int LoadSettings(int x)
-{
-	int i;
-	for (i = 0; i < DEVICE_MAX_NUM; i++)
-	{
-		if (NULL != DevMgr.pDevArray[i])
-		{
-			bool flag = false;
-			if ((SetMgr.signal & Signal_Picoammieter) && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_Picoammeter))
-			{
-				flag = true;
-			}
-			else if ((SetMgr.signal & Signal_WaveformGenerator) && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_WaveformGenerator))
-			{
-				flag = true;
-			}
-			else if ((SetMgr.signal & Signal_LCRMeter) && (DevMgr.pDevArray[i]->instrumentFlag == Instrument_LCRMeter))
-			{
-				flag = true;
-			}
-			DevMgr.pDevArray[i]->isSignal = flag;
-		}
-	}
-
-	for (i = 0; i < MEASURE_MAX_NUM; i++)
-	{
-		if (NULL != MeasureMgr.pMeasureArray[i])
-		{
-			bool flag = false;
-			if ((SetMgr.data & Data_Cp) && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter))
-			{
-				flag = true;
-			}
-			else if ((SetMgr.data & Data_D) && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_LCRMeter))
-			{
-				flag = true;
-			}
-			else if ((SetMgr.data & Data_Current) && (MeasureMgr.pMeasureArray[i]->instrumentFlag == Instrument_Picoammeter))
-			{
-				flag = true;
-			}
-			MeasureMgr.pMeasureArray[i]->isCollector = flag;
-		}
-	}
-
-	return 0;
-}
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
@@ -265,7 +207,6 @@ EOMSystem System = {
 	.isWorking = false,
 	.Init = Init,
 	.Shutdown = Shutdown,
-	.LoadSettings = LoadSettings,
 	.Start = Start,
 	.Stop = Stop};
 

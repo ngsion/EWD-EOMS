@@ -12,6 +12,7 @@
 // Include files
 
 #include "WaveformSetting.h"
+#include "logger.h"  
 
 //==============================================================================
 // Constants

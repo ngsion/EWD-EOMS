@@ -14,26 +14,26 @@
      /* Panels and Controls: */
 
 #define  PANEL                            1       /* callback function: OnPanel */
-#define  PANEL_RADIOBUTTON_WAVE           2       /* control type: radioButton, callback function: OnRadioWave */
-#define  PANEL_CHECKBOX_LCR               3       /* control type: radioButton, callback function: (none) */
-#define  PANEL_RADIOBUTTON_LCR            4       /* control type: radioButton, callback function: OnRadioLCR */
-#define  PANEL_CHECKBOX_PICO              5       /* control type: radioButton, callback function: (none) */
-#define  PANEL_RADIOBUTTON_PICO           6       /* control type: radioButton, callback function: OnRadioPico */
-#define  PANEL_COMMANDBUTTON              7       /* control type: command, callback function: OnOkBtn */
-#define  PANEL_LED_WAVE                   8       /* control type: LED, callback function: (none) */
-#define  PANEL_LED_LCR                    9       /* control type: LED, callback function: (none) */
-#define  PANEL_LED_PICO                   10      /* control type: LED, callback function: (none) */
-#define  PANEL_TEXTBOX_PICO               11      /* control type: textBox, callback function: (none) */
-#define  PANEL_TEXTBOX_LCR                12      /* control type: textBox, callback function: (none) */
-#define  PANEL_TEXTBOX_ADMESY             13      /* control type: textBox, callback function: (none) */
-#define  PANEL_TEXTBOX_WAVE               14      /* control type: textBox, callback function: (none) */
-#define  PANEL_TEXTMSG_3                  15      /* control type: textMsg, callback function: (none) */
-#define  PANEL_LED_ADMESY                 16      /* control type: LED, callback function: (none) */
-#define  PANEL_COMMANDBUTTON_REFRESH      17      /* control type: command, callback function: OnRefreshBtn */
-#define  PANEL_RING_PICO                  18      /* control type: ring, callback function: OnPicoRing */
-#define  PANEL_RING_LCR                   19      /* control type: ring, callback function: OnLCRRing */
-#define  PANEL_RING_WAVE                  20      /* control type: ring, callback function: OnWaveRing */
-#define  PANEL_RING_ADMESY                21      /* control type: ring, callback function: OnAdmesy */
+#define  PANEL_CHECKBOX_LCR_SRC           2       /* control type: radioButton, callback function: (none) */
+#define  PANEL_CHECKBOX_WAVE_SRC          3       /* control type: radioButton, callback function: (none) */
+#define  PANEL_CHECKBOX_LCR_DATA          4       /* control type: radioButton, callback function: (none) */
+#define  PANEL_CHECKBOX_PICO_DATA         5       /* control type: radioButton, callback function: (none) */
+#define  PANEL_COMMANDBUTTON              6       /* control type: command, callback function: OnOkBtn */
+#define  PANEL_LED_WAVE                   7       /* control type: LED, callback function: (none) */
+#define  PANEL_LED_LCR                    8       /* control type: LED, callback function: (none) */
+#define  PANEL_LED_PICO                   9       /* control type: LED, callback function: (none) */
+#define  PANEL_TEXTBOX_PICO               10      /* control type: textBox, callback function: (none) */
+#define  PANEL_TEXTBOX_LCR                11      /* control type: textBox, callback function: (none) */
+#define  PANEL_TEXTBOX_ADMESY             12      /* control type: textBox, callback function: (none) */
+#define  PANEL_TEXTBOX_WAVE               13      /* control type: textBox, callback function: (none) */
+#define  PANEL_TEXTMSG_3                  14      /* control type: textMsg, callback function: (none) */
+#define  PANEL_LED_ADMESY                 15      /* control type: LED, callback function: (none) */
+#define  PANEL_COMMANDBUTTON_REFRESH      16      /* control type: command, callback function: OnRefreshBtn */
+#define  PANEL_RING_PICO                  17      /* control type: ring, callback function: OnPicoRing */
+#define  PANEL_RING_LCR                   18      /* control type: ring, callback function: OnLCRRing */
+#define  PANEL_RING_WAVE                  19      /* control type: ring, callback function: OnWaveRing */
+#define  PANEL_RING_ADMESY                20      /* control type: ring, callback function: OnAdmesy */
+#define  PANEL_CHECKBOX_PICO_SRC          21      /* control type: radioButton, callback function: (none) */
 #define  PANEL_TEXTMSG_4                  22      /* control type: textMsg, callback function: (none) */
 
 
@@ -54,9 +54,6 @@ int  CVICALLBACK OnLCRRing(int panel, int control, int event, void *callbackData
 int  CVICALLBACK OnOkBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnPanel(int panel, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnPicoRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
-int  CVICALLBACK OnRadioLCR(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
-int  CVICALLBACK OnRadioPico(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
-int  CVICALLBACK OnRadioWave(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRefreshBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnWaveRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 

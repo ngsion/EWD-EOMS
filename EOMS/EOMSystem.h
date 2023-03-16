@@ -35,7 +35,6 @@ typedef struct
 
 	int (*Init)(int x);
 	int (*Shutdown)(int x);
-	int (*LoadSettings)(int x);
     int (*Start)(int x);
 	int (*Stop)(int x);
 	

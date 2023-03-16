@@ -12,6 +12,7 @@
 // Include files
 
 #include "LCRSetting.h"
+#include "logger.h"  
 
 //==============================================================================
 // Constants

@@ -12,6 +12,7 @@
 // Include files
 
 #include "PicoSetting.h"
+#include "logger.h"  
 
 //==============================================================================
 // Constants

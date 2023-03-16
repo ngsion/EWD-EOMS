@@ -51,38 +51,32 @@ int ConnectPico(int panel)
 	while (pHead != NULL)
 	{
 		InstrumentListNode *pNode = pHead;
-
-		if (index == ringIdx && Instrument_Type_ASRL == pNode->pInstr->type)
+		if (index == ringIdx)
 		{
-			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+			pMeter->pInstr = pNode->pInstr;
+
+			Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
+			pMeasure->pInstr = pNode->pInstr;
+
+			if (Instrument_Type_ASRL == pNode->pInstr->type)
 			{
-				LOG_ERROR("Error open %s", pNode->pInstr->address);
+				if (-1 == pNode->pInstr->Open(pNode->pInstr))
+				{
+					LOG_ERROR("Error open %s", pNode->pInstr->address);
+				}
+				else
+				{
+
+					pMeter->SetAttribute(pMeter);
+
+					pNode->pInstr->QueryID(pNode->pInstr);
+					LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+				}
 			}
-			else
-			{
-				Device *pMeter = NULL;
-				Measurement *pMeasure = NULL;
-
-				pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
-				pMeter->pInstr = pNode->pInstr;
-
-				pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
-				pMeasure->pInstr = pNode->pInstr;
-
-				SetMgr.online |= Online_Picoammieter;
-
-				pMeter->SetAttribute(pMeter);
-
-				pNode->pInstr->QueryID(pNode->pInstr);
-				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
-
-				updateLED(panel);
-				updateStrings(panel);
-
-				return 0;
-			}
-
-			break;
+			updateLED(panel);
+			updateStrings(panel);
+			return 0;
 		}
 		++index;
 		pHead = pNode->next;
@@ -101,34 +95,29 @@ int ConnectLCR(int panel)
 	{
 		InstrumentListNode *pNode = pHead;
 
-		if (index == ringIdx && Instrument_Type_GPIB == pNode->pInstr->type)
+		if (index == ringIdx)
 		{
-			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
+			pMeter->pInstr = pNode->pInstr;
+
+			Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
+			pMeasure->pInstr = pNode->pInstr;
+
+			if (Instrument_Type_GPIB == pNode->pInstr->type)
 			{
-				LOG_ERROR("Error open %s", pNode->pInstr->address);
+				if (-1 == pNode->pInstr->Open(pNode->pInstr))
+				{
+					LOG_ERROR("Error open %s", pNode->pInstr->address);
+				}
+				else
+				{
+					pNode->pInstr->QueryID(pNode->pInstr);
+					LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+				}
 			}
-			else
-			{
-				Device *pMeter = NULL;
-				Measurement *pMeasure = NULL;
-
-				pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
-				pMeter->pInstr = pNode->pInstr;
-
-				pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_LCRMeter);
-				pMeasure->pInstr = pNode->pInstr;
-
-				SetMgr.online |= Online_LCRMeter;
-
-				pNode->pInstr->QueryID(pNode->pInstr);
-				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
-
-				updateLED(panel);
-				updateStrings(panel);
-
-				return 0;
-			}
-			break;
+			updateLED(panel);
+			updateStrings(panel);
+			return 0;
 		}
 		++index;
 		pHead = pNode->next;
@@ -147,33 +136,26 @@ int ConnectWave(int panel)
 	{
 		InstrumentListNode *pNode = pHead;
 
-		if (index == ringIdx && Instrument_Type_USB == pNode->pInstr->type)
+		if (index == ringIdx)
 		{
-			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+			pMeter->pInstr = pNode->pInstr;
+			if (Instrument_Type_USB == pNode->pInstr->type)
 			{
-				LOG_ERROR("Error open %s", pNode->pInstr->address);
-			}
-			else
-			{
-				pNode->pInstr->QueryID(pNode->pInstr);
-				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
-
-				Device *pMeter = NULL;
-
-				if (NULL != strstr(pNode->pInstr->identifier, "Agilent"))
+				if (-1 == pNode->pInstr->Open(pNode->pInstr))
 				{
-					pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
-					pMeter->pInstr = pNode->pInstr;
-
-					SetMgr.online |= Online_WaveformGenerator;
-
-					updateLED(panel);
-					updateStrings(panel);
-
-					return 0;
+					LOG_ERROR("Error open %s", pNode->pInstr->address);
 				}
+				else
+				{
+					pNode->pInstr->QueryID(pNode->pInstr);
+					LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
+				}
+				updateLED(panel);
+				updateStrings(panel);
+
+				return 0;
 			}
-			break;
 		}
 		++index;
 		pHead = pNode->next;
@@ -192,84 +174,31 @@ int ConnectAdmesy(int panel)
 	while (pHead != NULL)
 	{
 		InstrumentListNode *pNode = pHead;
-
-		if (index == ringIdx && Instrument_Type_USB == pNode->pInstr->type)
+		if (index == ringIdx)
 		{
-			if (-1 == pNode->pInstr->Open(pNode->pInstr))
+			Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
+			pMeter->pInstr = pNode->pInstr;
+			if (Instrument_Type_USB == pNode->pInstr->type)
 			{
-				LOG_ERROR("Error open %s", pNode->pInstr->address);
-			}
-			else
-			{
-				pNode->pInstr->QueryID(pNode->pInstr);
-				LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
-
-				Device *pMeter = NULL;
-
-				if (NULL != strstr(pNode->pInstr->identifier, "Agilent"))
+				if (-1 == pNode->pInstr->Open(pNode->pInstr))
 				{
-					pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
-					pMeter->pInstr = pNode->pInstr;
-
-					SetMgr.online |= Online_WaveformGenerator;
-
-					updateLED(panel);
-					updateStrings(panel);
-
-					return 0;
+					LOG_ERROR("Error open %s", pNode->pInstr->address);
+				}
+				else
+				{
+					pNode->pInstr->QueryID(pNode->pInstr);
+					LOG_INFO("Init one instrument is %s, id %s", pNode->pInstr->address, pNode->pInstr->identifier);
 				}
 			}
-			break;
+			updateLED(panel);
+			updateStrings(panel);
+
+			return 0;
 		}
 		++index;
 		pHead = pNode->next;
 	}
 	return -1;
-}
-
-int CVICALLBACK OnRadioWave(int panel, int control, int event,
-							void *callbackData, int eventData1, int eventData2)
-{
-	switch (event)
-	{
-	case EVENT_COMMIT:
-	{
-		SetCtrlVal(panel, PANEL_RADIOBUTTON_PICO, 0);
-		SetCtrlVal(panel, PANEL_RADIOBUTTON_LCR, 0);
-	}
-	break;
-	}
-	return 0;
-}
-
-int CVICALLBACK OnRadioLCR(int panel, int control, int event,
-						   void *callbackData, int eventData1, int eventData2)
-{
-	switch (event)
-	{
-	case EVENT_COMMIT:
-	{
-		SetCtrlVal(panel, PANEL_RADIOBUTTON_PICO, 0);
-		SetCtrlVal(panel, PANEL_RADIOBUTTON_WAVE, 0);
-	}
-	break;
-	}
-	return 0;
-}
-
-int CVICALLBACK OnRadioPico(int panel, int control, int event,
-							void *callbackData, int eventData1, int eventData2)
-{
-	switch (event)
-	{
-	case EVENT_COMMIT:
-	{
-		SetCtrlVal(panel, PANEL_RADIOBUTTON_LCR, 0);
-		SetCtrlVal(panel, PANEL_RADIOBUTTON_WAVE, 0);
-	}
-	break;
-	}
-	return 0;
 }
 
 int CVICALLBACK OnOkBtn(int panel, int control, int event,
@@ -280,76 +209,21 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 	case EVENT_COMMIT:
 	{
 
-		int lcrSource = 0;
-		int picoSource = 0;
-		int waveSource = 0;
-		GetCtrlVal(panel, PANEL_RADIOBUTTON_LCR, &lcrSource);
-		GetCtrlVal(panel, PANEL_RADIOBUTTON_WAVE, &waveSource);
-		GetCtrlVal(panel, PANEL_RADIOBUTTON_PICO, &picoSource);
-		if (lcrSource)
-		{
-			SetMgr.signal = Signal_LCRMeter;
-		}
-		else if (picoSource)
-		{
-			SetMgr.signal = Signal_Picoammieter;
-		}
-		else if (waveSource)
-		{
-			SetMgr.signal = Signal_WaveformGenerator;
-		}
+		Setting *pPicoSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
+		Setting *pWaveSet = SetMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+		Setting *pLCRSet = SetMgr.FindWithInstrFlag(Instrument_LCRMeter);
 
-		SetMgr.data = Data_None;
-		int picoData = 0;
-		int lcrData = 0;
-		GetCtrlVal(panel, PANEL_CHECKBOX_PICO, &picoData);
-		GetCtrlVal(panel, PANEL_CHECKBOX_LCR, &lcrData);
-		if (lcrData)
-		{
-			SetMgr.data |= Data_Cp;
-			SetMgr.data |= Data_D;
-		}
-		if (picoData)
-		{
-			SetMgr.data |= Data_Current;
-		}
-		//////////////////////////////////////////
+		GetCtrlVal(panel, PANEL_CHECKBOX_LCR_SRC, &pLCRSet->isSignal);
+		GetCtrlVal(panel, PANEL_CHECKBOX_WAVE_SRC, &pWaveSet->isSignal);
+		GetCtrlVal(panel, PANEL_CHECKBOX_PICO_SRC, &pPicoSet->isSignal);
+		GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA, &pPicoSet->isColector);
+		GetCtrlVal(panel, PANEL_CHECKBOX_LCR_DATA, &pLCRSet->isColector);
 
-		/*	if (SetMgr.signal & Signal_LCRMeter || SetMgr.data & Data_D)
-			{
-				if (0 != ConnectLCR(panel))
-				{
-					break;
-				}
-			}
-
-			if (SetMgr.signal & Signal_Picoammieter || SetMgr.data & Data_Current)
-			{
-				SetMgr.signal = Signal_Picoammieter;
-				if (0 != ConnectPico(panel))
-				{
-					break;
-				}
-			}
-
-			if (SetMgr.signal & Signal_WaveformGenerator)
-			{
-				if (0 != ConnectWave(panel))
-				{
-					break;
-				}
-			}
-
-			updateLED(panel);
-			updateStrings(panel);  */
-
-		System.LoadSettings(0);
-
-		if (Signal_Picoammieter == SetMgr.signal)
+		if (pPicoSet->isSignal)
 		{
 			UI.ShowLCGraph(0);
 		}
-		else if (Signal_LCRMeter == SetMgr.signal)
+		else if (pLCRSet->isSignal)
 		{
 			UI.ShowCVGraph(0);
 		}
@@ -368,7 +242,7 @@ int updateStrings(int panel)
 {
 
 	Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
-	if (NULL != pMeter && NULL != pMeter->pInstr)
+	if (NULL != pMeter->pInstr)
 	{
 		ResetTextBox(panel, PANEL_TEXTBOX_PICO, pMeter->pInstr->identifier);
 	}
@@ -376,8 +250,9 @@ int updateStrings(int panel)
 	{
 		ResetTextBox(panel, PANEL_TEXTBOX_PICO, "");
 	}
+
 	pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
-	if (NULL != pMeter && NULL != pMeter->pInstr)
+	if (NULL != pMeter->pInstr)
 	{
 		ResetTextBox(panel, PANEL_TEXTBOX_LCR, pMeter->pInstr->identifier);
 	}
@@ -385,8 +260,9 @@ int updateStrings(int panel)
 	{
 		ResetTextBox(panel, PANEL_TEXTBOX_LCR, "");
 	}
+
 	pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
-	if (NULL != pMeter && NULL != pMeter->pInstr)
+	if (NULL != pMeter->pInstr)
 	{
 		ResetTextBox(panel, PANEL_TEXTBOX_WAVE, pMeter->pInstr->identifier);
 	}
@@ -394,8 +270,9 @@ int updateStrings(int panel)
 	{
 		ResetTextBox(panel, PANEL_TEXTBOX_WAVE, "");
 	}
+
 	pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
-	if (NULL != pMeter && NULL != pMeter->pInstr)
+	if (NULL != pMeter->pInstr)
 	{
 		ResetTextBox(panel, PANEL_TEXTBOX_ADMESY, pMeter->pInstr->identifier);
 	}
@@ -408,7 +285,8 @@ int updateStrings(int panel)
 
 int updateLED(int panel)
 {
-	if (SetMgr.online & Online_Picoammieter)
+	Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+	if (NULL != pMeter->pInstr && pMeter->pInstr->status >= Instrument_Status_Connected)
 	{
 		SetCtrlVal(panel, PANEL_LED_PICO, 1);
 	}
@@ -416,8 +294,8 @@ int updateLED(int panel)
 	{
 		SetCtrlVal(panel, PANEL_LED_PICO, 0);
 	}
-
-	if (SetMgr.online & Online_LCRMeter)
+	pMeter = DevMgr.FindWithInstrFlag(Instrument_LCRMeter);
+	if (NULL != pMeter->pInstr && pMeter->pInstr->status >= Instrument_Status_Connected)
 	{
 		SetCtrlVal(panel, PANEL_LED_LCR, 1);
 	}
@@ -425,7 +303,8 @@ int updateLED(int panel)
 	{
 		SetCtrlVal(panel, PANEL_LED_LCR, 0);
 	}
-	if (SetMgr.online & Online_WaveformGenerator)
+	pMeter = DevMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+	if (NULL != pMeter->pInstr && pMeter->pInstr->status >= Instrument_Status_Connected)
 	{
 		SetCtrlVal(panel, PANEL_LED_WAVE, 1);
 	}
@@ -433,7 +312,8 @@ int updateLED(int panel)
 	{
 		SetCtrlVal(panel, PANEL_LED_WAVE, 0);
 	}
-	if (SetMgr.online & Online_Admesy)
+	pMeter = DevMgr.FindWithInstrFlag(Instrument_Admesy);
+	if (NULL != pMeter->pInstr && pMeter->pInstr->status >= Instrument_Status_Connected)
 	{
 		SetCtrlVal(panel, PANEL_LED_ADMESY, 1);
 	}

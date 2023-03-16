@@ -11,6 +11,7 @@
 //==============================================================================
 // Include files
 
+#include <ansi_c.h>
 #include "SettingMgr.h"
 #include "PicoSetting.h"
 #include "LCRSetting.h"
@@ -84,7 +85,7 @@ static int Shutdown(int x)
 
 	return 0;
 }
-static Device *FindWithInstrFlag(int flag)
+static Setting *FindWithInstrFlag(int flag)
 {
 	Setting *pSet = NULL;
 	for (int i = 0; i < SETTING_MAX_NUM; i++)
