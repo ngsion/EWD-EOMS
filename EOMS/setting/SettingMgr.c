@@ -16,6 +16,7 @@
 #include "PicoSetting.h"
 #include "LCRSetting.h"
 #include "WaveformSetting.h"
+#include "AdmesySetting.h"
 
 //==============================================================================
 // Constants
@@ -45,6 +46,9 @@ static int Init(int x)
 
 	defaultSettingArray[2] = (Setting *)malloc(sizeof(LCRSetting));
 	LCRSettingInit((LCRSetting *)defaultSettingArray[2]);
+
+	defaultSettingArray[3] = (Setting *)malloc(sizeof(AdmesySetting));
+	AdmesySettingInit((AdmesySetting *)defaultSettingArray[3]);
 
 	for (i = 0; i < SETTING_MAX_NUM; i++)
 	{

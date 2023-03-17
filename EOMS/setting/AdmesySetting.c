@@ -1,0 +1,59 @@
+//==============================================================================
+//
+// Title:		AdmesySetting.c
+// Purpose:		A short description of the implementation.
+//
+// Created on:	2023-03-17 at 21:11:33 by .
+// Copyright:	. All Rights Reserved.
+//
+//==============================================================================
+
+//==============================================================================
+// Include files
+
+#include "AdmesySetting.h"
+#include "logger.h"  
+
+//==============================================================================
+// Constants
+
+//==============================================================================
+// Types
+
+//==============================================================================
+// Static global variables
+
+//==============================================================================
+// Static functions
+static int Init(Setting *pSet)
+{
+	LOG_INFO("Setting Init");
+	return 0;
+}
+static int Save(Setting *pSet)
+{
+	LOG_INFO("Setting Save");
+	return 0;
+}
+
+//==============================================================================
+// Global variables
+
+//==============================================================================
+// Global functions
+void AdmesySettingInit(AdmesySetting *pSet)
+{
+	if (NULL == pSet)
+	{
+		return;
+	}
+	SettingInit(&pSet->setting);
+	pSet->setting.instrumentFlag = Instrument_Admesy;
+
+	pSet->setting.Init = Init;
+	pSet->setting.Save = Save;
+}
+void AdmesySettingDeinit(AdmesySetting *pSet)
+{
+	SettingDeinit(&pSet->setting);
+}

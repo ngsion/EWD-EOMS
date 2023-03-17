@@ -75,15 +75,15 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 	{
-		
-		 int index = Instrument_Picoammeter;
+
+		int index = Instrument_Picoammeter;
 		for (; index < Instrument_WaveformGenerator; index++)
 		{
 			Setting *pSet = SetMgr.FindWithInstrFlag(index);
 			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_SRC + index - Instrument_Picoammeter, &pSet->isSignal);
 		}
-		
-		for ( index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
+
+		for (index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
 		{
 			Setting *pSet = SetMgr.FindWithInstrFlag(index);
 			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, &pSet->isColector);
@@ -111,7 +111,7 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 int updateStrings(int panel)
 {
 
-	for (int index = Instrument_Picoammeter; index < Instrument_Admesy; index++)
+	for (int index = Instrument_Picoammeter; index <= Instrument_Admesy; index++)
 	{
 		Device *pMeter = DevMgr.FindWithInstrFlag(index);
 
@@ -130,7 +130,7 @@ int updateStrings(int panel)
 
 int updateLED(int panel)
 {
-	for (int index = Instrument_Picoammeter; index < Instrument_Admesy; index++)
+	for (int index = Instrument_Picoammeter; index <= Instrument_Admesy; index++)
 	{
 		Device *pMeter = DevMgr.FindWithInstrFlag(index);
 
@@ -148,6 +148,36 @@ int updateLED(int panel)
 	return 0;
 }
 
+int updateRingControls(int panel)
+{
+	for (int index = Instrument_Picoammeter; index <= Instrument_Admesy; index++)
+	{
+		Setting *pSet = SetMgr.FindWithInstrFlag(index);
+		int cur = PANEL_RING_PICO + index - Instrument_Picoammeter;
+		int number = 0;
+		GetNumListItems(panel, cur, &number);
+		if (number != InstrMgr.instrumentsCount)
+		{
+			ClearListCtrl(panel, cur);
+			InstrumentListNode *pHead = *InstrMgr.plist;
+			int index = 0;
+			int count = 1;
+
+			index = -1;
+			++count;
+			while (pHead != NULL)
+			{
+				InstrumentListNode *pNode = pHead;
+				InsertListItem(panel, cur, index, pNode->pInstr->address, count);
+				++count;
+				pHead = pNode->next;
+			}
+			SetCtrlIndex(panel, cur, pSet->lastInstrIndex); // Based on index
+		}
+	}
+	return 0;
+}
+
 int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 						int eventData1, int eventData2)
 {
@@ -156,31 +186,6 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	{
 	case EVENT_GOT_FOCUS:
 	{
-		for (int index = Instrument_Picoammeter; index < Instrument_Admesy; index++)
-		{
-			Setting *pSet = SetMgr.FindWithInstrFlag(index);
-			int cur = PANEL_RING_PICO + index - Instrument_Picoammeter;
-			int number = 0;
-			GetNumListItems(panel, cur, &number);
-			if (number != InstrMgr.instrumentsCount)
-			{
-				ClearListCtrl(panel, cur);
-				InstrumentListNode *pHead = *InstrMgr.plist;
-				int index = 0;
-				int count = 1;
-
-				index = -1;
-				++count;
-				while (pHead != NULL)
-				{
-					InstrumentListNode *pNode = pHead;
-					InsertListItem(panel, cur, index, pNode->pInstr->address, count);
-					++count;
-					pHead = pNode->next;
-				}
-				SetCtrlIndex(panel, cur, pSet->lastInstrIndex); // Based on index
-			}
-		}
 	}
 
 	break;
@@ -208,7 +213,7 @@ int CVICALLBACK OnRefreshBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 		InstrMgr.Scan(0);
-
+        updateRingControls(panel);
 		break;
 	}
 	return 0;
@@ -269,8 +274,12 @@ int CVICALLBACK OnAdmesy(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_VAL_CHANGED:
+	{
+		Setting *pSet = SetMgr.FindWithInstrFlag(Instrument_Admesy);
+		GetCtrlIndex(panel, PANEL_RING_WAVE, &pSet->lastInstrIndex);
 		ConnectDevice(panel, Instrument_Admesy);
-		break;
+	}
+	break;
 	}
 	return 0;
 }

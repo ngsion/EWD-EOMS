@@ -44,7 +44,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 10
+Number of Opened Files = 5
 Window Confinement Region Enabled = True
 MainColumnWidth = 237
 FileDateColumnWidth = 70
@@ -74,7 +74,7 @@ In Projects = "1,"
 Window Top = 219
 Window Left = 106
 Window Z-Order = 1
-Source Window State = "1,72,72,72,32,34,34,0,0,204,0,0,0,0,0,48,39,0,51,13,323,547,1,0,"
+Source Window State = "1,72,72,72,32,34,34,0,0,204,0,0,0,0,0,44,39,0,51,13,323,547,1,0,"
 
 [File 0003]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.c"
@@ -83,7 +83,7 @@ Disk Date = 3761900094
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 8
+Window Z-Order = 5
 Source Window State = "1,35,35,35,4,90,4,0,0,80,0,0,0,0,0,18,90,0,98,41,239,541,1,0,"
 Breakpoint 0001 = "73,0,enabled,"
 Tracepoint 0001 = "0,0,74,1,"
@@ -97,7 +97,6 @@ Disk Date = 3761901589
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 4
 Source Window State = "1,151,151,151,0,13,13,0,0,110,0,0,0,0,0,20,111,0,126,34,266,717,1,0,"
 Breakpoint 0001 = "126,0,enabled,"
 Tracepoint 0001 = "0,0,126,1,"
@@ -116,12 +115,18 @@ Source Window State = "1,48,55,55,0,17,17,0,0,80,0,0,0,0,0,22,30,0,48,0,287,541,
 [File 0006]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
 File Type = "CSource"
-Disk Date = 3761897411
+Disk Date = 3761904593
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 5
-Source Window State = "1,139,139,139,30,44,44,0,0,83,0,0,0,0,0,25,151,0,163,12,323,559,1,0,"
+Window Z-Order = 2
+Source Window State = "1,130,130,130,4,13,13,0,0,83,0,0,0,0,0,25,33,0,34,40,323,559,1,0,"
+Breakpoint 0001 = "48,0,enabled,"
+Tracepoint 0001 = "0,0,49,1,"
+Breakpoint 0002 = "55,0,enabled,"
+Tracepoint 0002 = "0,0,56,1,"
+Breakpoint 0003 = "57,0,enabled,"
+Tracepoint 0003 = "0,0,58,1,"
 
 [File 0007]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.c"
@@ -156,7 +161,6 @@ Disk Date = 3761901398
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Window Z-Order = 7
 Source Window State = "1,128,128,128,5,14,14,0,0,80,0,0,0,0,0,19,108,0,130,51,251,541,1,0,"
 Breakpoint 0001 = "129,0,enabled,"
 Tracepoint 0001 = "0,0,130,1,"
@@ -173,11 +177,12 @@ Source Window State = "1,52,52,52,4,8,8,0,0,83,0,0,0,0,0,25,39,0,56,143,323,559,
 [File 0012]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
 File Type = "CSource"
-Disk Date = 3761891985
+Disk Date = 3761903976
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,62,62,62,9,18,9,0,0,60,0,0,0,0,0,25,58,0,62,14,323,421,1,0,"
+Window Z-Order = 4
+Source Window State = "1,62,62,62,9,18,9,0,0,60,0,0,0,0,0,25,26,0,61,48,323,421,1,0,"
 
 [File 0013]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.c"
@@ -186,7 +191,6 @@ Disk Date = 3761891891
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 6
 Source Window State = "1,67,79,67,4,16,4,0,0,81,0,0,0,0,0,25,166,0,184,160,323,547,1,0,"
 
 [File 0014]
@@ -217,7 +221,6 @@ Window Top = 157
 Window Left = 74
 Window Height = 311
 Window Width = 541
-Window Z-Order = 3
 
 [File 0017]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.uir"
@@ -246,8 +249,8 @@ Disk Date = 3761818387
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 9
-Source Window State = "1,67,67,67,25,45,45,0,0,80,0,0,0,0,0,20,33,0,59,96,263,541,1,0,"
+Window Z-Order = 3
+Source Window State = "1,67,67,67,25,45,45,0,0,80,0,0,0,0,0,20,84,0,99,39,263,541,1,0,"
 
 [File 0020]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Admesy.c"
@@ -484,8 +487,7 @@ Disk Date = 3761903242
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 2
-Source Window State = "1,21,21,21,98,100,100,0,0,81,0,0,0,0,0,25,12,0,21,154,323,547,1,0,"
+Source Window State = "1,25,25,25,9,24,24,0,3,81,0,0,0,0,0,25,12,0,25,9,323,547,1,0,"
 
 [File 0047]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.h"
@@ -512,7 +514,7 @@ Disk Date = 3761818361
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Source Window State = "1,57,57,57,8,27,27,0,3,0,0,0,0,0,0,0,42,0,57,8,239,541,1,0,"
+Source Window State = "1,38,38,38,4,21,21,0,3,80,0,0,0,0,0,18,16,0,38,4,239,541,1,0,"
 
 [File 0050]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.h"
@@ -530,7 +532,6 @@ Disk Date = 3761890434
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 10
 Source Window State = "1,36,36,36,19,34,34,0,3,80,0,0,0,0,0,18,21,0,36,19,239,541,1,0,"
 
 [File 0052]
@@ -664,17 +665,30 @@ Window Top = 95
 Window Left = 42
 Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,323,559,1,0,"
 
+[File 0067]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/AdmesySetting.c"
+File Type = "CSource"
+Disk Date = 3761903952
+In Projects = "1,"
+Window Top = 219
+Window Left = 106
+Source Window State = "1,0,0,0,0,0,0,0,0,83,0,0,0,0,0,25,0,0,0,0,323,559,1,0,"
+
+[File 0068]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/AdmesySetting.h"
+File Type = "Include"
+Disk Date = 3761903542
+In Projects = "1,"
+Window Top = 250
+Window Left = 122
+Source Window State = "1,0,0,0,0,0,0,0,0,83,0,0,0,0,0,25,0,0,0,0,323,559,1,0,"
+
 [Tab Order]
-Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.c"
-Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
+Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.c"
+Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
 Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
-Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.h"
-Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
-Tab 0006 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.c"
-Tab 0007 = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.c"
-Tab 0008 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.c"
-Tab 0009 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.uir"
-Tab 0010 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.h"
+Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
+Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True
