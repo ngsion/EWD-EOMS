@@ -31,8 +31,6 @@ extern "C"
     {
         Device device;
 
-        WaveformSetting *pSetting;
-
     } WaveformGenerator;
 
     //==============================================================================

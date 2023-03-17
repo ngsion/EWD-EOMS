@@ -140,11 +140,9 @@ void LCRMeterInit(LCRMeter *pDev)
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
 	pDev->device.Reset = Reset;
-	pDev->pSetting  = NULL;
 }
 void LCRMeterDeinit(LCRMeter *pDev)
 {
 	pDev->device.instrumentFlag = Instrument_LCRMeter; 
 	DeviceDeinit(&pDev->device);
-	pDev->pSetting  = NULL;
 }

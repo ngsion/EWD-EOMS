@@ -30,12 +30,12 @@
 typedef struct Setting
 {
     unsigned int instrumentFlag;
-    bool isSignal;
-    bool isColector;
+    int isSignal;
+    int isColector;
+    int lastInstrIndex;
 
-
-    int (*Start)(struct Setting * pSet);
-    int (*Stop)(struct Setting * pSet);
+    int (*Init)(struct Setting * pSet);
+    int (*Save)(struct Setting * pSet);
 
 }Setting;
 
@@ -45,8 +45,8 @@ typedef struct Setting
 
 //==============================================================================
 // Global functions
-void SetterInit(Setting * pSet);
-void SetterDeinit(Setting * pSet);
+void SettingInit(Setting * pSet);
+void SettingDeinit(Setting * pSet);
 
 
 

@@ -74,7 +74,7 @@ static int Start(int x)
 
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
+		if (NULL != defaultDeviceArray[i] && true/* == defaultDeviceArray[i]->isSignal*/)
 		{
 			LOG_INFO("before start");
 			defaultDeviceArray[i]->Start(defaultDeviceArray[i]);
@@ -88,7 +88,7 @@ static int Stop(int x)
 {
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		if (NULL != defaultDeviceArray[i] && true == defaultDeviceArray[i]->isSignal)
+		if (NULL != defaultDeviceArray[i] /*&& true == defaultDeviceArray[i]->isSignal*/)
 		{
 			defaultDeviceArray[i]->Stop(defaultDeviceArray[i]);
 		}
@@ -126,7 +126,6 @@ static Device *FindWithInstrFlag(int flag)
 // Global variables
 
 DeviceMgr DevMgr = {
-	.pDevArray = &defaultDeviceArray,
 	.Init = Init,
 	.Shutdown = Shutdown,
 	.Reset = Reset,

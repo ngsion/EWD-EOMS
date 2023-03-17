@@ -26,14 +26,14 @@
 //==============================================================================
 // Static functions
 
-static int Start(Setting *pSet)
+static int Init(Setting *pSet)
 {
-	LOG_INFO("Setting starts");
+	LOG_INFO("Setting Inits");
 	return 0;
 }
-static int Stop(Setting *pSet)
+static int Save(Setting *pSet)
 {
-	LOG_INFO("Setting Stops");
+	LOG_INFO("Setting Save");
 	return 0;
 }
 
@@ -43,18 +43,21 @@ static int Stop(Setting *pSet)
 //==============================================================================
 // Global functions
 
-void SetterInit(Setting * pSet)
+void SettingInit(Setting * pSet)
 {
 	if (NULL == pSet)
 	{
 		return;
 	}
+	pSet->Init = Init;
+	pSet->Save = Save;
 	pSet->isSignal = false;
 	pSet->isColector = false;
 	pSet->instrumentFlag = Instrument_Unknown;
+	pSet->lastInstrIndex = 0;
 
 }
-void SetterDeinit(Setting * pSet)
+void SettingDeinit(Setting * pSet)
 {
 	if (NULL == pSet)
 	{
@@ -62,4 +65,5 @@ void SetterDeinit(Setting * pSet)
 	}
 	pSet->isSignal = false;
 	pSet->isColector = false;
+	pSet->lastInstrIndex = 0;
 }

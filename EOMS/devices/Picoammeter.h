@@ -32,7 +32,6 @@ typedef struct Picoammeter
 {
     Device device;
 
-    PicoSetting * pSetting;
     
 }Picoammeter;
 

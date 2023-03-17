@@ -25,14 +25,14 @@
 
 //==============================================================================
 // Static functions
-static int Start(Setting *pSet)
+static int Init(Setting *pSet)
 {
-	LOG_INFO("Setting starts");
+	LOG_INFO("Setting Init");
 	return 0;
 }
-static int Stop(Setting *pSet)
+static int Save(Setting *pSet)
 {
-	LOG_INFO("Setting Stops");
+	LOG_INFO("Setting Save");
 	return 0;
 }
 
@@ -47,13 +47,13 @@ void PicoSettingInit(PicoSetting *pSet)
 	{
 		return;
 	}
-	SetterInit(&pSet->setting);
+	SettingInit(&pSet->setting);
 	pSet->setting.instrumentFlag = Instrument_Picoammeter;
 
-	pSet->setting.Start = Start;
-	pSet->setting.Stop = Stop;
+	pSet->setting.Init = Init;
+	pSet->setting.Save = Save;
 }
 void PicoSettingDeinit(PicoSetting *pSet)
 {
-	SetterDeinit(&pSet->setting);
+	SettingDeinit(&pSet->setting);
 }

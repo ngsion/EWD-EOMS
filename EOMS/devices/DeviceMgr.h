@@ -29,7 +29,7 @@
 // Types
 typedef struct DeviceMgr
 {
-    Device ** pDevArray;
+ 
     
 	int (*Init)(int x);
     int (*Reset)(int x); 

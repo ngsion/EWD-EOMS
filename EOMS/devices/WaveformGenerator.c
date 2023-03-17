@@ -42,6 +42,7 @@ static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 	return 0;
 }
 
+
 static int Start(Device *pDev)
 {
 	if (!pDev)
@@ -120,11 +121,11 @@ void WaveformGeneratorInit(WaveformGenerator *pDev)
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
-	pDev->pSetting  = NULL;
+
 }
 void WaveformGeneratorDeinit(WaveformGenerator *pDev)
 {
 	pDev->device.instrumentFlag = Instrument_WaveformGenerator;
 	DeviceDeinit(&pDev->device);
-	pDev->pSetting  = NULL;
+
 }

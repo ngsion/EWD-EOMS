@@ -29,21 +29,40 @@
 // Static functions
 static int Reset(struct Device *pDev)
 {
-	LOG_INFO("Device Reset");
-
-	if (NULL != pDev->pInstr && pDev->pInstr->status >= Instrument_Status_Open)
+	if (!pDev)
 	{
+		LOG_ERROR("error in Device Reset");
+		return -1;
+	}
 
-		ViStatus status;
-		ViSession session = pDev->pInstr->session;
-        status = viPrintf(session, "*RST\n");
+	if (NULL != pDev->pInstr)
+	{
+		if (pDev->pInstr->status >= Instrument_Status_Open)
+		{
+			ViStatus status;
+			ViSession session = pDev->pInstr->session;
+			status = viPrintf(session, "*RST\n");
+
+			if (status < VI_SUCCESS)
+			{
+				LOG_ERROR("Device Reset %d.", status);
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			LOG_ERROR("Device Reset failed status %d ", pDev->pInstr->status);
+		}
 	}
 	else
 	{
 		LOG_ERROR("Device Reset failed null %d ", NULL == pDev->pInstr);
 	}
 
-	return 0;
+	return -1;
 }
 static int Start(Device *pDev)
 {
@@ -55,10 +74,21 @@ static int Stop(Device *pDev)
 	LOG_INFO("Device Stops");
 	return 0;
 }
-static int SetAttribute(Device *pDev)
+static int Connect(Device *pDev)
 {
-   LOG_INFO("Device SetAttribute");
-   return 0;
+	if (!pDev)
+	{
+		LOG_ERROR("error in Device Connect");
+		return -1;
+	}
+
+	if (0 == pDev->pInstr->Open(pDev->pInstr))
+	{
+		return 0;
+	}
+
+	LOG_ERROR("Error Connect %s", pDev->pInstr->address);
+	return -1;
 }
 static int QueryID(Device *pDev)
 {
@@ -67,19 +97,21 @@ static int QueryID(Device *pDev)
 		LOG_ERROR("error in Device QueryID");
 		return -1;
 	}
-	
-	if (NULL != pDev->pInstr)
+
+	if (0 == pDev->pInstr->QueryID(pDev->pInstr))
 	{
-         pDev->pInstr->QueryID(pDev->pInstr);
+		LOG_INFO("QueryID one instrument is %s, id %s", pDev->pInstr->address, pDev->pInstr->identifier);
+		return 0;
 	}
-	return 0;
+
+	LOG_ERROR("Error QueryID %s", pDev->pInstr->address);
+	return -1;
 }
 static int DoWithCommand(struct Device *pDev, void *inData, void *outData)
 {
 	LOG_INFO("Device DoWithCommand");
 	return 0;
 }
-
 
 //==============================================================================
 // Global variables
@@ -95,11 +127,11 @@ void DeviceInit(Device *pDev)
 	}
 	pDev->instrumentFlag = 0;
 	pDev->pInstr = NULL;
-	pDev->isSignal = false;
+	pDev->pSet = NULL;
 	pDev->Start = Start;
 	pDev->Stop = Stop;
 	pDev->QueryID = QueryID;
-	pDev->SetAttribute = SetAttribute;
+	pDev->Connect = Connect;
 	pDev->DoWithCommand = DoWithCommand;
 	pDev->Reset = Reset;
 }
@@ -107,4 +139,5 @@ void DeviceDeinit(Device *pDev)
 {
 	pDev->instrumentFlag = 0;
 	pDev->pInstr = NULL;
+	pDev->pSet = NULL;
 }

@@ -139,6 +139,7 @@ Instrument *InstrumentAllocInit()
 		pInstr->Open = Open;
 		pInstr->QueryID = QueryID;
 		pInstr->Close = Close;
+		pInstr->index = 0;
 	}
 	return pInstr;
 }

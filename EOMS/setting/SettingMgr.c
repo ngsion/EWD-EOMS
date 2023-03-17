@@ -31,7 +31,8 @@ static Setting *defaultSettingArray[SETTING_MAX_NUM];
 // Static functions
 static int Init(int x)
 {
-	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	int i = 0;
+	for (; i < SETTING_MAX_NUM; i++)
 	{
 		defaultSettingArray[i] = NULL;
 	}
@@ -45,27 +46,11 @@ static int Init(int x)
 	defaultSettingArray[2] = (Setting *)malloc(sizeof(LCRSetting));
 	LCRSettingInit((LCRSetting *)defaultSettingArray[2]);
 
-	return 0;
-}
-
-static int Start(int x)
-{
-	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	for (i = 0; i < SETTING_MAX_NUM; i++)
 	{
 		if (NULL != defaultSettingArray[i])
 		{
-			defaultSettingArray[i]->Start(defaultSettingArray[i]);
-		}
-	}
-	return 0;
-}
-static int Stop(int x)
-{
-	for (int i = 0; i < SETTING_MAX_NUM; i++)
-	{
-		if (NULL != defaultSettingArray[i])
-		{
-			defaultSettingArray[i]->Stop(defaultSettingArray[i]);
+			defaultSettingArray[i]->Init(defaultSettingArray[i]);
 		}
 	}
 
@@ -74,7 +59,16 @@ static int Stop(int x)
 
 static int Shutdown(int x)
 {
-	for (int i = 0; i < SETTING_MAX_NUM; i++)
+	int i = 0;
+	for (; i < SETTING_MAX_NUM; i++)
+	{
+		if (NULL != defaultSettingArray[i])
+		{
+			defaultSettingArray[i]->Save(defaultSettingArray[i]);
+		}
+	}
+
+	for (i = 0; i < SETTING_MAX_NUM; i++)
 	{
 		if (NULL != defaultSettingArray[i])
 		{
@@ -105,7 +99,5 @@ static Setting *FindWithInstrFlag(int flag)
 // Global functions
 SettingMgr SetMgr = {
 	.Init = Init,
-	.Start = Start,
-	.Stop = Stop,
 	.Shutdown = Shutdown,
 	.FindWithInstrFlag = FindWithInstrFlag};

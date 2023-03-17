@@ -67,6 +67,7 @@ typedef enum{
         uint32_t session;
         char address[INSTRUMENT_ADDRESS_LENGTH];
         char identifier[INSTRUMENT_ID_LENGTH];
+        unsigned int index;
 
   
         int (*Open)(struct Instrument *pInstr);

@@ -46,14 +46,7 @@ int CVICALLBACK OnPanelCV(int panel, int event, void *callbackData,
 {
 	switch (event)
 	{
-	case EVENT_GOT_FOCUS:
-	{
-	}
 
-	break;
-	case EVENT_LOST_FOCUS:
-
-		break;
 	case EVENT_CLOSE:
 	{
 		if (true == System.isWorking)

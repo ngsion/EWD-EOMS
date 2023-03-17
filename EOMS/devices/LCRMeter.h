@@ -29,7 +29,6 @@
 typedef struct LCRMeter
 {
     Device device;
-    LCRSetting  * pSetting;
    
 }LCRMeter;
 

@@ -21,6 +21,7 @@
 #include "cvidef.h"
 #include "Instrument.h"
 #include <stdbool.h>
+#include "Setting.h"
 //==============================================================================
 // Constants
 #define DEVICE_TITLE_LENGTH 64
@@ -33,16 +34,14 @@ typedef struct Device
     unsigned int instrumentFlag;
     char  title[DEVICE_TITLE_LENGTH]; ///chinese name
     Instrument * pInstr;
-    bool isSignal;
-    bool isColector;
+    Setting * pSet;
 
-
-
+    int (*Connect)(struct Device * pDev);
+    int (*QueryID)(struct Device * pDev);
+    
     int (*Reset)(struct Device * pDev); 
     int (*Start)(struct Device * pDev);
     int (*Stop)(struct Device * pDev);
-    int (*SetAttribute)(struct Device * pDev);
-    int (*QueryID)(struct Device * pDev);
     int (*DoWithCommand)(struct Device * pDev, void * inData, void * outData);
     
 }Device;

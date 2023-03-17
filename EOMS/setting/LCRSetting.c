@@ -25,14 +25,14 @@
 
 //==============================================================================
 // Static functions
-static int Start(Setting *pSet)
+static int Init(Setting *pSet)
 {
-	LOG_INFO("Setting starts");
+	LOG_INFO("Setting Init");
 	return 0;
 }
-static int Stop(Setting *pSet)
+static int Save(Setting *pSet)
 {
-	LOG_INFO("Setting Stops");
+	LOG_INFO("Setting Save");
 	return 0;
 }
 
@@ -47,14 +47,14 @@ void LCRSettingInit(LCRSetting *pSet)
 	{
 		return;
 	}
-	SetterInit(&pSet->setting);
+	SettingInit(&pSet->setting);
     pSet->setting.instrumentFlag = Instrument_LCRMeter;
 
-	pSet->setting.Start = Start;
-	pSet->setting.Stop = Stop;
+	pSet->setting.Init = Init;
+	pSet->setting.Save = Save;
 
 }
 void LCRSettingDeinit(LCRSetting *pSet)
 {
-	SetterDeinit(&pSet->setting);
+	SettingDeinit(&pSet->setting);
 }

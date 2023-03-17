@@ -54,6 +54,7 @@ static int sFindResource()
 	unsigned short intfType;
 	unsigned short intfNum;
 	int i = numInstrs;
+	InstrMgr.instrumentsCount = 0;
 	while (i > 0)
 	{
 
@@ -72,6 +73,7 @@ static int sFindResource()
 		pInstr->type = intfType;
 		pInstr->status = Instrument_Status_Connected;
 		memcpy(pInstr->address, instrResourceString, VI_FIND_BUFLEN);
+		pInstr->index = InstrMgr.instrumentsCount++;
 
 		InstrumentListPushBack(InstrMgr.plist, pInstr);
 
@@ -113,7 +115,7 @@ static int Init(int x)
 
 static int Scan(int x)
 {
-	InstrumentListClear(&defaultInstrList);
+	InstrumentListClear(InstrMgr.plist);
 	return sFindResource(x);
 }
 
@@ -124,8 +126,24 @@ static int Shutdown(int x)
 		viClose(defaultRM);
 		defaultRM = 0;
 	}
-	InstrumentListClear(&defaultInstrList);
+	InstrumentListClear(InstrMgr.plist);
 	return 0;
+}
+
+static Instrument * GetInstrByIndex(int x)
+{
+	InstrumentListNode *cur = *InstrMgr.plist;
+	InstrumentListNode *next = NULL;
+	while (cur != NULL)
+	{
+		next = cur->next;
+		if (cur->pInstr->index == x)
+		{
+			return cur->pInstr;
+		}
+		cur = next;
+	}
+	return NULL;
 }
 
 //==============================================================================
@@ -133,14 +151,15 @@ static int Shutdown(int x)
 
 InstrumentMgr InstrMgr = {
 	.plist = &defaultInstrList,
+	.instrumentsCount = 0,
 	.Init = Init,
 	.Scan = Scan,
-	.Shutdown = Shutdown
-
+	.Shutdown = Shutdown,
+	.GetInstrByIndex = GetInstrByIndex
+   
 };
 
-//==============================================================================
-// Global variables
+
 
 //==============================================================================
 // Global functions

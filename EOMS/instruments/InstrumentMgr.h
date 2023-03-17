@@ -29,11 +29,12 @@
 typedef struct InstrumentMgr
 {
 	InstrumentListNode ** plist;
+	unsigned int instrumentsCount;
 
 	int (*Init)(int x);
 	int (*Scan)(int x);
 	int (*Shutdown)(int x);
-	
+	Instrument * (*GetInstrByIndex)(int x);
 	
 }InstrumentMgr;
 

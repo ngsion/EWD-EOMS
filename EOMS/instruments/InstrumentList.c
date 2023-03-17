@@ -96,6 +96,7 @@ void InstrumentListDeleteOne(InstrumentListNode **pList, Instrument *pInstr)
 
 void InstrumentListClear(InstrumentListNode **pList)
 {
+
 	InstrumentListNode *cur = *pList;
 	InstrumentListNode *next = NULL;
 	while (NULL != cur)

@@ -29,7 +29,6 @@
 //==============================================================================
 // Static global variables
 
-
 void setupLogger()
 {
 	time_t now; // time_t
@@ -57,6 +56,13 @@ static int Init(int x)
 	MeasureMgr.Init(x);
 	SetMgr.Init(x);
 
+	for (int index = Instrument_Picoammeter; index < Instrument_Admesy; index++)
+	{
+		Setting *pSet = SetMgr.FindWithInstrFlag(index);
+		Device *pDev = DevMgr.FindWithInstrFlag(index);
+		pDev->pSet = pSet;
+	}
+
 	return 0;
 }
 static int Shutdown(int x)
@@ -72,19 +78,19 @@ static int Shutdown(int x)
 static int Stop(int x)
 {
 	System.isWorking = false;
+
 	MeasureMgr.Stop(x);
 	DevMgr.Reset(x);
 	DevMgr.Stop(x);
 	DataMgr.Stop(x);
-	SetMgr.Stop(x);
+
 	return 0;
 }
-
 
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
 	Delay(1);
-	if (Signal_Picoammieter == SetMgr.signal)
+//	if (Signal_Picoammieter == SetMgr.signal)
 	{
 		DevMgr.Start(0);
 
@@ -126,7 +132,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		Stop(0);
 		return 0;
 	}
-	else if (Signal_LCRMeter == SetMgr.signal)
+//	else if (Signal_LCRMeter == SetMgr.signal)
 	{
 
 		DevMgr.Start(0);
@@ -178,7 +184,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		Stop(0);
 		return 0;
 	}
-	else
+//	else
 	{
 
 		MeasureMgr.Start(0);
@@ -195,8 +201,7 @@ static int Start(int x)
 
 	DevMgr.Reset(x);
 	DataMgr.Start(0);
-    SetMgr.Start(0);
-	
+
 	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
 
 	return 0;
