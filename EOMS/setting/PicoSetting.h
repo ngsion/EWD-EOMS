@@ -24,12 +24,18 @@
 
 //==============================================================================
 // Constants
+#define BATCH_NO_LENGTH 64
 
 //==============================================================================
 // Types
 typedef struct PicoSetting
 {
     Setting setting;
+    double VMax;
+    double VMin;
+    double VSpan;
+    double MInterval;
+    char batchNo[BATCH_NO_LENGTH];
 
 }PicoSetting;
 

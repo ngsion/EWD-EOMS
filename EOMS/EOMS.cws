@@ -14,16 +14,18 @@ Active Project = 1
 Project 0001 = "EOMS.prj"
 Project 0001 Folder Source Files/instruments Collapsed = True
 Project 0001 FolderId 2 Collapsed = True
+Project 0001 Folder Source Files/devices Collapsed = True
+Project 0001 FolderId 3 Collapsed = True
 Project 0001 Folder Source Files/measurement Collapsed = True
 Project 0001 FolderId 4 Collapsed = True
 Project 0001 Folder Source Files/clogger Collapsed = True
 Project 0001 FolderId 5 Collapsed = True
+Project 0001 Folder Source Files/setting Collapsed = True
+Project 0001 FolderId 6 Collapsed = True
 Project 0001 Folder Source Files/datastruct Collapsed = True
 Project 0001 FolderId 7 Collapsed = True
 Project 0001 Folder Source Files/datasave Collapsed = True
 Project 0001 FolderId 8 Collapsed = True
-Project 0001 Folder Source Files/ui Collapsed = True
-Project 0001 FolderId 9 Collapsed = True
 Project 0001 Folder Instrument Files Collapsed = True
 Project 0001 FolderId 11 Collapsed = True
 Drag Bar Left = 254
@@ -44,7 +46,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 5
+Number of Opened Files = 15
 Window Confinement Region Enabled = True
 MainColumnWidth = 237
 FileDateColumnWidth = 70
@@ -69,12 +71,12 @@ In Projects = "1,"
 [File 0002]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
 File Type = "CSource"
-Disk Date = 3748253656
+Disk Date = 3762228049
 In Projects = "1,"
 Window Top = 219
 Window Left = 106
-Window Z-Order = 2
-Source Window State = "1,72,72,72,32,34,34,0,0,81,0,0,0,0,0,25,39,0,51,13,323,547,1,0,"
+Window Z-Order = 1
+Source Window State = "1,96,96,96,11,21,21,0,0,204,0,0,0,0,0,30,37,0,52,13,323,547,1,0,"
 
 [File 0003]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.c"
@@ -83,7 +85,6 @@ Disk Date = 3761900094
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 5
 Source Window State = "1,35,35,35,4,90,4,0,0,80,0,0,0,0,0,18,90,0,98,41,239,541,1,0,"
 Breakpoint 0001 = "73,0,enabled,"
 Tracepoint 0001 = "0,0,74,1,"
@@ -97,106 +98,54 @@ Disk Date = 3762207273
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Source Window State = "1,151,151,151,0,13,13,0,0,110,0,0,0,0,0,20,111,0,126,34,266,717,1,0,"
+Window Z-Order = 14
+Source Window State = "1,151,151,151,0,13,13,0,0,110,0,0,0,0,0,20,78,0,125,8,266,717,1,0,"
 Breakpoint 0001 = "126,0,enabled,"
 Tracepoint 0001 = "0,0,126,1,"
 Breakpoint 0002 = "153,0,enabled,"
 Tracepoint 0002 = "0,0,154,1,"
 
 [File 0005]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/CVGraph.c"
-File Type = "CSource"
-Disk Date = 3761821388
-In Projects = "1,"
-Window Top = 157
-Window Left = 74
-Source Window State = "1,48,55,55,0,17,17,0,0,80,0,0,0,0,0,22,30,0,48,0,287,541,1,0,"
-
-[File 0006]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
 File Type = "CSource"
-Disk Date = 3762207774
+Disk Date = 3762227953
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 3
-Source Window State = "1,130,130,130,4,13,13,0,0,83,0,0,0,0,0,25,33,0,52,145,323,559,1,0,"
+Window Z-Order = 12
+Source Window State = "1,91,91,91,11,22,22,0,0,83,0,0,0,0,0,25,69,0,91,29,323,559,1,0,"
 
-[File 0007]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.c"
-File Type = "CSource"
-Disk Date = 3748338467
-In Projects = "1,"
-Window Top = 95
-Window Left = 42
-Source Window State = "1,138,138,138,32,132,32,0,0,81,0,0,0,0,0,24,42,0,151,34,311,547,1,0,"
-
-[File 0008]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCGraph.c"
-File Type = "CSource"
-Disk Date = 3761821375
-In Projects = "1,"
-Window Top = 157
-Window Left = 74
-Source Window State = "1,85,92,92,0,15,15,0,0,81,0,0,0,0,0,22,76,0,85,0,287,547,1,0,"
-
-[File 0009]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/Setting.h"
-File Type = "Include"
-Disk Date = 3761882978
-In Projects = "1,"
-Window Top = 31
-Source Window State = "1,47,47,47,5,16,16,0,3,90,0,0,0,0,0,31,21,0,47,5,400,600,1,0,"
-
-[File 0010]
+[File 0006]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.c"
 File Type = "CSource"
 Disk Date = 3761901398
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Source Window State = "1,128,128,128,5,14,14,0,0,80,0,0,0,0,0,19,108,0,130,51,251,541,1,0,"
+Window Z-Order = 8
+Source Window State = "1,128,128,128,5,14,14,0,0,80,0,0,0,0,0,19,7,0,16,0,251,541,1,0,"
 Breakpoint 0001 = "129,0,enabled,"
 Tracepoint 0001 = "0,0,130,1,"
 
-[File 0011]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/Setting.c"
-File Type = "CSource"
-Disk Date = 3761892291
-In Projects = "1,"
-Window Top = 219
-Window Left = 106
-Source Window State = "1,52,52,52,4,8,8,0,0,83,0,0,0,0,0,25,39,0,56,143,323,559,1,0,"
-
-[File 0012]
+[File 0007]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
 File Type = "CSource"
 Disk Date = 3761903976
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 4
 Source Window State = "1,62,62,62,9,18,9,0,0,60,0,0,0,0,0,25,26,0,61,48,323,421,1,0,"
 
-[File 0013]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.c"
+[File 0008]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
 File Type = "CSource"
-Disk Date = 3761891891
+Disk Date = 3762210636
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,67,79,67,4,16,4,0,0,81,0,0,0,0,0,25,166,0,184,160,323,547,1,0,"
+Source Window State = "1,67,67,67,25,45,45,0,0,80,0,0,0,0,0,20,61,0,78,30,263,541,1,0,"
 
-[File 0014]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.h"
-File Type = "Include"
-Disk Date = 3761891327
-In Projects = "1,"
-Window Top = 64
-Window Left = 26
-Source Window State = "1,36,36,36,4,11,11,0,3,60,0,0,0,0,0,25,18,0,36,4,323,421,1,0,"
-
-[File 0015]
+[File 0009]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/CVGraph.uir"
 File Type = "User Interface Resource"
 Disk Date = 3750564789
@@ -205,8 +154,9 @@ Window Top = 64
 Window Left = 26
 Window Height = 287
 Window Width = 547
+Window Z-Order = 15
 
-[File 0016]
+[File 0010]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.uir"
 File Type = "User Interface Resource"
 Disk Date = 3761903242
@@ -215,8 +165,9 @@ Window Top = 157
 Window Left = 74
 Window Height = 311
 Window Width = 541
+Window Z-Order = 10
 
-[File 0017]
+[File 0011]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.uir"
 File Type = "User Interface Resource"
 Disk Date = 3748323295
@@ -225,8 +176,9 @@ Window Top = 95
 Window Left = 42
 Window Height = 287
 Window Width = 541
+Window Z-Order = 11
 
-[File 0018]
+[File 0012]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCGraph.uir"
 File Type = "User Interface Resource"
 Disk Date = 3750564789
@@ -235,18 +187,9 @@ Window Top = 157
 Window Left = 74
 Window Height = 287
 Window Width = 541
+Window Z-Order = 13
 
-[File 0019]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
-File Type = "CSource"
-Disk Date = 3762210636
-In Projects = "1,"
-Window Top = 64
-Window Left = 26
-Window Z-Order = 1
-Source Window State = "1,67,67,67,25,45,45,0,0,204,0,0,0,0,0,44,61,0,78,30,263,541,1,0,"
-
-[File 0020]
+[File 0013]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Admesy.c"
 File Type = "CSource"
 Disk Date = 3762207667
@@ -255,7 +198,7 @@ Window Top = 33
 Window Left = 10
 Source Window State = "1,33,33,33,5,15,15,0,0,0,0,0,0,0,0,0,15,0,38,12,371,717,1,0,"
 
-[File 0021]
+[File 0014]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.c"
 File Type = "CSource"
 Disk Date = 3762210502
@@ -264,7 +207,7 @@ Window Top = 126
 Window Left = 50
 Source Window State = "1,91,91,91,10,16,16,0,0,0,0,0,0,0,0,0,37,0,54,195,371,673,1,0,"
 
-[File 0022]
+[File 0015]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/LCRMeter.c"
 File Type = "CSource"
 Disk Date = 3762207688
@@ -273,16 +216,17 @@ Window Top = 188
 Window Left = 90
 Source Window State = "1,25,43,25,0,17,0,0,3,0,0,0,0,0,0,0,111,0,43,17,323,541,1,0,"
 
-[File 0023]
+[File 0016]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.c"
 File Type = "CSource"
 Disk Date = 3762207719
 In Projects = "1,"
 Window Top = 281
 Window Left = 130
-Source Window State = "1,31,31,31,11,24,24,0,0,0,0,0,0,0,0,0,93,0,105,33,371,673,1,0,"
+Window Z-Order = 5
+Source Window State = "1,175,175,175,17,21,21,0,0,102,0,0,0,0,0,29,153,0,176,34,371,673,1,0,"
 
-[File 0024]
+[File 0017]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/WaveformGenerator.c"
 File Type = "CSource"
 Disk Date = 3762207729
@@ -291,7 +235,7 @@ Window Top = 33
 Window Left = 10
 Source Window State = "1,66,66,66,36,38,38,0,0,0,0,0,0,0,0,0,47,0,65,69,323,547,1,0,"
 
-[File 0025]
+[File 0018]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/LCRMeterMeasure.c"
 File Type = "CSource"
 Disk Date = 3748931383
@@ -300,7 +244,7 @@ Window Top = 33
 Window Left = 10
 Source Window State = "1,85,85,85,61,67,67,0,0,0,0,0,0,0,0,0,60,0,64,181,323,541,1,0,"
 
-[File 0026]
+[File 0019]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/Measurement.c"
 File Type = "CSource"
 Disk Date = 3748337471
@@ -309,7 +253,7 @@ Window Top = 312
 Window Left = 146
 Source Window State = "1,64,64,64,4,60,60,0,0,0,0,0,0,0,0,0,39,0,64,47,371,673,1,0,"
 
-[File 0027]
+[File 0020]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/MeasurementMgr.c"
 File Type = "CSource"
 Disk Date = 3748339284
@@ -318,7 +262,7 @@ Window Top = 33
 Window Left = 10
 Source Window State = "1,180,180,180,25,42,42,0,0,0,0,0,0,0,0,0,33,0,45,44,323,547,1,0,"
 
-[File 0028]
+[File 0021]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/PicoammeterMeasure.c"
 File Type = "CSource"
 Disk Date = 3748339351
@@ -327,7 +271,7 @@ Window Top = 374
 Window Left = 178
 Source Window State = "1,67,67,67,57,63,63,0,0,0,0,0,0,0,0,0,52,0,67,63,371,673,1,0,"
 
-[File 0029]
+[File 0022]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/logger.c"
 File Type = "CSource"
 Disk Date = 3746405821
@@ -336,7 +280,7 @@ Window Top = 95
 Window Left = 42
 Source Window State = "1,106,106,106,30,68,30,0,0,0,0,0,0,0,0,0,337,0,367,45,323,547,1,0,"
 
-[File 0030]
+[File 0023]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/logger.h"
 File Type = "Include"
 Disk Date = 3723446539
@@ -345,21 +289,30 @@ Window Top = 64
 Window Left = 26
 Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,18,0,323,547,1,0,"
 
-[File 0031]
+[File 0024]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/loggerconf.c"
 File Type = "CSource"
 Disk Date = 3723446539
 In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
-[File 0032]
+[File 0025]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/clogger/loggerconf.h"
 File Type = "Include"
 Disk Date = 3723446539
 In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
-[File 0033]
+[File 0026]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/AdmesySetting.c"
+File Type = "CSource"
+Disk Date = 3761903952
+In Projects = "1,"
+Window Top = 219
+Window Left = 106
+Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,323,559,1,0,"
+
+[File 0027]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/LCRSetting.c"
 File Type = "CSource"
 Disk Date = 3761882847
@@ -368,16 +321,26 @@ Window Top = 219
 Window Left = 106
 Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,165,323,559,1,0,"
 
-[File 0034]
+[File 0028]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/PicoSetting.c"
 File Type = "CSource"
-Disk Date = 3761882851
+Disk Date = 3762230269
 In Projects = "1,"
 Window Top = 157
 Window Left = 74
-Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,14,21,323,559,1,0,"
+Window Z-Order = 4
+Source Window State = "1,33,33,33,12,16,16,0,0,83,0,0,0,0,0,25,21,0,43,16,323,559,1,0,"
 
-[File 0035]
+[File 0029]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/Setting.c"
+File Type = "CSource"
+Disk Date = 3761892291
+In Projects = "1,"
+Window Top = 219
+Window Left = 106
+Source Window State = "1,52,52,52,4,8,8,0,0,0,0,0,0,0,0,0,39,0,56,143,323,559,1,0,"
+
+[File 0030]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/WaveformSetting.c"
 File Type = "CSource"
 Disk Date = 3761882830
@@ -386,7 +349,7 @@ Window Top = 64
 Window Left = 26
 Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,0,323,559,1,0,"
 
-[File 0036]
+[File 0031]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Map.c"
 File Type = "CSource"
 Disk Date = 3747905782
@@ -395,14 +358,14 @@ Window Top = 64
 Window Left = 26
 Source Window State = "1,157,157,157,8,12,12,0,0,0,0,0,0,0,0,0,67,0,84,16,323,541,1,0,"
 
-[File 0037]
+[File 0032]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Queue.c"
 File Type = "CSource"
 Disk Date = 3747996210
 In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
-[File 0038]
+[File 0033]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Stack.c"
 File Type = "CSource"
 Disk Date = 3748164787
@@ -411,7 +374,7 @@ Window Top = 126
 Window Left = 58
 Source Window State = "1,43,43,43,33,38,38,0,0,0,0,0,0,0,0,0,57,0,77,8,215,541,1,0,"
 
-[File 0039]
+[File 0034]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/DataSaveMgr.c"
 File Type = "CSource"
 Disk Date = 3747996118
@@ -420,7 +383,7 @@ Window Top = 95
 Window Left = 42
 Source Window State = "1,13,13,13,0,29,29,0,3,0,0,0,0,0,0,0,0,0,13,0,263,547,1,0,"
 
-[File 0040]
+[File 0035]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/Excel.c"
 File Type = "CSource"
 Disk Date = 3747996856
@@ -429,7 +392,43 @@ Window Top = 64
 Window Left = 26
 Source Window State = "1,172,172,172,5,13,13,0,0,0,0,0,0,0,0,0,40,0,44,57,215,541,1,0,"
 
-[File 0041]
+[File 0036]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/CVGraph.c"
+File Type = "CSource"
+Disk Date = 3761821388
+In Projects = "1,"
+Window Top = 157
+Window Left = 74
+Source Window State = "1,48,55,55,0,17,17,0,0,80,0,0,0,0,0,22,30,0,48,0,287,541,1,0,"
+
+[File 0037]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.c"
+File Type = "CSource"
+Disk Date = 3748338467
+In Projects = "1,"
+Window Top = 95
+Window Left = 42
+Source Window State = "1,138,138,138,32,132,32,0,0,0,0,0,0,0,0,0,42,0,151,34,311,547,1,0,"
+
+[File 0038]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCGraph.c"
+File Type = "CSource"
+Disk Date = 3761821375
+In Projects = "1,"
+Window Top = 157
+Window Left = 74
+Source Window State = "1,85,92,92,0,15,15,0,0,0,0,0,0,0,0,0,76,0,85,0,287,547,1,0,"
+
+[File 0039]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/EOMSystem.c"
+File Type = "CSource"
+Disk Date = 3761891891
+In Projects = "1,"
+Window Top = 64
+Window Left = 26
+Source Window State = "1,67,79,67,4,16,4,0,0,0,0,0,0,0,0,0,166,0,184,160,323,547,1,0,"
+
+[File 0040]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Admesy.h"
 File Type = "Include"
 Disk Date = 3750632501
@@ -437,6 +436,15 @@ In Projects = "1,"
 Window Top = 64
 Window Left = 26
 Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,21,22,371,717,1,0,"
+
+[File 0041]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/AdmesySetting.h"
+File Type = "Include"
+Disk Date = 3761903542
+In Projects = "1,"
+Window Top = 250
+Window Left = 122
+Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,323,559,1,0,"
 
 [File 0042]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/CVGraph.h"
@@ -481,7 +489,7 @@ Disk Date = 3761903242
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Source Window State = "1,25,25,25,9,24,24,0,3,81,0,0,0,0,0,25,12,0,25,9,323,547,1,0,"
+Source Window State = "1,25,25,25,9,24,24,0,3,0,0,0,0,0,0,0,12,0,25,9,323,547,1,0,"
 
 [File 0047]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.h"
@@ -508,7 +516,7 @@ Disk Date = 3761818361
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
-Source Window State = "1,38,38,38,4,21,21,0,3,80,0,0,0,0,0,18,16,0,38,4,239,541,1,0,"
+Source Window State = "1,38,38,38,4,21,21,0,3,0,0,0,0,0,0,0,16,0,38,4,239,541,1,0,"
 
 [File 0050]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.h"
@@ -526,7 +534,7 @@ Disk Date = 3761890434
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Source Window State = "1,36,36,36,19,34,34,0,3,80,0,0,0,0,0,18,21,0,36,19,239,541,1,0,"
+Source Window State = "1,36,36,36,19,34,34,0,3,0,0,0,0,0,0,0,21,0,36,19,239,541,1,0,"
 
 [File 0052]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCGraph.h"
@@ -596,7 +604,10 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.h"
 File Type = "Include"
 Disk Date = 3761887428
 In Projects = "1,"
-Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
+Window Top = 95
+Window Left = 42
+Window Z-Order = 7
+Source Window State = "1,0,0,0,0,0,0,0,0,83,0,0,0,0,0,19,13,0,22,0,251,559,1,0,"
 
 [File 0060]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/PicoammeterMeasure.h"
@@ -610,11 +621,12 @@ Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,371,673,0,0,"
 [File 0061]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/PicoSetting.h"
 File Type = "Include"
-Disk Date = 3761803100
+Disk Date = 3762230221
 In Projects = "1,"
 Window Top = 188
 Window Left = 90
-Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,30,79,323,559,1,0,"
+Window Z-Order = 6
+Source Window State = "1,35,36,35,0,0,0,0,0,83,0,0,0,0,0,25,23,0,34,0,323,559,1,0,"
 
 [File 0062]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Queue.h"
@@ -626,6 +638,23 @@ Window Left = 42
 Source Window State = "1,22,22,22,0,21,21,0,3,0,0,0,0,0,0,0,9,0,22,0,215,541,1,0,"
 
 [File 0063]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/Setting.h"
+File Type = "Include"
+Disk Date = 3761882978
+In Projects = "1,"
+Window Top = 31
+Source Window State = "1,47,47,47,5,16,16,0,3,0,0,0,0,0,0,0,21,0,47,5,400,600,1,0,"
+
+[File 0064]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.h"
+File Type = "Include"
+Disk Date = 3761891327
+In Projects = "1,"
+Window Top = 64
+Window Left = 26
+Source Window State = "1,36,36,36,4,11,11,0,3,0,0,0,0,0,0,0,18,0,36,4,323,421,1,0,"
+
+[File 0065]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Stack.h"
 File Type = "Include"
 Disk Date = 3748164743
@@ -634,23 +663,23 @@ Window Top = 33
 Window Left = 10
 Source Window State = "1,40,40,40,37,42,42,0,0,0,0,0,0,0,0,0,26,0,40,42,215,541,1,0,"
 
-[File 0064]
+[File 0066]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.h"
 File Type = "Include"
-Disk Date = 3748253612
+Disk Date = 3762227992
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
 Source Window State = "1,30,30,30,4,32,32,0,3,0,0,0,0,0,0,0,0,0,30,4,287,547,1,0,"
 
-[File 0065]
+[File 0067]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/WaveformGenerator.h"
 File Type = "Include"
 Disk Date = 3761887532
 In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
-[File 0066]
+[File 0068]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/WaveformSetting.h"
 File Type = "Include"
 Disk Date = 3761803417
@@ -659,30 +688,53 @@ Window Top = 95
 Window Left = 42
 Source Window State = "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,323,559,1,0,"
 
-[File 0067]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/AdmesySetting.c"
-File Type = "CSource"
-Disk Date = 3761903952
+[File 0069]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.uir"
+File Type = "User Interface Resource"
+Disk Date = 3762230003
 In Projects = "1,"
-Window Top = 219
-Window Left = 106
-Source Window State = "1,0,0,0,0,0,0,0,0,83,0,0,0,0,0,25,0,0,0,0,323,559,1,0,"
+Window Top = 33
+Window Left = 10
+Window Height = 251
+Window Width = 559
+Window Z-Order = 3
 
-[File 0068]
-Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/AdmesySetting.h"
-File Type = "Include"
-Disk Date = 3761903542
+[File 0070]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.c"
+File Type = "CSource"
+Disk Date = 3762230327
 In Projects = "1,"
-Window Top = 250
-Window Left = 122
-Source Window State = "1,0,0,0,0,0,0,0,0,83,0,0,0,0,0,25,0,0,0,0,323,559,1,0,"
+Window Top = 95
+Window Left = 42
+Window Z-Order = 2
+Source Window State = "1,49,49,49,56,57,57,0,0,80,0,0,0,0,0,19,35,0,52,17,251,541,1,0,"
+
+[File 0071]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.h"
+File Type = "Include"
+Disk Date = 3762230003
+In Projects = "1,"
+Window Top = 64
+Window Left = 26
+Window Z-Order = 9
+Source Window State = "1,0,0,0,0,0,0,0,0,83,0,0,0,0,0,19,0,0,0,0,251,559,1,0,"
 
 [Tab Order]
-Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.c"
-Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
-Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
-Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
-Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
+Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.uir"
+Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.uir"
+Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/CVGraph.uir"
+Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.c"
+Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCGraph.uir"
+Tab 0006 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
+Tab 0007 = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
+Tab 0008 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.h"
+Tab 0009 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.c"
+Tab 0010 = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.c"
+Tab 0011 = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.h"
+Tab 0012 = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/PicoSetting.h"
+Tab 0013 = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.c"
+Tab 0014 = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/PicoSetting.c"
+Tab 0015 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.uir"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

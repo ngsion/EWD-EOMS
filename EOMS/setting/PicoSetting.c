@@ -27,6 +27,11 @@
 // Static functions
 static int Init(Setting *pSet)
 {
+	PicoSetting * picoset = (PicoSetting*) pSet;
+	picoset->MInterval = 0.1;
+	picoset->VMax = 30;
+	picoset->VMin = 0;
+     memset(picoset->batchNo, 0, BATCH_NO_LENGTH);
 	LOG_INFO("Setting Init");
 	return 0;
 }
@@ -49,7 +54,7 @@ void PicoSettingInit(PicoSetting *pSet)
 	}
 	SettingInit(&pSet->setting);
 	pSet->setting.instrumentFlag = Instrument_Picoammeter;
-
+    memset(pSet->batchNo, 0, BATCH_NO_LENGTH);
 	pSet->setting.Init = Init;
 	pSet->setting.Save = Save;
 }

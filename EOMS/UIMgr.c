@@ -1,6 +1,7 @@
 #include <cvirte.h>
 #include <userint.h>
 #include "Entry.h"
+#include "SettingMgr.h"
 
 static int panelHandle;
 
@@ -53,11 +54,25 @@ static int ShowEntry(int x)
 
 	return 0;
 }
+
+static int ShowPICOSet(int x)
+{
+	QuitUserInterface(0);
+	DiscardPanel(panelHandle);
+
+	panelHandle = LoadPanel(0, "PicoSet.uir", PANEL);
+	/* display the panel and run the user interface */
+	DisplayPanel(panelHandle);
+	status = RunUserInterface();
+
+	return 0;
+}
+
 static int ShowLCGraph(int x)
 {
 	QuitUserInterface(0);
 	DiscardPanel(panelHandle);
-	
+
 	panelHandle = LoadPanel(0, "LCGraph.uir", PANEL);
 	/* display the panel and run the user interface */
 	DisplayPanel(panelHandle);
@@ -69,7 +84,7 @@ static int ShowCVGraph(int x)
 {
 	QuitUserInterface(0);
 	DiscardPanel(panelHandle);
-	
+
 	panelHandle = LoadPanel(0, "CVGraph.uir", PANEL);
 	/* display the panel and run the user interface */
 	DisplayPanel(panelHandle);
@@ -81,7 +96,7 @@ static int ShowGraph(int x)
 {
 	QuitUserInterface(0);
 	DiscardPanel(panelHandle);
-	
+
 	panelHandle = LoadPanel(0, "EOMS.uir", PANEL);
 	/* display the panel and run the user interface */
 	DisplayPanel(panelHandle);
@@ -89,14 +104,44 @@ static int ShowGraph(int x)
 
 	return 0;
 }
+
+static int ShowByFlag(int x)
+{
+	for (int index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
+	{
+		Setting *pSet = SetMgr.FindWithInstrFlag(index);
+		if (pSet->isColector || pSet->isSignal)
+		{
+			switch (index)
+			{
+			case Instrument_Picoammeter:
+			{
+				ShowPICOSet(x);
+			}
+			break;
+			case Instrument_LCRMeter:
+			{
+				ShowCVGraph(x);
+			}
+			break;
+
+			default:
+				break;
+			}
+		}
+	}
+	return 0;
+}
+
 //==============================================================================
 // Global variables
 UIMgr UI = {
+	.ShowByFlag = ShowByFlag,
+	.ShowPICOSet = ShowPICOSet,
 	.ShowEntry = ShowEntry,
 	.ShowGraph = ShowGraph,
 	.ShowLCGraph = ShowLCGraph,
-	.ShowCVGraph = ShowCVGraph 
-	};
+	.ShowCVGraph = ShowCVGraph};
 
 int main(int argc, char *argv[])
 {

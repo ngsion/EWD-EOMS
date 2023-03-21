@@ -89,18 +89,8 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, &pSet->isColector);
 		}
 
-		/*if (pPicoSet->isSignal)
-		{
-			UI.ShowLCGraph(0);
-		}
-		else if (pLCRSet->isSignal)
-		{
-			UI.ShowCVGraph(0);
-		}
-		else
-		{
-			UI.ShowGraph(0);
-		}*/
+		UI.ShowPICOSet(0);
+
 	}
 
 	break;
