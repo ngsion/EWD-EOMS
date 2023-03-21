@@ -121,11 +121,11 @@ void WaveformGeneratorInit(WaveformGenerator *pDev)
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
-
+    pDev->device.type = Instrument_Type_USB;
 }
 void WaveformGeneratorDeinit(WaveformGenerator *pDev)
 {
 	pDev->device.instrumentFlag = Instrument_WaveformGenerator;
 	DeviceDeinit(&pDev->device);
-
+  
 }

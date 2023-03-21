@@ -47,7 +47,7 @@ int ConnectDevice(int panel, int devIndex)
 
 	Device *pMeter = DevMgr.FindWithInstrFlag(devIndex);
 	Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(devIndex);
-	if (NULL != pInstr)
+	if (NULL != pInstr && pMeter->type == pInstr->type)
 	{
 		pMeter->pInstr = pInstr;
 		if (NULL != pMeasure)

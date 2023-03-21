@@ -61,7 +61,6 @@ static int Reset(struct Device *pDev)
 	{
 		LOG_ERROR("Device Reset failed null %d ", NULL == pDev->pInstr);
 	}
-
 	return -1;
 }
 static int Start(Device *pDev)
@@ -134,6 +133,7 @@ void DeviceInit(Device *pDev)
 	pDev->Connect = Connect;
 	pDev->DoWithCommand = DoWithCommand;
 	pDev->Reset = Reset;
+	pDev->type = Instrument_Type_UNKNOWN;
 }
 void DeviceDeinit(Device *pDev)
 {

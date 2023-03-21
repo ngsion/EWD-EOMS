@@ -39,6 +39,7 @@ void AdmesyInit(Admesy *pDev)
 	}
 	DeviceInit(&pDev->device);
 	pDev->device.instrumentFlag = Instrument_Admesy; 
+	pDev->device.type = Instrument_Type_USB;
 
 }
 void AdmesyDeinit(Admesy *pDev)

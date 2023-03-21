@@ -61,6 +61,7 @@ int QueryID(struct Instrument *pInstr)
 {
 	if (NULL == pInstr)
 	{
+		LOG_ERROR("Error QueryID.");
 		return -1;
 	}
 
@@ -96,10 +97,11 @@ int QueryID(struct Instrument *pInstr)
 	if (status < VI_SUCCESS)
 	{
 		LOG_ERROR("Error reading a response from the device %s.", pInstr->address);
+		return -1;
 	}
 	else
 	{
-		LOG_INFO("instrument %s id is: %*s", pInstr->address, retCount, buffer);
+		LOG_INFO("QueryID instrument %s id is: %*s", pInstr->address, retCount, buffer);
 		memcpy(pInstr->identifier, buffer, retCount);
 	}
 
@@ -110,6 +112,7 @@ int Close(struct Instrument *pInstr)
 {
 	if (NULL == pInstr)
 	{
+		LOG_ERROR("Error Close.");
 		return -1;
 	}
 

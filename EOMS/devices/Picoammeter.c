@@ -173,6 +173,7 @@ void PicoammeterInit(Picoammeter *pDev)
 	pDev->device.Start = Start;
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
+	pDev->device.type = Instrument_Type_ASRL;
 }
 void PicoammeterDeinit(Picoammeter *pDev)
 {

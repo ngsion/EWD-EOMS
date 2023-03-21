@@ -73,8 +73,8 @@ Disk Date = 3748253656
 In Projects = "1,"
 Window Top = 219
 Window Left = 106
-Window Z-Order = 1
-Source Window State = "1,72,72,72,32,34,34,0,0,204,0,0,0,0,0,44,39,0,51,13,323,547,1,0,"
+Window Z-Order = 2
+Source Window State = "1,72,72,72,32,34,34,0,0,81,0,0,0,0,0,25,39,0,51,13,323,547,1,0,"
 
 [File 0003]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.c"
@@ -93,7 +93,7 @@ Tracepoint 0002 = "0,0,84,1,"
 [File 0004]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.c"
 File Type = "CSource"
-Disk Date = 3761901589
+Disk Date = 3762207273
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
@@ -115,18 +115,12 @@ Source Window State = "1,48,55,55,0,17,17,0,0,80,0,0,0,0,0,22,30,0,48,0,287,541,
 [File 0006]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
 File Type = "CSource"
-Disk Date = 3761904593
+Disk Date = 3762207774
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 2
-Source Window State = "1,130,130,130,4,13,13,0,0,83,0,0,0,0,0,25,33,0,34,40,323,559,1,0,"
-Breakpoint 0001 = "48,0,enabled,"
-Tracepoint 0001 = "0,0,49,1,"
-Breakpoint 0002 = "55,0,enabled,"
-Tracepoint 0002 = "0,0,56,1,"
-Breakpoint 0003 = "57,0,enabled,"
-Tracepoint 0003 = "0,0,58,1,"
+Window Z-Order = 3
+Source Window State = "1,130,130,130,4,13,13,0,0,83,0,0,0,0,0,25,33,0,52,145,323,559,1,0,"
 
 [File 0007]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.c"
@@ -245,17 +239,17 @@ Window Width = 541
 [File 0019]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
 File Type = "CSource"
-Disk Date = 3761818387
+Disk Date = 3762210636
 In Projects = "1,"
 Window Top = 64
 Window Left = 26
-Window Z-Order = 3
-Source Window State = "1,67,67,67,25,45,45,0,0,80,0,0,0,0,0,20,84,0,99,39,263,541,1,0,"
+Window Z-Order = 1
+Source Window State = "1,67,67,67,25,45,45,0,0,204,0,0,0,0,0,44,61,0,78,30,263,541,1,0,"
 
 [File 0020]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Admesy.c"
 File Type = "CSource"
-Disk Date = 3750632467
+Disk Date = 3762207667
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
@@ -264,7 +258,7 @@ Source Window State = "1,33,33,33,5,15,15,0,0,0,0,0,0,0,0,0,15,0,38,12,371,717,1
 [File 0021]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.c"
 File Type = "CSource"
-Disk Date = 3761889289
+Disk Date = 3762210502
 In Projects = "1,"
 Window Top = 126
 Window Left = 50
@@ -273,7 +267,7 @@ Source Window State = "1,91,91,91,10,16,16,0,0,0,0,0,0,0,0,0,37,0,54,195,371,673
 [File 0022]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/LCRMeter.c"
 File Type = "CSource"
-Disk Date = 3761889126
+Disk Date = 3762207688
 In Projects = "1,"
 Window Top = 188
 Window Left = 90
@@ -282,7 +276,7 @@ Source Window State = "1,25,43,25,0,17,0,0,3,0,0,0,0,0,0,0,111,0,43,17,323,541,1
 [File 0023]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.c"
 File Type = "CSource"
-Disk Date = 3761889259
+Disk Date = 3762207719
 In Projects = "1,"
 Window Top = 281
 Window Left = 130
@@ -291,7 +285,7 @@ Source Window State = "1,31,31,31,11,24,24,0,0,0,0,0,0,0,0,0,93,0,105,33,371,673
 [File 0024]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/WaveformGenerator.c"
 File Type = "CSource"
-Disk Date = 3761889311
+Disk Date = 3762207729
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
@@ -465,7 +459,7 @@ Source Window State = "1,29,29,29,1,24,24,0,0,0,0,0,0,0,0,0,16,0,20,0,263,547,1,
 [File 0044]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.h"
 File Type = "Include"
-Disk Date = 3761887341
+Disk Date = 3762207604
 In Projects = "1,"
 Window Top = 126
 Window Left = 58
@@ -687,8 +681,8 @@ Source Window State = "1,0,0,0,0,0,0,0,0,83,0,0,0,0,0,25,0,0,0,0,323,559,1,0,"
 Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.c"
 Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.c"
 Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
-Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
-Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
+Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
+Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

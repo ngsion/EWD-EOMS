@@ -140,6 +140,7 @@ void LCRMeterInit(LCRMeter *pDev)
 	pDev->device.Stop = Stop;
 	pDev->device.DoWithCommand = DoWithCommand;
 	pDev->device.Reset = Reset;
+	pDev->device.type = Instrument_Type_GPIB;
 }
 void LCRMeterDeinit(LCRMeter *pDev)
 {
