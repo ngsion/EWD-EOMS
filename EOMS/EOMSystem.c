@@ -19,6 +19,7 @@
 #include <string.h>
 #include "SettingMgr.h"
 #include "Stack.h"
+#include "PicoSetting.h"
 
 //==============================================================================
 // Constants
@@ -60,7 +61,13 @@ static int Init(int x)
 	{
 		Setting *pSet = SetMgr.FindWithInstrFlag(index);
 		Device *pDev = DevMgr.FindWithInstrFlag(index);
+		Measurement *pMea = MeasureMgr.FindWithInstrFlag(index);
 		pDev->pSet = pSet;
+		if (pMea)
+		{
+		  pMea->pSet = pSet;
+
+		}
 	}
 
 	return 0;
@@ -87,10 +94,54 @@ static int Stop(int x)
 	return 0;
 }
 
+static int CVICALLBACK PicoThreadFunction(void *functionData)
+{
+	Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
+	Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
+	PicoSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
+
+
+	if (pSet->setting.isSignal)
+	{
+		double VMax = pSet->VMax;
+		double Vmin = pSet->VMin;
+		double VSpan = pSet->VSpan;
+		double delay = pSet->MInterval;
+		double currentValue = 0;
+		Stack *pVoltStack = StackAllocInit();
+		double volt = 0;
+		for (volt = Vmin; volt <= VMax; volt += VSpan)
+		{
+			pMeter->DoWithCommand(pMeter, &volt, NULL);
+			pVoltStack->InStack(pVoltStack, volt);
+			if (pSet->setting.isCollector)
+			{
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &currentValue, NULL);
+			}
+			Delay(delay);
+		}
+
+		Stack *pCurrentStack = StackAllocInit();
+		while (pVoltStack->Size(pVoltStack) > 0)
+		{
+			volt = pVoltStack->OutStack(pVoltStack);
+			pMeter->DoWithCommand(pMeter, &volt, NULL);
+			if (pSet->setting.isCollector)
+			{
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &currentValue, NULL);
+				pCurrentStack->InStack(pCurrentStack, currentValue);
+			}
+			Delay(delay);
+		}
+		StackDelloc(pVoltStack);
+		StackDelloc(pCurrentStack);
+	}
+}
+
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
 	Delay(1);
-//	if (Signal_Picoammieter == SetMgr.signal)
+	//	if (Signal_Picoammieter == SetMgr.signal)
 	{
 		DevMgr.Start(0);
 
@@ -132,7 +183,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		Stop(0);
 		return 0;
 	}
-//	else if (Signal_LCRMeter == SetMgr.signal)
+	//	else if (Signal_LCRMeter == SetMgr.signal)
 	{
 
 		DevMgr.Start(0);
@@ -184,7 +235,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		Stop(0);
 		return 0;
 	}
-//	else
+	//	else
 	{
 
 		MeasureMgr.Start(0);
@@ -198,11 +249,12 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 static int Start(int x)
 {
 	System.isWorking = true;
-
+    DevMgr.Start(x);
 	DevMgr.Reset(x);
+	MeasureMgr.Start(0);
 	DataMgr.Start(0);
 
-	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, NULL, NULL);
+	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, PicoThreadFunction, NULL, NULL);
 
 	return 0;
 }

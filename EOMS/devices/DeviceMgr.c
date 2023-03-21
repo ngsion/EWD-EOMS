@@ -54,9 +54,6 @@ static int Init(int x)
 	return 0;
 }
 
-
-
-
 static int Reset(int x)
 {
 
@@ -64,7 +61,10 @@ static int Reset(int x)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-			defaultDeviceArray[i]->Reset(defaultDeviceArray[i]);
+			if (defaultDeviceArray[i]->pSet->isSignal || defaultDeviceArray[i]->pSet->isCollector)
+			{
+				defaultDeviceArray[i]->Reset(defaultDeviceArray[i]);
+			}
 		}
 	}
 	return 0;
@@ -74,11 +74,12 @@ static int Start(int x)
 
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		if (NULL != defaultDeviceArray[i] && true/* == defaultDeviceArray[i]->isSignal*/)
+		if (NULL != defaultDeviceArray[i])
 		{
-			LOG_INFO("before start");
-			defaultDeviceArray[i]->Start(defaultDeviceArray[i]);
-			LOG_INFO("after start");
+			if (defaultDeviceArray[i]->pSet->isSignal || defaultDeviceArray[i]->pSet->isCollector)
+			{
+				defaultDeviceArray[i]->Start(defaultDeviceArray[i]);
+			}
 		}
 	}
 
@@ -88,9 +89,12 @@ static int Stop(int x)
 {
 	for (int i = 0; i < DEVICE_MAX_NUM; i++)
 	{
-		if (NULL != defaultDeviceArray[i] /*&& true == defaultDeviceArray[i]->isSignal*/)
+		if (NULL != defaultDeviceArray[i])
 		{
-			defaultDeviceArray[i]->Stop(defaultDeviceArray[i]);
+			if (defaultDeviceArray[i]->pSet->isSignal || defaultDeviceArray[i]->pSet->isCollector)
+			{
+				defaultDeviceArray[i]->Stop(defaultDeviceArray[i]);
+			}
 		}
 	}
 

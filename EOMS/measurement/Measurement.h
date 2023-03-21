@@ -22,6 +22,7 @@
 #include "Instrument.h"
 #include <stdbool.h>
 #include "Queue.h"
+#include "Setting.h"
 
 //==============================================================================
 // Constants
@@ -38,7 +39,7 @@ typedef struct Measurement
     bool isCollector;
     int  jobId;
     unsigned int instrumentFlag;
-    
+    Setting * pSet;
  
 
 

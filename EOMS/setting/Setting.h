@@ -31,7 +31,7 @@ typedef struct Setting
 {
     unsigned int instrumentFlag;
     int isSignal;
-    int isColector;
+    int isCollector;
     int lastInstrIndex;
 
     int (*Init)(struct Setting * pSet);

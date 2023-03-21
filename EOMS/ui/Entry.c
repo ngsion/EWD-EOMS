@@ -86,7 +86,7 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		for (index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
 		{
 			Setting *pSet = SetMgr.FindWithInstrFlag(index);
-			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, &pSet->isColector);
+			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, &pSet->isCollector);
 		}
 
 		UI.ShowPICOSet(0);

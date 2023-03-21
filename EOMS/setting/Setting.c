@@ -52,7 +52,7 @@ void SettingInit(Setting * pSet)
 	pSet->Init = Init;
 	pSet->Save = Save;
 	pSet->isSignal = false;
-	pSet->isColector = false;
+	pSet->isCollector = false;
 	pSet->instrumentFlag = Instrument_Unknown;
 	pSet->lastInstrIndex = 0;
 
@@ -64,6 +64,6 @@ void SettingDeinit(Setting * pSet)
 		return;
 	}
 	pSet->isSignal = false;
-	pSet->isColector = false;
+	pSet->isCollector = false;
 	pSet->lastInstrIndex = 0;
 }

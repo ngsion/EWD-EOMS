@@ -110,7 +110,7 @@ static int ShowByFlag(int x)
 	for (int index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
 	{
 		Setting *pSet = SetMgr.FindWithInstrFlag(index);
-		if (pSet->isColector || pSet->isSignal)
+		if (pSet->isCollector || pSet->isSignal)
 		{
 			switch (index)
 			{
