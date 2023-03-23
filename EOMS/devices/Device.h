@@ -24,7 +24,7 @@
 #include "Setting.h"
 //==============================================================================
 // Constants
-#define DEVICE_TITLE_LENGTH 64
+
 
 
 //==============================================================================
@@ -32,7 +32,6 @@
 typedef struct Device
 {
     unsigned int instrumentFlag;
-    char  title[DEVICE_TITLE_LENGTH]; ///chinese name
     Instrument * pInstr;
     Instrument_Type * type;
     Setting * pSet;

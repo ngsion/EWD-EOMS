@@ -47,7 +47,7 @@ int CVICALLBACK OnNextBtn (int panel, int control, int event,
 			GetCtrlVal(panel, PANEL_PSET_NUMERIC_VMIN, &pSet->VMin);
 			GetCtrlVal(panel, PANEL_PSET_NUMERIC_VSPAN, &pSet->VSpan);
 			GetCtrlVal(panel, PANEL_PSET_NUMERIC_INTERVAL, &pSet->MInterval);
-			GetCtrlVal(panel, PANEL_PSET_STRING_BATCH, pSet->batchNo);
+			GetCtrlVal(panel, PANEL_PSET_STRING_BATCH, pSet->setting.batchNo);
 		}
 
 			break;

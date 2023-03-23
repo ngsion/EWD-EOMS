@@ -10,7 +10,7 @@
 
 //==============================================================================
 // Include files
-#include "Excel.h"
+
 #include <ansi_c.h>
 #include <cvirte.h>
 #include <userint.h>

@@ -20,7 +20,7 @@
 #include "SettingMgr.h"
 #include "Stack.h"
 #include "PicoSetting.h"
-
+#include "Excel.h"
 //==============================================================================
 // Constants
 
@@ -69,7 +69,6 @@ static int Init(int x)
 
 		}
 	}
-
 	return 0;
 }
 static int Shutdown(int x)
@@ -137,7 +136,7 @@ static int CVICALLBACK PicoThreadFunction(void *functionData)
 		StackDelloc(pCurrentStack);
 	}
 }
-
+/*
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
 	Delay(1);
@@ -245,7 +244,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	}
 	return 0;
 }
-
+*/
 static int Start(int x)
 {
 	System.isWorking = true;

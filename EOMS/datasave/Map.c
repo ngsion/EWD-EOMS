@@ -66,25 +66,21 @@ static int SetMap(Map *map, char *key, unsigned int cvalue, unsigned int rvalue)
 		}
 	}
 
-	if (false == added)
-		return 0;
-	return -1;
+	return (true == added) ? 0 : -1;
 }
 
 static int GetValue(Map *map, char *key, unsigned int * cvalue, unsigned int * rvalue)
 {
-	int value = -1;
 	for (int index = 0; index < MAP_NODE_LENGTH; index++)
 	{
 		if (NULL != map->array[index].key && 0 == strcmp(map->array[index].key, key))
 		{
 			*cvalue = map->array[index].cvalue;
 			*rvalue = map->array[index].rvalue;
-			value = 0;
-			break;
+			return 0;
 		}
 	}
-	return value;
+	return -1;
 }
 
 int RemoveKey(Map *map, char *key)

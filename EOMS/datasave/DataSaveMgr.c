@@ -16,35 +16,64 @@
 
 //==============================================================================
 // Constants
-static Excel *psExcel;
+static Excel *fileArray[MAX_FILE_COUNT];
+
 // Static functions
 
 static int Start(int x)
 {
-	if (NULL == psExcel)
+	for (int index = 0; index < MAX_FILE_COUNT; index++)
 	{
-		psExcel = ExcelAllocInit();
+		fileArray[index] = NULL;
 	}
 
 	return 0;
+}
+static Excel *GetOneWithInfo(const char *info)
+{
+	if (!info) return NULL;
+	
+	int index = 0;
+
+	for (index = 0; index < MAX_FILE_COUNT; index++)
+	{
+		if (NULL != fileArray[index] && 0 == strcmp(info, fileArray[index]->excelInfo))
+		{
+			return fileArray[index];
+		}
+	}
+
+	for (index = 0; index < MAX_FILE_COUNT; index++)
+	{
+		if (NULL == fileArray[index])
+		{
+			fileArray[index] = ExcelAllocInit(info);
+			return fileArray[index];
+		}
+	}
+	LOG_ERROR("GetOneWithInfo too much files ");
+	return NULL;
 }
 static int Stop(int x)
 {
-	if (NULL != psExcel)
+	for (int index = 0; index < MAX_FILE_COUNT; index++)
 	{
-		psExcel->Save(psExcel);
-		ExcelDelloc(psExcel);
-		psExcel = NULL;
+		if (NULL != fileArray[index])
+		{
+			fileArray[index]->Save(fileArray[index]);
+			ExcelDelloc(fileArray[index]);
+			fileArray[index] = NULL;
+		}
 	}
 
 	return 0;
 }
 
-static int SaveKey(char *key)
+static int SaveKey(Excel *pfile, char *key)
 {
-	if (NULL != psExcel)
+	if (NULL != pfile)
 	{
-		psExcel->SetCell(psExcel, key);
+		pfile->SetCell(pfile, key);
 	}
 	else
 	{
@@ -52,11 +81,11 @@ static int SaveKey(char *key)
 	}
 	return 0;
 }
-static int SaveInt(char *key, int value)
+static int SaveInt(Excel *pfile, char *key, int value)
 {
-	if (NULL != psExcel)
+	if (NULL != pfile)
 	{
-		psExcel->SetCellInt(psExcel, key, value);
+		pfile->SetCellInt(pfile, key, value);
 	}
 	else
 	{
@@ -64,11 +93,11 @@ static int SaveInt(char *key, int value)
 	}
 	return 0;
 }
-static int SaveDouble(char *key, double value)
+static int SaveDouble(Excel *pfile, char *key, double value)
 {
-	if (NULL != psExcel)
+	if (NULL != pfile)
 	{
-		psExcel->SetCellDouble(psExcel, key, value);
+		pfile->SetCellDouble(pfile, key, value);
 	}
 	else
 	{
@@ -76,11 +105,11 @@ static int SaveDouble(char *key, double value)
 	}
 	return 0;
 }
-static int SaveStr(char *key, char *value)
+static int SaveStr(Excel *pfile, char *key, char *value)
 {
-	if (NULL != psExcel)
+	if (NULL != pfile)
 	{
-		psExcel->SetCellStr(psExcel, key, value);
+		pfile->SetCellStr(pfile, key, value);
 	}
 	else
 	{
@@ -92,6 +121,7 @@ static int SaveStr(char *key, char *value)
 // Global variables
 
 DataSaveMgr DataMgr = {
+	.GetOneWithInfo = GetOneWithInfo,
 	.Start = Start,
 	.Stop = Stop,
 	.SaveKey = SaveKey,

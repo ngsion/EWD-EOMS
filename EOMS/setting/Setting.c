@@ -55,6 +55,8 @@ void SettingInit(Setting * pSet)
 	pSet->isCollector = false;
 	pSet->instrumentFlag = Instrument_Unknown;
 	pSet->lastInstrIndex = 0;
+	memset(pSet->batchNo, 0, BATCH_NO_LENGTH);
+
 
 }
 void SettingDeinit(Setting * pSet)

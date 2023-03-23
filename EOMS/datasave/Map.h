@@ -28,11 +28,11 @@
 typedef struct MapNode
 {
     char * key;
-    unsigned int cvalue;
-    unsigned int rvalue;
+    unsigned int cvalue; ///列的值
+    unsigned int rvalue; ///行的值
 }MapNode;
 
-
+/// 自定义map，用于excel保存数据
 typedef struct Map
 {
     MapNode array[MAP_NODE_LENGTH]; 

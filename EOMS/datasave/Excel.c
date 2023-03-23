@@ -27,6 +27,14 @@
 
 //==============================================================================
 // Static functions
+static int Save(struct Excel *excel)
+{
+
+    HRESULT result = ExcelRpt_WorkbookSave(excel->workbookHandle, excel->excelFileName, ExRConst_DefaultFileFormat);
+    return (result < 0) ? -1 : 0;
+}
+
+/// 获取key这列数据最新的位置，若没有这个key，则添加之
 static int GetIndex(struct Excel *excel, char *key, unsigned int *cvalue, unsigned int *rvalue)
 {
     char index[8] = {0};
@@ -45,11 +53,7 @@ static int SetCell(struct Excel *excel, char *key)
 {
     unsigned int column = 0;
     unsigned int row = 0;
-    if (0 == GetIndex(excel, key, &column, &row))
-    {
-        return 0;
-    }
-    return -1;
+    return GetIndex(excel, key, &column, &row);
 }
 static int SetCellInt(struct Excel *excel, char *key, int value)
 {
@@ -63,6 +67,8 @@ static int SetCellInt(struct Excel *excel, char *key, int value)
         excel->columnMap->SetMap(excel->columnMap, key, column, row);
         sprintf(index, "%c%d", 64 + column, row);
         ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataInt, value);
+        if (++excel->recordCount > MAX_SYNC_COUNT)
+            excel->Save(excel);
     }
     else
     {
@@ -82,6 +88,8 @@ static int SetCellDouble(struct Excel *excel, char *key, double value)
         excel->columnMap->SetMap(excel->columnMap, key, column, row);
         sprintf(index, "%c%d", 64 + column, row);
         ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataDouble, value);
+        if (++excel->recordCount > MAX_SYNC_COUNT)
+            excel->Save(excel);
     }
     else
     {
@@ -100,6 +108,8 @@ static int SetCellStr(struct Excel *excel, char *key, char *value)
         excel->columnMap->SetMap(excel->columnMap, key, column, row);
         sprintf(index, "%c%d", 65 + column, row);
         ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataString, value);
+        if (++excel->recordCount > MAX_SYNC_COUNT)
+            excel->Save(excel);
     }
     else
     {
@@ -107,32 +117,35 @@ static int SetCellStr(struct Excel *excel, char *key, char *value)
     }
     return 0;
 }
-static int Save(struct Excel *excel)
-{
-    char NewRptFileName[128] = {0};
-    time_t NowTime;
-    time(&NowTime);
-    struct tm *Now;
-    Now = localtime(&NowTime);
-    sprintf(NewRptFileName, "\\data\\report%04d%02d%02d-%02d%02d%02d.xls", Now->tm_year + 1900, Now->tm_mon + 1, Now->tm_mday, Now->tm_hour, Now->tm_min, Now->tm_sec);
-    GetProjectDir(excel->ExcelFileName);
-    strcat(excel->ExcelFileName, NewRptFileName);
 
-    HRESULT result = ExcelRpt_WorkbookSave(excel->workbookHandle, excel->ExcelFileName, ExRConst_DefaultFileFormat);
-    return result;
-}
 //==============================================================================
 // Global variables
 
 //==============================================================================
 // Global functions
 
-Excel *ExcelAllocInit()
+Excel *ExcelAllocInit(const char *info)
 {
     Excel *excel = (Excel *)malloc(sizeof(Excel));
 
     if (NULL != excel)
     {
+
+        memset(excel->excelInfo, 0, EXCEL_INFO_LEN);
+        memcpy(excel->excelInfo, info, strlen(info));
+
+        memset(excel->excelFileName, 0, MAX_PATHNAME_LEN);
+        GetProjectDir(excel->excelFileName);
+
+        char fileName[MAX_PATHNAME_LEN] = {0};
+        time_t NowTime;
+        time(&NowTime);
+        struct tm *Now;
+        Now = localtime(&NowTime);
+        sprintf(fileName, "\\data\\%s\\report%04d%02d%02d-%02d%02d%02d.xls", info, Now->tm_year + 1900, Now->tm_mon + 1, Now->tm_mday, Now->tm_hour, Now->tm_min, Now->tm_sec);
+
+        strcat(excel->excelFileName, fileName);
+
         excel->SetCell = SetCell;
         excel->SetCellInt = SetCellInt;
         excel->SetCellStr = SetCellStr;
@@ -140,6 +153,7 @@ Excel *ExcelAllocInit()
         excel->SetCellDouble = SetCellDouble;
         excel->columnMap = MapAllocInit();
         excel->currentColumnMax = COLUMN_START_POS;
+        excel->recordCount = 0;
 
         HRESULT result = ExcelRpt_ApplicationNew(0, &(excel->applicationHandle));
 
@@ -183,7 +197,9 @@ void ExcelDelloc(Excel *excel)
 
 void TestExel()
 {
-    Excel *pExel = ExcelAllocInit();
+    Excel *pExel = ExcelAllocInit("oio");
+    Excel *pExel2 = ExcelAllocInit("767");
+    pExel2->SetCellInt(pExel, "V", 10);
     pExel->SetCellInt(pExel, "V", 10);
     pExel->SetCellDouble(pExel, "V", 10.9);
     pExel->SetCellStr(pExel, "V1", "11.9");
@@ -193,4 +209,7 @@ void TestExel()
     pExel->SetCellDouble(pExel, "V3", 70);
     pExel->Save(pExel);
     ExcelDelloc(pExel);
+    Delay(1);
+    pExel2->Save(pExel2);
+    ExcelDelloc(pExel2);
 }

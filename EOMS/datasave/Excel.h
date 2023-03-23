@@ -25,6 +25,9 @@ extern "C"
 
 #define COLUMN_START_POS 1
 #define ROW_START_POS 1
+#define MAX_SYNC_COUNT 50
+#define EXCEL_INFO_LEN  64
+
     // Types
 
     typedef struct Excel
@@ -32,13 +35,15 @@ extern "C"
         CAObjHandle applicationHandle;
         CAObjHandle workbookHandle;
         CAObjHandle worksheetHandle;
+     
 
         Map * columnMap;
         unsigned int currentColumnMax;
+        unsigned int recordCount;    
+        char excelInfo[EXCEL_INFO_LEN];
+		char excelFileName[MAX_PATHNAME_LEN];  
 
-
-		char ExcelFileName[MAX_PATHNAME_LEN];  
-        int (*SetCell)(struct Excel *excel, char *key); 
+        int (*SetCell)(struct Excel *excel, char *key); //添加一个key
         int (*SetCellInt)(struct Excel *excel, char *key, int value);
         int (*SetCellDouble)(struct Excel *excel, char *key, double value);
         int (*SetCellStr)(struct Excel *excel, char *key, char *value);
@@ -50,7 +55,7 @@ extern "C"
 
     //==============================================================================
     // Global functions
-    Excel *ExcelAllocInit();
+    Excel *ExcelAllocInit(const char * info);
     void ExcelDelloc(Excel *excel);
 
     void TestExel();

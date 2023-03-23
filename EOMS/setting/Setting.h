@@ -20,10 +20,11 @@
 #include "cvidef.h"
 #include <stdbool.h>
 #include "Instrument.h"
+
 //==============================================================================
 // Constants
 
-
+#define BATCH_NO_LENGTH 64
 
 //==============================================================================
 // Types
@@ -33,6 +34,8 @@ typedef struct Setting
     int isSignal;
     int isCollector;
     int lastInstrIndex;
+    char batchNo[BATCH_NO_LENGTH];
+    
 
     int (*Init)(struct Setting * pSet);
     int (*Save)(struct Setting * pSet);

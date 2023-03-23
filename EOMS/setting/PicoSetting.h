@@ -35,7 +35,7 @@ typedef struct PicoSetting
     double VMin;
     double VSpan;
     double MInterval;
-    char batchNo[BATCH_NO_LENGTH];
+  
 
 }PicoSetting;
 
