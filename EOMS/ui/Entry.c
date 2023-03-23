@@ -89,7 +89,7 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, &pSet->isCollector);
 		}
 
-		UI.ShowPICOSet(0);
+		UI.ShowCVGraph(0);
 
 	}
 
@@ -270,6 +270,42 @@ int CVICALLBACK OnAdmesy(int panel, int control, int event,
 		ConnectDevice(panel, Instrument_Admesy);
 	}
 	break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnPicoSet (int panel, int control, int event,
+						   void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+            UI.ShowPICOSet(0);
+			break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnLCRSet (int panel, int control, int event,
+						  void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+
+			break;
+	}
+	return 0;
+}
+
+int CVICALLBACK OnWAVESet (int panel, int control, int event,
+						   void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+		case EVENT_COMMIT:
+
+			break;
 	}
 	return 0;
 }

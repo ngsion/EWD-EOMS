@@ -24,7 +24,6 @@
 // Constants
 typedef struct 
 {
-    int (*ShowByFlag)(int x);
     int (*ShowPICOSet)(int x);
 	int (*ShowEntry)(int x);
 	int (*ShowGraph)(int x);

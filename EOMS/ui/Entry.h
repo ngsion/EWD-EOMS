@@ -34,7 +34,10 @@
 #define  PANEL_LED_LCR                    19      /* control type: LED, callback function: (none) */
 #define  PANEL_LED_WAVE                   20      /* control type: LED, callback function: (none) */
 #define  PANEL_LED_ADMESY                 21      /* control type: LED, callback function: (none) */
-#define  PANEL_TEXTMSG_4                  22      /* control type: textMsg, callback function: (none) */
+#define  PANEL_COMMANDBUTTON_WAVESET      22      /* control type: command, callback function: OnWAVESet */
+#define  PANEL_COMMANDBUTTON_LCRSET       23      /* control type: command, callback function: OnLCRSet */
+#define  PANEL_COMMANDBUTTON_PICOSET      24      /* control type: command, callback function: OnPicoSet */
+#define  PANEL_TEXTMSG_4                  25      /* control type: textMsg, callback function: (none) */
 
 
      /* Control Arrays: */
@@ -51,11 +54,14 @@
 
 int  CVICALLBACK OnAdmesy(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnLCRRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
+int  CVICALLBACK OnLCRSet(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnOkBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnPanel(int panel, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnPicoRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
+int  CVICALLBACK OnPicoSet(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnRefreshBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 int  CVICALLBACK OnWaveRing(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
+int  CVICALLBACK OnWAVESet(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
 
 
 #ifdef __cplusplus

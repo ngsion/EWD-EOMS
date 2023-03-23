@@ -13,7 +13,7 @@
 
      /* Panels and Controls: */
 
-#define  PANEL_PSET                       1
+#define  PANEL_PSET                       1       /* callback function: OnPanelPicoSet */
 #define  PANEL_PSET_STRING_BATCH          2       /* control type: string, callback function: (none) */
 #define  PANEL_PSET_NUMERIC_INTERVAL      3       /* control type: numeric, callback function: (none) */
 #define  PANEL_PSET_NUMERIC_VSPAN         4       /* control type: numeric, callback function: (none) */
@@ -35,6 +35,7 @@
      /* Callback Prototypes: */
 
 int  CVICALLBACK OnNextBtn(int panel, int control, int event, void *callbackData, int eventData1, int eventData2);
+int  CVICALLBACK OnPanelPicoSet(int panel, int event, void *callbackData, int eventData1, int eventData2);
 
 
 #ifdef __cplusplus

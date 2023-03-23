@@ -57,13 +57,13 @@ static int ShowEntry(int x)
 
 static int ShowPICOSet(int x)
 {
-	QuitUserInterface(0);
-	DiscardPanel(panelHandle);
+	//QuitUserInterface(0);
+	//DiscardPanel(panelHandle);
 
-	panelHandle = LoadPanel(0, "PicoSet.uir", PANEL);
+	int panelHandle2 = LoadPanel(0, "PicoSet.uir", PANEL);
 	/* display the panel and run the user interface */
-	DisplayPanel(panelHandle);
-	status = RunUserInterface();
+	DisplayPanel(panelHandle2);
+	//status = RunUserInterface();
 
 	return 0;
 }
@@ -105,38 +105,9 @@ static int ShowGraph(int x)
 	return 0;
 }
 
-static int ShowByFlag(int x)
-{
-	for (int index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
-	{
-		Setting *pSet = SetMgr.FindWithInstrFlag(index);
-		if (pSet->isCollector || pSet->isSignal)
-		{
-			switch (index)
-			{
-			case Instrument_Picoammeter:
-			{
-				ShowPICOSet(x);
-			}
-			break;
-			case Instrument_LCRMeter:
-			{
-				ShowCVGraph(x);
-			}
-			break;
-
-			default:
-				break;
-			}
-		}
-	}
-	return 0;
-}
-
 //==============================================================================
 // Global variables
 UIMgr UI = {
-	.ShowByFlag = ShowByFlag,
 	.ShowPICOSet = ShowPICOSet,
 	.ShowEntry = ShowEntry,
 	.ShowGraph = ShowGraph,

@@ -34,23 +34,40 @@
 //==============================================================================
 // Global functions
 
-
-int CVICALLBACK OnNextBtn (int panel, int control, int event,
-						   void *callbackData, int eventData1, int eventData2)
+int CVICALLBACK OnNextBtn(int panel, int control, int event,
+						  void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_COMMIT:
-		{
-			PicoSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
-			GetCtrlVal(panel, PANEL_PSET_NUMERIC_VMAX, &pSet->VMax);
-			GetCtrlVal(panel, PANEL_PSET_NUMERIC_VMIN, &pSet->VMin);
-			GetCtrlVal(panel, PANEL_PSET_NUMERIC_VSPAN, &pSet->VSpan);
-			GetCtrlVal(panel, PANEL_PSET_NUMERIC_INTERVAL, &pSet->MInterval);
-			GetCtrlVal(panel, PANEL_PSET_STRING_BATCH, pSet->setting.batchNo);
-		}
+	case EVENT_COMMIT:
+	{
+		PicoSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
+		GetCtrlVal(panel, PANEL_PSET_NUMERIC_VMAX, &pSet->VMax);
+		GetCtrlVal(panel, PANEL_PSET_NUMERIC_VMIN, &pSet->VMin);
+		GetCtrlVal(panel, PANEL_PSET_NUMERIC_VSPAN, &pSet->VSpan);
+		GetCtrlVal(panel, PANEL_PSET_NUMERIC_INTERVAL, &pSet->MInterval);
+		GetCtrlVal(panel, PANEL_PSET_STRING_BATCH, pSet->setting.batchNo);
+	}
+	break;
+	}
 
-			break;
+	return 0;
+}
+
+int CVICALLBACK OnPanelPicoSet(int panel, int event, void *callbackData,
+							   int eventData1, int eventData2)
+{
+	switch (event)
+	{
+	case EVENT_GOT_FOCUS:
+
+		break;
+	case EVENT_LOST_FOCUS:
+
+		break;
+	case EVENT_CLOSE:
+		DiscardPanel(panel);
+		break;
 	}
 	return 0;
 }
