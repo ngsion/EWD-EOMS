@@ -12,8 +12,6 @@ VXIplug&play Framework 64-bit Dir = "/C/Program Files/IVI Foundation/VISA/win64"
 Number of Projects = 1
 Active Project = 1
 Project 0001 = "EOMS.prj"
-Project 0001 Folder Source Files/instruments Collapsed = True
-Project 0001 FolderId 2 Collapsed = True
 Project 0001 Folder Source Files/devices Collapsed = True
 Project 0001 FolderId 3 Collapsed = True
 Project 0001 Folder Source Files/measurement Collapsed = True
@@ -22,8 +20,6 @@ Project 0001 Folder Source Files/clogger Collapsed = True
 Project 0001 FolderId 5 Collapsed = True
 Project 0001 Folder Source Files/setting Collapsed = True
 Project 0001 FolderId 6 Collapsed = True
-Project 0001 Folder Source Files/ui Collapsed = True
-Project 0001 FolderId 9 Collapsed = True
 Project 0001 Folder Instrument Files Collapsed = True
 Project 0001 FolderId 11 Collapsed = True
 Drag Bar Left = 254
@@ -44,7 +40,7 @@ Save Changes Before Compiling = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 5
+Number of Opened Files = 9
 Window Confinement Region Enabled = True
 MainColumnWidth = 237
 FileDateColumnWidth = 70
@@ -69,11 +65,11 @@ In Projects = "1,"
 [File 0002]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
 File Type = "CSource"
-Disk Date = 3762387740
+Disk Date = 3762578013
 In Projects = "1,"
 Window Top = 219
 Window Left = 106
-Window Z-Order = 4
+Window Z-Order = 3
 Source Window State = "1,110,111,110,0,0,0,0,0,81,0,0,0,0,0,25,33,0,52,13,323,547,1,0,"
 
 [File 0003]
@@ -103,12 +99,12 @@ Tracepoint 0001 = "0,0,154,1,"
 [File 0005]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
 File Type = "CSource"
-Disk Date = 3762387833
+Disk Date = 3762578036
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
-Window Z-Order = 5
-Source Window State = "1,91,91,91,23,24,24,0,0,83,0,0,0,0,0,25,79,0,91,24,323,559,1,0,"
+Window Z-Order = 1
+Source Window State = "1,91,91,91,23,24,24,0,0,204,0,0,0,0,0,39,79,0,94,13,323,559,1,0,"
 
 [File 0006]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.c"
@@ -158,7 +154,7 @@ Window Top = 157
 Window Left = 74
 Window Height = 311
 Window Width = 541
-Window Z-Order = 1
+Window Z-Order = 7
 
 [File 0011]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.uir"
@@ -635,7 +631,7 @@ Source Window State = "1,40,40,40,37,42,42,0,0,0,0,0,0,0,0,0,26,0,40,42,215,541,
 [File 0064]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.h"
 File Type = "Include"
-Disk Date = 3762387481
+Disk Date = 3762577224
 In Projects = "1,"
 Window Top = 33
 Window Left = 10
@@ -666,7 +662,7 @@ Window Top = 33
 Window Left = 10
 Window Height = 251
 Window Width = 559
-Window Z-Order = 2
+Window Z-Order = 8
 
 [File 0068]
 Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.c"
@@ -675,7 +671,7 @@ Disk Date = 3762388046
 In Projects = "1,"
 Window Top = 95
 Window Left = 42
-Window Z-Order = 3
+Window Z-Order = 9
 Source Window State = "1,49,49,49,56,57,57,0,0,80,0,0,0,0,0,19,36,0,56,0,251,541,1,0,"
 
 [File 0069]
@@ -703,12 +699,58 @@ Disk Date = 3762380084
 In Projects = "1,"
 Source Window State = "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"
 
+[File 0072]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCRSet.uir"
+File Type = "User Interface Resource"
+Disk Date = 3762577598
+In Projects = "1,"
+Window Top = 126
+Window Left = 58
+Window Height = 323
+Window Width = 541
+Window Z-Order = 6
+
+[File 0073]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCRSet.c"
+File Type = "CSource"
+Disk Date = 3762577579
+In Projects = "1,"
+Window Top = 33
+Window Left = 10
+Window Z-Order = 5
+Source Window State = "1,35,41,41,0,1,1,0,0,83,0,0,0,0,0,25,30,0,41,18,323,559,1,0,"
+
+[File 0074]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/WaveSet.uir"
+File Type = "User Interface Resource"
+Disk Date = 3762577710
+In Projects = "1,"
+Window Top = 157
+Window Left = 74
+Window Height = 323
+Window Width = 559
+Window Z-Order = 4
+
+[File 0075]
+Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/WaveSet.c"
+File Type = "CSource"
+Disk Date = 3762577958
+In Projects = "1,"
+Window Top = 64
+Window Left = 26
+Window Z-Order = 2
+Source Window State = "1,53,53,53,16,32,32,0,0,80,0,0,0,0,0,25,10,0,53,0,323,541,1,0,"
+
 [Tab Order]
-Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
-Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
-Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.uir"
-Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.c"
-Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.uir"
+Tab 0001 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.uir"
+Tab 0002 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.c"
+Tab 0003 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.uir"
+Tab 0004 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCRSet.uir"
+Tab 0005 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCRSet.c"
+Tab 0006 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/WaveSet.uir"
+Tab 0007 = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.c"
+Tab 0008 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/WaveSet.c"
+Tab 0009 = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.c"
 
 [Default Build Config 0001 Debug]
 Generate Browse Info = True

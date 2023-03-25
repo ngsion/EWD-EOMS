@@ -68,6 +68,32 @@ static int ShowPICOSet(int x)
 	return 0;
 }
 
+static int ShowLCRSet(int x)
+{
+	//QuitUserInterface(0);
+	//DiscardPanel(panelHandle);
+
+	int panelHandle2 = LoadPanel(0, "LCRSet.uir", PANEL);
+	/* display the panel and run the user interface */
+	DisplayPanel(panelHandle2);
+	//status = RunUserInterface();
+
+	return 0;
+}
+
+static int ShowWaveSet(int x)
+{
+	//QuitUserInterface(0);
+	//DiscardPanel(panelHandle);
+
+	int panelHandle2 = LoadPanel(0, "WaveSet.uir", PANEL);
+	/* display the panel and run the user interface */
+	DisplayPanel(panelHandle2);
+	//status = RunUserInterface();
+
+	return 0;
+}
+
 static int ShowLCGraph(int x)
 {
 	QuitUserInterface(0);
@@ -108,6 +134,8 @@ static int ShowGraph(int x)
 //==============================================================================
 // Global variables
 UIMgr UI = {
+	.ShowWaveSet = ShowWaveSet,
+	.ShowLCRSet =  ShowLCRSet,
 	.ShowPICOSet = ShowPICOSet,
 	.ShowEntry = ShowEntry,
 	.ShowGraph = ShowGraph,

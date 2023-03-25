@@ -25,6 +25,8 @@
 typedef struct 
 {
     int (*ShowPICOSet)(int x);
+    int (*ShowLCRSet)(int x);
+    int (*ShowWaveSet)(int x);
 	int (*ShowEntry)(int x);
 	int (*ShowGraph)(int x);
     int (*ShowLCGraph)(int x);

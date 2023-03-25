@@ -90,7 +90,6 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 		}
 
 		UI.ShowCVGraph(0);
-
 	}
 
 	break;
@@ -203,7 +202,7 @@ int CVICALLBACK OnRefreshBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 		InstrMgr.Scan(0);
-        updateRingControls(panel);
+		updateRingControls(panel);
 		break;
 	}
 	return 0;
@@ -274,38 +273,38 @@ int CVICALLBACK OnAdmesy(int panel, int control, int event,
 	return 0;
 }
 
-int CVICALLBACK OnPicoSet (int panel, int control, int event,
-						   void *callbackData, int eventData1, int eventData2)
-{
-	switch (event)
-	{
-		case EVENT_COMMIT:
-            UI.ShowPICOSet(0);
-			break;
-	}
-	return 0;
-}
-
-int CVICALLBACK OnLCRSet (int panel, int control, int event,
+int CVICALLBACK OnPicoSet(int panel, int control, int event,
 						  void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_COMMIT:
-
-			break;
+	case EVENT_COMMIT:
+		UI.ShowPICOSet(0);
+		break;
 	}
 	return 0;
 }
 
-int CVICALLBACK OnWAVESet (int panel, int control, int event,
-						   void *callbackData, int eventData1, int eventData2)
+int CVICALLBACK OnLCRSet(int panel, int control, int event,
+						 void *callbackData, int eventData1, int eventData2)
 {
 	switch (event)
 	{
-		case EVENT_COMMIT:
+	case EVENT_COMMIT:
+		UI.ShowLCRSet(0);
+		break;
+	}
+	return 0;
+}
 
-			break;
+int CVICALLBACK OnWAVESet(int panel, int control, int event,
+						  void *callbackData, int eventData1, int eventData2)
+{
+	switch (event)
+	{
+	case EVENT_COMMIT:
+		UI.ShowWaveSet(0);
+		break;
 	}
 	return 0;
 }
