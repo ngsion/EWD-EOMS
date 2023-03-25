@@ -31,8 +31,7 @@
 // Types
 typedef struct 
 {
-	bool isWorking;
-
+	
 	int (*Init)(int x);
 	int (*Shutdown)(int x);
     int (*Start)(int x);

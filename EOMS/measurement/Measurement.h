@@ -19,7 +19,7 @@
 // Include files
 
 #include "cvidef.h"
-#include "Instrument.h"
+#include "Device.h"
 #include <stdbool.h>
 #include "Queue.h"
 #include "Setting.h"
@@ -33,19 +33,22 @@
 // Types
 typedef struct Measurement
 {
-    Instrument * pInstr;
+    
+    unsigned int instrumentFlag;
+   
+    Device * pDev;
+    Setting * pSet;
+
+
     Queue * pInDataQueue;
     Queue * pDataQueue;
-    bool isCollector;
-    int  jobId;
-    unsigned int instrumentFlag;
-    Setting * pSet;
- 
+    bool isCollecting;
+    
 
 
-    int (*Start)(struct Measurement * pDev);
-    int (*Stop)(struct Measurement * pDev);
-    int (*DoMeasureWithCommand)(struct Measurement * pDev, void * inData, void * outData1, void * outData2);
+    int (*Start)(struct Measurement * pMea);
+    int (*Stop)(struct Measurement * pMea);
+    int (*DoMeasureWithCommand)(struct Measurement * pMea, void * inData, void * outData1, void * outData2);
 
 }Measurement;
 

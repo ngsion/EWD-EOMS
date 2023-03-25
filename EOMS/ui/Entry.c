@@ -46,12 +46,10 @@ int ConnectDevice(int panel, int devIndex)
 	Instrument *pInstr = InstrMgr.GetInstrByIndex(pSet->lastInstrIndex);
 
 	Device *pMeter = DevMgr.FindWithInstrFlag(devIndex);
-	Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(devIndex);
+
 	if (NULL != pInstr && pMeter->type == pInstr->type)
 	{
 		pMeter->pInstr = pInstr;
-		if (NULL != pMeasure)
-			pMeasure->pInstr = pInstr;
 		if (0 == pMeter->Connect(pMeter))
 		{
 			pMeter->QueryID(pMeter);
@@ -60,8 +58,6 @@ int ConnectDevice(int panel, int devIndex)
 	else
 	{
 		pMeter->pInstr = NULL;
-		if (NULL != pMeasure)
-			pMeasure->pInstr = NULL;
 	}
 	updateLED(panel);
 	updateStrings(panel);
@@ -181,7 +177,7 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 
 	case EVENT_CLOSE:
 	{
-		if (true == System.isWorking)
+		//if (true == System.isWorking)
 		{
 			System.Stop(0);
 		}

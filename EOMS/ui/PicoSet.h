@@ -20,6 +20,7 @@
 #define  PANEL_PSET_NUMERIC_VMIN          5       /* control type: numeric, callback function: (none) */
 #define  PANEL_PSET_NUMERIC_VMAX          6       /* control type: numeric, callback function: (none) */
 #define  PANEL_PSET_COMMANDBUTTON         7       /* control type: command, callback function: OnNextBtn */
+#define  PANEL_PSET_TEXTBOX               8       /* control type: textBox, callback function: (none) */
 
 
      /* Control Arrays: */

@@ -49,7 +49,7 @@ int CVICALLBACK OnPanelCV(int panel, int event, void *callbackData,
 
 	case EVENT_CLOSE:
 	{
-		if (true == System.isWorking)
+//		if (true == System.isWorking)
 		{
 			System.Stop(0);
 		}
@@ -70,7 +70,7 @@ int CVICALLBACK OnStartCVBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 
-		if (true == System.isWorking)
+//		if (true == System.isWorking)
 			return 0;
 
 	//	SetPlotAttribute(panel, PANEL_GRAPH,  ATTR_LINE_STYLE, VAL_SOLID);  

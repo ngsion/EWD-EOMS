@@ -61,7 +61,7 @@ static int Reset(int x)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-			if (defaultDeviceArray[i]->pSet->isSignal || defaultDeviceArray[i]->pSet->isCollector)
+			if (defaultDeviceArray[i])
 			{
 				defaultDeviceArray[i]->Reset(defaultDeviceArray[i]);
 			}
@@ -76,9 +76,12 @@ static int Start(int x)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-			if (defaultDeviceArray[i]->pSet->isSignal || defaultDeviceArray[i]->pSet->isCollector)
+			if (defaultDeviceArray[i]->pSet)
 			{
-				defaultDeviceArray[i]->Start(defaultDeviceArray[i]);
+				if (defaultDeviceArray[i]->pSet->isSignal || defaultDeviceArray[i]->pSet->isCollector)
+				{
+					defaultDeviceArray[i]->Start(defaultDeviceArray[i]);
+				}
 			}
 		}
 	}
@@ -91,10 +94,9 @@ static int Stop(int x)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-			if (defaultDeviceArray[i]->pSet->isSignal || defaultDeviceArray[i]->pSet->isCollector)
-			{
-				defaultDeviceArray[i]->Stop(defaultDeviceArray[i]);
-			}
+
+			defaultDeviceArray[i]->Stop(defaultDeviceArray[i]);
+			
 		}
 	}
 

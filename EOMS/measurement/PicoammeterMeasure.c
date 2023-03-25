@@ -10,13 +10,15 @@
 
 //==============================================================================
 // Include files
-
+#include "DataSaveMgr.h"
 #include <visa.h>
 #include <ansi_c.h>
 #include <formatio.h>
 #include <utility.h>
 #include "PicoammeterMeasure.h"
 #include "logger.h"
+#include "PicoSetting.h"
+#include "Stack.h"
 
 //==============================================================================
 // Constants
@@ -29,15 +31,14 @@
 
 //==============================================================================
 // Static functions
-static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *outData1, void *outData2)
+static int DoMeasureWithCommand(struct Measurement *pMea, void *inData, void *outData1, void *outData2)
 {
-	PicoammeterMeasure *pMeter = (PicoammeterMeasure *)pDev;
-
-	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
+	
+	if (NULL != pMea->pDev->pInstr && pMea->pDev->pInstr->status >= Instrument_Status_Open)
 	{
 
 		ViStatus status;
-		ViSession session = pMeter->measure.pInstr->session;
+		ViSession session = pMea->pDev->pInstr->session;
 		double *pOutValue = (double *)outData1;
 
 		status = viPrintf(session, ":READ?\n");
@@ -66,54 +67,95 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			if (inData != NULL)
 			{
 				double *indat = (double *)inData;
-				pDev->pInDataQueue->Push(pDev->pInDataQueue, *indat);
+				pMea->pInDataQueue->Push(pMea->pInDataQueue, *indat);
 			}
-			pDev->pDataQueue->Push(pDev->pDataQueue, *pOutValue);
+			pMea->pDataQueue->Push(pMea->pDataQueue, *pOutValue);
 		}
 	}
 	else
 	{
-		LOG_ERROR("Picoammeter DoMeasureWithCommand failed null %d ", NULL == pMeter->measure.pInstr);
+		LOG_ERROR("Picoammeter DoMeasureWithCommand failed null %d ", NULL == pMea->pDev->pInstr);
 	}
 	return 0;
 }
 
-static int Start(Measurement *pDev)
+static int CVICALLBACK ThreadFunction(void *functionData)
+{
+	Measurement *pMeasure = (Measurement *)functionData;
+	Device *pMeter = pMeasure->pDev;
+	PicoSetting *pSet = (PicoSetting *)pMeasure->pSet;
+	Excel *pExcel = DataMgr.GetOneWithInfo(pSet->setting.batchNo);
+	if (!pExcel || !pMeter->pInstr)
+	{
+		LOG_ERROR("Picoammeter ThreadFunction failed null %d ", NULL == pMeter->pInstr);
+		return -1;
+	}
+	if (pSet->setting.isSignal)
+	{
+		double VMax = pSet->VMax;
+		double Vmin = pSet->VMin;
+		double VSpan = pSet->VSpan;
+		double delay = pSet->MInterval;
+		double currentValue = 0;
+		Stack *pVoltStack = StackAllocInit();
+		double volt = 0;
+		for (volt = Vmin; volt <= VMax; volt += VSpan)
+		{
+			pMeter->DoWithCommand(pMeter, &volt, NULL);
+			DataMgr.SaveInt(pExcel, "V", volt);
+			pVoltStack->InStack(pVoltStack, volt);
+			if (pSet->setting.isCollector)
+			{
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &currentValue, NULL);
+				DataMgr.SaveDouble(pMeter, "I+", currentValue);
+			}
+			if (!pMeasure->isCollecting)
+				return 0;
+			Delay(delay);
+		}
+
+		Stack *pCurrentStack = StackAllocInit();
+		while (pVoltStack->Size(pVoltStack) > 0)
+		{
+			volt = pVoltStack->OutStack(pVoltStack);
+			pMeter->DoWithCommand(pMeter, &volt, NULL);
+			if (pSet->setting.isCollector)
+			{
+				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &currentValue, NULL);
+				pCurrentStack->InStack(pCurrentStack, currentValue);
+			}
+			if (!pMeasure->isCollecting)
+				return 0;
+			Delay(delay);
+		}
+		while (pCurrentStack->Size(pCurrentStack) > 0)
+		{
+			DataMgr.SaveDouble(pExcel, "I-", pCurrentStack->OutStack(pCurrentStack));
+		}
+
+		StackDelloc(pVoltStack);
+		StackDelloc(pCurrentStack);
+	}
+}
+
+static int Start(Measurement *pMea)
 {
 
-	if (!pDev)
+	if (!pMea)
 	{
 		LOG_ERROR("error in PicoammeterMeasure start");
 		return -1;
 	}
-	PicoammeterMeasure *pMeter = (PicoammeterMeasure *)pDev;
-	ViStatus status = VI_SUCCESS;
-	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
-	{
-		LOG_INFO("PicoammeterMeasure starts");
 
-		ViSession session = pMeter->measure.pInstr->session;
+	pMea->isCollecting = true;
+	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, ThreadFunction, pMea, NULL);
 
-		status = viPrintf(session, ":FORM:ELEM CURR1\n");
-		// status = viPrintf(session, ":SENS1:CURR:NPLC 1\n");
-		status = viPrintf(session, ":SENS1:CURR:RANG:AUTO ON\n");
-		//  status = viPrintf(session, ":CONFIgure:CURRent:DC\n");
-		// status = viPrintf(session, ":SYST:AZER OFF\n");
-		// status = viPrintf(session, ":SENS1:MED OFF\n");
-		// status = viPrintf(session, ":SENS1:AVERage OFF\n");
-	}
-	else
-	{
-		LOG_ERROR("PicoammeterMeasure Start failed null %d ", NULL == pMeter->measure.pInstr);
-	}
-	if (status < VI_SUCCESS)
-	{
-		LOG_ERROR("status is %d.", status);
-	}
 	return 0;
 }
-static int Stop(Measurement *pDev)
+static int Stop(Measurement *pMea)
 {
+	pMea->isCollecting = false;
+	
 	LOG_INFO("PicoammeterMeasure Stops");
 
 	return 0;
@@ -126,19 +168,19 @@ static int Stop(Measurement *pDev)
 // Global functions
 //==============================================================================
 // Global functions
-void PicoammeterMeasureInit(PicoammeterMeasure *pDev)
+void PicoammeterMeasureInit(PicoammeterMeasure *pMea)
 {
-	if (NULL == pDev)
+	if (NULL == pMea)
 	{
 		return;
 	}
-	MeasurementInit(&pDev->measure);
-	pDev->measure.instrumentFlag = Instrument_Picoammeter;
-	pDev->measure.Start = Start;
-	pDev->measure.Stop = Stop;
-	pDev->measure.DoMeasureWithCommand = DoMeasureWithCommand;
+	MeasurementInit(&pMea->measure);
+	pMea->measure.instrumentFlag = Instrument_Picoammeter;
+	pMea->measure.Start = Start;
+	pMea->measure.Stop = Stop;
+	pMea->measure.DoMeasureWithCommand = DoMeasureWithCommand;
 }
-void PicoammeterMeasureDeinit(PicoammeterMeasure *pDev)
+void PicoammeterMeasureDeinit(PicoammeterMeasure *pMea)
 {
-	MeasurementDeinit(&pDev->measure);
+	MeasurementDeinit(&pMea->measure);
 }

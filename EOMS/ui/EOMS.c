@@ -49,7 +49,7 @@ int CVICALLBACK panelCB(int panel, int event, void *callbackData,
 {
 	if (event == EVENT_CLOSE)
 	{
-		if (true == System.isWorking)
+	//	if (true == System.isWorking)
 		{
 			System.Stop(0);
 		}
@@ -67,8 +67,8 @@ int CVICALLBACK onOKBtb(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-		if (true == System.isWorking)
-			return 0;
+//		if (true == System.isWorking)
+		//	return 0;
 
 		//	SetAxisScalingMode( panel, PANEL_STRIPCHART_TOP, VAL_LEFT_YAXIS, VAL_AUTOSCALE, 4000, 10000);
 

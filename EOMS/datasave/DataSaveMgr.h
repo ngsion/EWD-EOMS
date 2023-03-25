@@ -18,14 +18,14 @@ extern "C"
 
     //==============================================================================
     // Include files
-#include "Excel.h"  
+#include "Excel.h" 
 #include "cvidef.h"
-
+ 
 
     //==============================================================================
     // Constants
     
-    #define MAX_FILE_COUNT 10
+    #define MAX_FILE_COUNT 32
 
     typedef struct DataSaveMgr
     {

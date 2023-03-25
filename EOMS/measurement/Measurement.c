@@ -36,7 +36,7 @@ static int Stop(Measurement * pDev){
    return 0;
 }
 
- static int DoMeasureWithCommand(struct Measurement * pDev, void * inData, void * outData1, void * outData2)
+ static int DoMeasureWithCommand(struct Measurement * pMea, void * inData, void * outData1, void * outData2)
  {
 	LOG_INFO("Measurement DoMeasureWithCommand");
     return 0;
@@ -44,26 +44,28 @@ static int Stop(Measurement * pDev){
 //==============================================================================
 // Global variables
 
-void MeasurementInit(Measurement * pDev)
+void MeasurementInit(Measurement * pMea)
 {
-	if(NULL == pDev)
+	if(NULL == pMea)
 	{
 		return;
 	}
-	pDev->instrumentFlag = Instrument_Unknown;
-    pDev->pInstr = NULL;
-	pDev->jobId = 0;
-	pDev->Start = Start;
-	pDev->Stop = Stop;
-	pDev->isCollector = false;
-	pDev->DoMeasureWithCommand = DoMeasureWithCommand;
-	pDev->pDataQueue = QueueAllocInit();
-    pDev->pInDataQueue = QueueAllocInit();
+	pMea->instrumentFlag = Instrument_Unknown;
+    pMea->pDev = NULL;
+	pMea->pSet = NULL;
+	pMea->isCollecting = false;
+	pMea->Start = Start;
+	pMea->Stop = Stop;
+	pMea->DoMeasureWithCommand = DoMeasureWithCommand;
+	pMea->pDataQueue = QueueAllocInit();
+    pMea->pInDataQueue = QueueAllocInit();
 }
-void MeasurementDeinit(Measurement * pDev)
+void MeasurementDeinit(Measurement * pMea)
 {
-	pDev->instrumentFlag = Instrument_Unknown; 
-	pDev->pInstr = NULL;
-	QueueDelloc(pDev->pDataQueue);
-	QueueDelloc(pDev->pInDataQueue);
+	pMea->instrumentFlag = Instrument_Unknown; 
+	pMea->pDev = NULL;
+	pMea->pSet = NULL;
+	pMea->isCollecting = false;
+	QueueDelloc(pMea->pDataQueue);
+	QueueDelloc(pMea->pInDataQueue);
 }

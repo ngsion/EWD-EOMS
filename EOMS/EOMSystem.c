@@ -60,13 +60,13 @@ static int Init(int x)
 	for (int index = Instrument_Picoammeter; index < Instrument_Admesy; index++)
 	{
 		Setting *pSet = SetMgr.FindWithInstrFlag(index);
-		Device *pDev = DevMgr.FindWithInstrFlag(index);
+		Device *pDevice = DevMgr.FindWithInstrFlag(index);
 		Measurement *pMea = MeasureMgr.FindWithInstrFlag(index);
-		pDev->pSet = pSet;
+		pDevice->pSet = pSet;
 		if (pMea)
 		{
 		  pMea->pSet = pSet;
-
+          pMea->pDev = pDevice;
 		}
 	}
 	return 0;
@@ -83,7 +83,6 @@ static int Shutdown(int x)
 
 static int Stop(int x)
 {
-	System.isWorking = false;
 
 	MeasureMgr.Stop(x);
 	DevMgr.Reset(x);
@@ -93,49 +92,6 @@ static int Stop(int x)
 	return 0;
 }
 
-static int CVICALLBACK PicoThreadFunction(void *functionData)
-{
-	Device *pMeter = DevMgr.FindWithInstrFlag(Instrument_Picoammeter);
-	Measurement *pMeasure = MeasureMgr.FindWithInstrFlag(Instrument_Picoammeter);
-	PicoSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
-
-
-	if (pSet->setting.isSignal)
-	{
-		double VMax = pSet->VMax;
-		double Vmin = pSet->VMin;
-		double VSpan = pSet->VSpan;
-		double delay = pSet->MInterval;
-		double currentValue = 0;
-		Stack *pVoltStack = StackAllocInit();
-		double volt = 0;
-		for (volt = Vmin; volt <= VMax; volt += VSpan)
-		{
-			pMeter->DoWithCommand(pMeter, &volt, NULL);
-			pVoltStack->InStack(pVoltStack, volt);
-			if (pSet->setting.isCollector)
-			{
-				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &currentValue, NULL);
-			}
-			Delay(delay);
-		}
-
-		Stack *pCurrentStack = StackAllocInit();
-		while (pVoltStack->Size(pVoltStack) > 0)
-		{
-			volt = pVoltStack->OutStack(pVoltStack);
-			pMeter->DoWithCommand(pMeter, &volt, NULL);
-			if (pSet->setting.isCollector)
-			{
-				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &currentValue, NULL);
-				pCurrentStack->InStack(pCurrentStack, currentValue);
-			}
-			Delay(delay);
-		}
-		StackDelloc(pVoltStack);
-		StackDelloc(pCurrentStack);
-	}
-}
 /*
 static int CVICALLBACK ThreadFunction(void *functionData)
 {
@@ -247,20 +203,16 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 */
 static int Start(int x)
 {
-	System.isWorking = true;
     DevMgr.Start(x);
 	DevMgr.Reset(x);
-	MeasureMgr.Start(0);
 	DataMgr.Start(0);
-
-	CmtScheduleThreadPoolFunction(DEFAULT_THREAD_POOL_HANDLE, PicoThreadFunction, NULL, NULL);
+    MeasureMgr.Start(0);
 
 	return 0;
 }
 //==============================================================================
 // Global variables
 EOMSystem System = {
-	.isWorking = false,
 	.Init = Init,
 	.Shutdown = Shutdown,
 	.Start = Start,

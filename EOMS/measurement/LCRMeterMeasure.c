@@ -30,15 +30,15 @@
 
 //==============================================================================
 // Static functions
-static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *outData1, void *outData2)
+static int DoMeasureWithCommand(struct Measurement *pMea, void *inData, void *outData1, void *outData2)
 {
-	LCRMeterMeasure *pMeter = (LCRMeterMeasure *)pDev;
+
 	int result = -1;
-	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
+	if (NULL != pMea->pDev->pInstr && pMea->pDev->pInstr->status >= Instrument_Status_Open)
 	{
 
 		ViStatus status;
-		ViSession session = pMeter->measure.pInstr->session;
+		ViSession session = pMea->pDev->pInstr->session;
 
 		status = viPrintf(session, ":FETCh?\n");
 
@@ -81,38 +81,37 @@ static int DoMeasureWithCommand(struct Measurement *pDev, void *inData, void *ou
 			{
 				*pOutValue = CpValue;
 				*pDValue = DValue;
-				pDev->pDataQueue->Push(pDev->pDataQueue, *pOutValue);
+				pMea->pDataQueue->Push(pMea->pDataQueue, *pOutValue);
 				if (inData != NULL)
 				{
 					double *indat = (double *)inData;
-					pDev->pInDataQueue->Push(pDev->pInDataQueue, *indat);
+					pMea->pInDataQueue->Push(pMea->pInDataQueue, *indat);
 				}
 			}
-			LOG_INFO("num is %d , CpValue is %f DValue is %f queue size %d , inqueue size %d\n", num, CpValue, DValue, pDev->pDataQueue->size, pDev->pInDataQueue->size);
+			LOG_INFO("num is %d , CpValue is %f DValue is %f queue size %d , inqueue size %d\n", num, CpValue, DValue, pMea->pDataQueue->size, pMea->pInDataQueue->size);
 		}
 	}
 	else
 	{
-		LOG_ERROR("LCRMeterMeasure DoMeasureWithCommand failed null %d ", NULL == pMeter->measure.pInstr);
+		LOG_ERROR("LCRMeterMeasure DoMeasureWithCommand failed null %d ", NULL == pMea->pDev->pInstr);
 	}
 	return result;
 }
 
-static int Start(Measurement *pDev)
+static int Start(Measurement *pMea)
 {
 
-	if (!pDev)
+	if (!pMea)
 	{
 		LOG_ERROR("error in LCRMeterMeasure start");
 		return -1;
 	}
-	LCRMeterMeasure *pMeter = (LCRMeterMeasure *)pDev;
 
-	if (NULL != pMeter->measure.pInstr && pMeter->measure.pInstr->status >= Instrument_Status_Open)
+	if (NULL != pMea->pDev->pInstr && pMea->pDev->pInstr->status >= Instrument_Status_Open)
 	{
 		LOG_INFO("LCRMeterMeasure starts");
 		ViStatus status;
-		ViSession session = pMeter->measure.pInstr->session;
+		ViSession session = pMea->pDev->pInstr->session;
 		status = viPrintf(session, "FUNC:IMP CPD\n");
 		status = viPrintf(session, "FREQ 1kHz\n");
 		status = viPrintf(session, "VOLT 0V\n");
@@ -122,7 +121,7 @@ static int Start(Measurement *pDev)
 	}
 	else
 	{
-		LOG_ERROR("LCRMeterMeasure Start failed null %d ", NULL == pMeter->measure.pInstr);
+		LOG_ERROR("LCRMeterMeasure Start failed null %d ", NULL == pMea->pDev->pInstr);
 	}
 
 	return 0;

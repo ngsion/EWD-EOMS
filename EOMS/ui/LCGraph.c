@@ -46,8 +46,8 @@ int CVICALLBACK OnStartBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-		if (true == System.isWorking)
-			return 0;
+//		if (true == System.isWorking)
+		//	return 0;
 
 //		SetAxisScalingMode(panel, PANEL_STRIPCHART, VAL_LEFT_YAXIS, VAL_MANUAL, -1000, 1500);
 
@@ -86,7 +86,7 @@ int CVICALLBACK OnPanelLC(int panel, int event, void *callbackData,
 
 	case EVENT_CLOSE:
 	{
-		if (true == System.isWorking)
+//		if (true == System.isWorking)
 		{
 			System.Stop(0);
 		}

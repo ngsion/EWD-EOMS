@@ -43,8 +43,8 @@ typedef struct PicoammeterMeasure
 
 //==============================================================================
 // Global functions
-void PicoammeterMeasureInit(PicoammeterMeasure * pDev);
-void PicoammeterMeasureDeinit(PicoammeterMeasure * pDev);
+void PicoammeterMeasureInit(PicoammeterMeasure * pMea);
+void PicoammeterMeasureDeinit(PicoammeterMeasure * pMea);
 
 #ifdef __cplusplus
     }

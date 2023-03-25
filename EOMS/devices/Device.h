@@ -33,7 +33,7 @@ typedef struct Device
 {
     unsigned int instrumentFlag;
     Instrument * pInstr;
-    Instrument_Type * type;
+    Instrument_Type  type;
     Setting * pSet;
 
     int (*Connect)(struct Device * pDev);
