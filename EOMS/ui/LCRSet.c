@@ -41,7 +41,7 @@ int CVICALLBACK OnLCRSaveBtn(int panel, int control, int event,
 	{
 	case EVENT_COMMIT:
 	{
-		LCRSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
+		LCRSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_LCRMeter);
 		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRMAX, &pSet->VMax);
 		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRMIN, &pSet->VMin);
 		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRSTEP, &pSet->VSpan);

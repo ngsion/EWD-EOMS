@@ -17,6 +17,7 @@
 #include "logger.h"
 #include "visa.h"
 #include <string.h>
+#include "WaveformSetting.h"
 //==============================================================================
 // Constants
 
@@ -52,18 +53,18 @@ static int Start(Device *pDev)
 	}
 	ViStatus status = VI_SUCCESS;
 	WaveformGenerator *pMeter = (WaveformGenerator *)pDev;
+	WaveformSetting *pSet = (WaveformSetting *)pMeter->device.pSet;
 	if (NULL != pMeter->device.pInstr && pMeter->device.pInstr->status >= Instrument_Status_Open)
 	{
 		LOG_INFO("WaveformGenerator starts");
 		ViSession session = pMeter->device.pInstr->session;
-
 		viPrintf(session, "*CLS\n");
 		viPrintf(session, "SOURce1:FUNCtion SQU\n");
 		// viPrintf(session,"SOURce1:FUNCtion:SQU:DCYC +20.0\n");
-		viPrintf(session, "SOURce1:FREQuency 5\n");
-		viPrintf(session, "SOURce1:VOLTage:HIGH +5\n");
-		viPrintf(session, "SOURce1:VOLTage:LOW 0.0\n");
-		viPrintf(session, "SOURce1:VOLTage:OFFSet 0\n");
+		viPrintf(session, "SOURce1:FREQuency %d\n",pSet->frequecy);
+		viPrintf(session, "SOURce1:VOLTage:HIGH %0.2f\n",pSet->high);
+		viPrintf(session, "SOURce1:VOLTage:LOW %0.2f\n",pSet->low);
+		viPrintf(session, "SOURce1:VOLTage:OFFSet %0.2f\n",pSet->offset1);
 		// viPrintf(session,"SOURce1:VOLTage:PHASe 90\n");
 		viPrintf(session, "OUTPut1 ON\n"); /* Turn on the instrument output */
 										   //	viPrintf(instr, "SOURce1:*TRG\n");  /* Send bus trigger */
@@ -71,7 +72,7 @@ static int Start(Device *pDev)
 		viPrintf(session, "SOURce2:FUNCtion DC\n");
 		// viPrintf(session,"SOURce2:FREQuency +5\n");
 		// viPrintf(session,"SOURce2:VOLTage 4\n");
-		viPrintf(session, "SOURce2:VOLTage:OFFSet -2.5\n");
+		viPrintf(session, "SOURce2:VOLTage:OFFSet %0.2f\n",pSet->offset2);
 		viPrintf(session, "OUTPut2 ON\n");
 	}
 	else

@@ -25,13 +25,13 @@ extern "C"
     //==============================================================================
     // Constants
     
-    #define MAX_FILE_COUNT 32
+    #define MAX_FILE_COUNT 12
 
     typedef struct DataSaveMgr
     {
         Excel * (*GetOneWithInfo)(const char * info);
-        int (*Start)(int x);
-        int (*Stop)(int x);
+        int (*Init)(int x);
+        int (*Shutdown)(int x);
         int (*Sync)(int x);
         int (*SaveKey)(Excel * pfile, char *key);
         int (*SaveInt)(Excel * pfile, char *key, int value);

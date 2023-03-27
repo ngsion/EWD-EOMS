@@ -20,7 +20,7 @@ static Excel *fileArray[MAX_FILE_COUNT];
 
 // Static functions
 
-static int Start(int x)
+static int Init(int x)
 {
 	for (int index = 0; index < MAX_FILE_COUNT; index++)
 	{
@@ -31,7 +31,11 @@ static int Start(int x)
 }
 static Excel *GetOneWithInfo(const char *info)
 {
-	if (!info) return NULL;
+	if (!info) 
+	{
+		LOG_ERROR("GetOneWithInfo info is  NULL ");
+		return NULL;
+	}
 	
 	int index = 0;
 
@@ -68,7 +72,7 @@ static int Sync(int x)
 	return 0;
 }
 
-static int Stop(int x)
+static int Shutdown(int x)
 {
 	for (int index = 0; index < MAX_FILE_COUNT; index++)
 	{
@@ -136,8 +140,8 @@ static int SaveStr(Excel *pfile, char *key, char *value)
 
 DataSaveMgr DataMgr = {
 	.GetOneWithInfo = GetOneWithInfo,
-	.Start = Start,
-	.Stop = Stop,
+	.Init = Init,
+	.Shutdown = Shutdown,
 	.Sync = Sync,
 	.SaveKey = SaveKey,
 	.SaveInt = SaveInt,

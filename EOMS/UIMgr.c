@@ -20,7 +20,9 @@ static int panelHandle;
 
 #include "UIMgr.h"
 #include "EOMSystem.h"
-
+#include "SettingMgr.h"
+#include "LCRSetting.h"
+#include "PicoSetting.h"
 
 //==============================================================================
 // Constants
@@ -57,39 +59,39 @@ static int ShowEntry(int x)
 
 static int ShowPICOSet(int x)
 {
-	//QuitUserInterface(0);
-	//DiscardPanel(panelHandle);
+	// QuitUserInterface(0);
+	// DiscardPanel(panelHandle);
 
 	int panelHandle2 = LoadPanel(0, "PicoSet.uir", PANEL);
 	/* display the panel and run the user interface */
 	DisplayPanel(panelHandle2);
-	//status = RunUserInterface();
+	// status = RunUserInterface();
 
 	return 0;
 }
 
 static int ShowLCRSet(int x)
 {
-	//QuitUserInterface(0);
-	//DiscardPanel(panelHandle);
+	// QuitUserInterface(0);
+	// DiscardPanel(panelHandle);
 
 	int panelHandle2 = LoadPanel(0, "LCRSet.uir", PANEL);
 	/* display the panel and run the user interface */
 	DisplayPanel(panelHandle2);
-	//status = RunUserInterface();
+	// status = RunUserInterface();
 
 	return 0;
 }
 
 static int ShowWaveSet(int x)
 {
-	//QuitUserInterface(0);
-	//DiscardPanel(panelHandle);
+	// QuitUserInterface(0);
+	// DiscardPanel(panelHandle);
 
 	int panelHandle2 = LoadPanel(0, "WaveSet.uir", PANEL);
 	/* display the panel and run the user interface */
 	DisplayPanel(panelHandle2);
-	//status = RunUserInterface();
+	// status = RunUserInterface();
 
 	return 0;
 }
@@ -120,6 +122,18 @@ static int ShowCVGraph(int x)
 }
 static int ShowGraph(int x)
 {
+
+	PicoSetting *picoSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
+	if (picoSet->setting.isSignal && picoSet->setting.isCollector)
+	{
+		return ShowLCGraph(x);
+	}
+	LCRSetting *pLCRSet = SetMgr.FindWithInstrFlag(Instrument_LCRMeter);
+	if (pLCRSet->setting.isSignal && pLCRSet->setting.isCollector)
+	{
+		return ShowCVGraph(x);
+	}
+
 	QuitUserInterface(0);
 	DiscardPanel(panelHandle);
 
@@ -135,7 +149,7 @@ static int ShowGraph(int x)
 // Global variables
 UIMgr UI = {
 	.ShowWaveSet = ShowWaveSet,
-	.ShowLCRSet =  ShowLCRSet,
+	.ShowLCRSet = ShowLCRSet,
 	.ShowPICOSet = ShowPICOSet,
 	.ShowEntry = ShowEntry,
 	.ShowGraph = ShowGraph,

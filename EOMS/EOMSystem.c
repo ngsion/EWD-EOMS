@@ -51,6 +51,7 @@ void setupLogger()
 // Static functions
 static int Init(int x)
 {
+	DataMgr.Init(0); 
 	setupLogger();
 	InstrMgr.Init(x);
 	DevMgr.Init(x);
@@ -77,6 +78,7 @@ static int Shutdown(int x)
 	MeasureMgr.Shutdown(x);
 	InstrMgr.Shutdown(x);
 	SetMgr.Shutdown(x);
+		DataMgr.Shutdown(x); 
 	logger_flush();
 	return 0;
 }
@@ -87,7 +89,7 @@ static int Stop(int x)
 	MeasureMgr.Stop(x);
 	DevMgr.Reset(x);
 	DevMgr.Stop(x);
-	DataMgr.Stop(x);
+	DataMgr.Sync(x);
 
 	return 0;
 }
@@ -205,7 +207,7 @@ static int Start(int x)
 {
     DevMgr.Start(x);
 	DevMgr.Reset(x);
-	DataMgr.Start(0);
+	
     MeasureMgr.Start(0);
 
 	return 0;
