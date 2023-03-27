@@ -47,10 +47,13 @@ FolderEx 8 Parent = 1
 Folder 9 = "Source Files/ui"
 FolderEx 9 = "ui"
 FolderEx 9 Parent = 1
-Folder 10 = "Include Files"
-FolderEx 10 = "Include Files"
-Folder 11 = "Instrument Files"
-FolderEx 11 = "Instrument Files"
+Folder 10 = "Source Files/utility"
+FolderEx 10 = "utility"
+FolderEx 10 Parent = 1
+Folder 11 = "Include Files"
+FolderEx 11 = "Include Files"
+Folder 12 = "Instrument Files"
+FolderEx 12 = "Instrument Files"
 
 [File 0001]
 File Type = "User Interface Resource"
@@ -625,7 +628,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Admesy.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0046]
 File Type = "Include"
@@ -637,7 +640,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/AdmesySetting.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0047]
 File Type = "Include"
@@ -649,7 +652,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/CVGraph.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0048]
 File Type = "Include"
@@ -661,7 +664,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/DataSaveMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0049]
 File Type = "Include"
@@ -673,7 +676,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Device.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0050]
 File Type = "Include"
@@ -685,7 +688,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/DeviceMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0051]
 File Type = "Include"
@@ -697,7 +700,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/Entry.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0052]
 File Type = "Include"
@@ -709,7 +712,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/EOMS.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0053]
 File Type = "Include"
@@ -721,7 +724,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/Excel.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0054]
 File Type = "Include"
@@ -733,7 +736,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/Instrument.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0055]
 File Type = "Include"
@@ -745,7 +748,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentList.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0056]
 File Type = "Include"
@@ -757,7 +760,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/instruments/InstrumentMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0057]
 File Type = "Include"
@@ -769,7 +772,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/LCGraph.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0058]
 File Type = "Include"
@@ -781,7 +784,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/LCRMeter.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0059]
 File Type = "Include"
@@ -793,7 +796,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/LCRMeterMeasure.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0060]
 File Type = "Include"
@@ -805,7 +808,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/LCRSetting.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0061]
 File Type = "Include"
@@ -817,7 +820,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datasave/Map.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0062]
 File Type = "Include"
@@ -829,7 +832,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/Measurement.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0063]
 File Type = "Include"
@@ -841,7 +844,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/MeasurementMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0064]
 File Type = "Include"
@@ -853,7 +856,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/Picoammeter.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0065]
 File Type = "Include"
@@ -865,7 +868,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/measurement/PicoammeterMeasure.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0066]
 File Type = "Include"
@@ -877,7 +880,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/PicoSet.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0067]
 File Type = "Include"
@@ -889,7 +892,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/PicoSetting.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0068]
 File Type = "Include"
@@ -901,7 +904,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Queue.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0069]
 File Type = "Include"
@@ -913,7 +916,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/Setting.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0070]
 File Type = "Include"
@@ -925,7 +928,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/SettingMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0071]
 File Type = "Include"
@@ -937,7 +940,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/datastruct/Stack.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0072]
 File Type = "Include"
@@ -949,7 +952,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/UIMgr.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0073]
 File Type = "Include"
@@ -961,7 +964,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/devices/WaveformGenerator.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0074]
 File Type = "Include"
@@ -973,7 +976,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/setting/WaveformSetting.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0075]
 File Type = "Include"
@@ -985,7 +988,7 @@ Path = "/f/EWD-EOMS/EWD-EOMS/EOMS/ui/WaveSet.h"
 Exclude = False
 Project Flags = 0
 Folder = "Include Files"
-Folder Id = 10
+Folder Id = 11
 
 [File 0076]
 File Type = "Function Panel"
@@ -999,7 +1002,7 @@ Path Line0002 = "report.fp"
 Exclude = False
 Project Flags = 0
 Folder = "Instrument Files"
-Folder Id = 11
+Folder Id = 12
 
 [Custom Build Configs]
 Num Custom Build Configs = 0

@@ -89,7 +89,7 @@ static int Stop(int x)
 	MeasureMgr.Stop(x);
 	DevMgr.Reset(x);
 	DevMgr.Stop(x);
-	DataMgr.Sync(x);
+	DataMgr.Shutdown(x);
 
 	return 0;
 }

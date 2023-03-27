@@ -28,8 +28,9 @@
 static int Init(Setting *pSet)
 {
 	PicoSetting * picoset = (PicoSetting*) pSet;
-	picoset->MInterval = 0.1;
+	picoset->MInterval = 1;
 	picoset->VMax = 30;
+	picoset->VSpan = 2;
 	picoset->VMin = 0;
 	LOG_INFO("Setting Init");
 	return 0;

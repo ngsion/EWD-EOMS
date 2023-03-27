@@ -94,9 +94,7 @@ static int Stop(int x)
 	{
 		if (NULL != defaultDeviceArray[i])
 		{
-
 			defaultDeviceArray[i]->Stop(defaultDeviceArray[i]);
-			
 		}
 	}
 

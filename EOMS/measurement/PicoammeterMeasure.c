@@ -107,7 +107,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 			if (pSet->setting.isCollector)
 			{
 				pMeasure->DoMeasureWithCommand(pMeasure, &volt, &currentValue, NULL);
-				DataMgr.SaveDouble(pMeter, "I+", currentValue);
+				DataMgr.SaveDouble(pExcel, "I+", currentValue);
 			}
 			if (!pMeasure->isCollecting)
 				return 0;
@@ -137,9 +137,10 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		StackDelloc(pCurrentStack);
 	}
 
-	DataMgr.Sync(0);
-	pMeasure->Stop(0);
-	pMeter->Stop(0);
+	DataMgr.Sync(pExcel);
+	pMeasure->Stop(pMeasure);
+	pMeter->Stop(pMeter);
+	return 0;
 }
 
 static int Start(Measurement *pMea)

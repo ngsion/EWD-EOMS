@@ -31,12 +31,12 @@ static int Init(int x)
 }
 static Excel *GetOneWithInfo(const char *info)
 {
-	if (!info) 
+	if (!info)
 	{
 		LOG_ERROR("GetOneWithInfo info is  NULL ");
 		return NULL;
 	}
-	
+
 	int index = 0;
 
 	for (index = 0; index < MAX_FILE_COUNT; index++)
@@ -59,13 +59,19 @@ static Excel *GetOneWithInfo(const char *info)
 	return NULL;
 }
 
-static int Sync(int x)
+static int Sync(Excel *pfile)
 {
-	for (int index = 0; index < MAX_FILE_COUNT; index++)
+	if (NULL != pfile)
 	{
-		if (NULL != fileArray[index])
+		for (int index = 0; index < MAX_FILE_COUNT; index++)
 		{
-			fileArray[index]->Save(fileArray[index]);
+			if (pfile == fileArray[index])
+			{
+				pfile->Save(pfile);
+				ExcelDelloc(pfile);
+				fileArray[index] = NULL;
+				return 0;
+			}
 		}
 	}
 

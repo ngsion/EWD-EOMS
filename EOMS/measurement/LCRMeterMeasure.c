@@ -172,7 +172,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 
 		LOG_INFO("LCRMeter ThreadFunction end");
 	}
-	DataMgr.Sync(0);
+	DataMgr.Sync(pExcel);
 	pMeasure->Stop(0);
 	pMeter->Stop(0);
 }

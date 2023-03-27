@@ -24,9 +24,10 @@ extern "C"
 #include "Map.h"
 
 #define COLUMN_START_POS 1
-#define ROW_START_POS 1
+#define ROW_START_POS 2
 #define MAX_SYNC_COUNT 50
 #define EXCEL_INFO_LEN  64
+#define COLUMN_RECOR_SPAN 2
 
     // Types
 
@@ -47,6 +48,7 @@ extern "C"
         int (*SetCellInt)(struct Excel *excel, char *key, int value);
         int (*SetCellDouble)(struct Excel *excel, char *key, double value);
         int (*SetCellStr)(struct Excel *excel, char *key, char *value);
+        int (*Jump)(struct Excel *excel);
         int (*Save)(struct Excel *excel);
     } Excel;
 
