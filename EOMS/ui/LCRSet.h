@@ -14,7 +14,13 @@
      /* Panels and Controls: */
 
 #define  PANEL_LCRS                       1       /* callback function: OnPanelLCRSet */
-#define  PANEL_LCRS_COMMANDBUTTON         2       /* control type: command, callback function: OnLCRSaveBtn */
+#define  PANEL_LCRS_STRING_LCRBATCH       2       /* control type: string, callback function: (none) */
+#define  PANEL_LCRS_NUMERIC_LCRINTERVAL   3       /* control type: numeric, callback function: (none) */
+#define  PANEL_LCRS_COMMANDBUTTON         4       /* control type: command, callback function: OnLCRSaveBtn */
+#define  PANEL_LCRS_NUMERIC_LCRMAX        5       /* control type: numeric, callback function: (none) */
+#define  PANEL_LCRS_NUMERIC_LCRMIN        6       /* control type: numeric, callback function: (none) */
+#define  PANEL_LCRS_NUMERIC_LCRSTEP       7       /* control type: numeric, callback function: (none) */
+#define  PANEL_LCRS_TEXTBOX               8       /* control type: textBox, callback function: (none) */
 
 
      /* Control Arrays: */

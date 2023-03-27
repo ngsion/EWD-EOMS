@@ -54,6 +54,20 @@ static Excel *GetOneWithInfo(const char *info)
 	LOG_ERROR("GetOneWithInfo too much files ");
 	return NULL;
 }
+
+static int Sync(int x)
+{
+	for (int index = 0; index < MAX_FILE_COUNT; index++)
+	{
+		if (NULL != fileArray[index])
+		{
+			fileArray[index]->Save(fileArray[index]);
+		}
+	}
+
+	return 0;
+}
+
 static int Stop(int x)
 {
 	for (int index = 0; index < MAX_FILE_COUNT; index++)
@@ -124,6 +138,7 @@ DataSaveMgr DataMgr = {
 	.GetOneWithInfo = GetOneWithInfo,
 	.Start = Start,
 	.Stop = Stop,
+	.Sync = Sync,
 	.SaveKey = SaveKey,
 	.SaveInt = SaveInt,
 	.SaveDouble = SaveDouble,

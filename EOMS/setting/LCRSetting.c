@@ -27,6 +27,10 @@
 // Static functions
 static int Init(Setting *pSet)
 {
+	LCRSetting * pLCRset = (LCRSetting*) pSet;
+	pLCRset->MInterval = 0.1;
+	pLCRset->VMax = 30;
+	pLCRset->VMin = 0;
 	LOG_INFO("Setting Init");
 	return 0;
 }
@@ -49,7 +53,6 @@ void LCRSettingInit(LCRSetting *pSet)
 	}
 	SettingInit(&pSet->setting);
     pSet->setting.instrumentFlag = Instrument_LCRMeter;
-
 	pSet->setting.Init = Init;
 	pSet->setting.Save = Save;
 

@@ -14,7 +14,8 @@
 // Include files
 
 #include "LCRSet.h"
-
+#include "SettingMgr.h"
+#include "LCRSetting.h"
 //==============================================================================
 // Constants
 
@@ -39,8 +40,15 @@ int CVICALLBACK OnLCRSaveBtn(int panel, int control, int event,
 	switch (event)
 	{
 	case EVENT_COMMIT:
-
-		break;
+	{
+		LCRSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
+		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRMAX, &pSet->VMax);
+		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRMIN, &pSet->VMin);
+		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRSTEP, &pSet->VSpan);
+		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRINTERVAL, &pSet->MInterval);
+		GetCtrlVal(panel, PANEL_LCRS_STRING_LCRBATCH, pSet->setting.batchNo);
+	}
+	break;
 	}
 	return 0;
 }

@@ -32,6 +32,7 @@ extern "C"
         Excel * (*GetOneWithInfo)(const char * info);
         int (*Start)(int x);
         int (*Stop)(int x);
+        int (*Sync)(int x);
         int (*SaveKey)(Excel * pfile, char *key);
         int (*SaveInt)(Excel * pfile, char *key, int value);
         int (*SaveDouble)(Excel * pfile, char *key, double value);

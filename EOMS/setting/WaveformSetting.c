@@ -27,6 +27,13 @@
 // Static functions
 static int Init(Setting *pSet)
 {
+	WaveformSetting * pWaveSet = (WaveformSetting*) pSet;
+    pWaveSet->frequecy = 1;
+	pWaveSet->high = 5.0;
+	pWaveSet->low = 0;
+	pWaveSet->offset1 = 0;
+	pWaveSet->offset2 = -2.5;
+
 	LOG_INFO("Setting Init");
 	return 0;
 }

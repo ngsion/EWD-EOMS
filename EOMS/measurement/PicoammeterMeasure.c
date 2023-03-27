@@ -33,7 +33,7 @@
 // Static functions
 static int DoMeasureWithCommand(struct Measurement *pMea, void *inData, void *outData1, void *outData2)
 {
-	
+
 	if (NULL != pMea->pDev->pInstr && pMea->pDev->pInstr->status >= Instrument_Status_Open)
 	{
 
@@ -136,6 +136,10 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		StackDelloc(pVoltStack);
 		StackDelloc(pCurrentStack);
 	}
+
+	DataMgr.Sync(0);
+	pMeasure->Stop(0);
+	pMeter->Stop(0);
 }
 
 static int Start(Measurement *pMea)
@@ -155,7 +159,7 @@ static int Start(Measurement *pMea)
 static int Stop(Measurement *pMea)
 {
 	pMea->isCollecting = false;
-	
+
 	LOG_INFO("PicoammeterMeasure Stops");
 
 	return 0;

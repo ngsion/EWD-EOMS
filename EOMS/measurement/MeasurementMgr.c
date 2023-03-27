@@ -47,10 +47,9 @@ static int Init(int x)
 
 static int Start(int x)
 {
-
 	for (int i = 0; i < MEASURE_MAX_NUM; i++)
 	{
-		if (NULL != defaultMeasureArray[i])
+		if (NULL != defaultMeasureArray[i] && NULL != defaultMeasureArray[i]->pSet)
 		{
 			if (defaultMeasureArray[i]->pSet->isCollector)
 			{
@@ -58,7 +57,6 @@ static int Start(int x)
 			}
 		}
 	}
-
 	return 0;
 }
 static int Stop(int x)
@@ -67,10 +65,7 @@ static int Stop(int x)
 	{
 		if (NULL != defaultMeasureArray[i])
 		{
-			if (defaultMeasureArray[i]->pSet->isCollector)
-			{
-				defaultMeasureArray[i]->Stop(defaultMeasureArray[i]);
-			}
+			defaultMeasureArray[i]->Stop(defaultMeasureArray[i]);
 		}
 	}
 

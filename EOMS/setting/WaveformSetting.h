@@ -30,6 +30,11 @@
 typedef struct WaveformSetting
 {
     Setting setting;
+    int frequecy;
+    double high;
+    double low;
+    double offset1;
+    double offset2;
 
 }WaveformSetting;
 

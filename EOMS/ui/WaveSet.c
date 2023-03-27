@@ -14,7 +14,8 @@
 // Include files
 
 #include "WaveSet.h"
-
+#include "SettingMgr.h"
+#include "WaveformSetting.h"
 //==============================================================================
 // Constants
 
@@ -57,8 +58,15 @@ int CVICALLBACK OnWaveSetSaveBtn(int panel, int control, int event,
     switch (event)
     {
     case EVENT_COMMIT:
-
-        break;
+    {
+        WaveformSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_WaveformGenerator);
+        GetCtrlVal(panel, PANEL_WS_NUMERIC_FREQUENCY, &pSet->frequecy);
+        GetCtrlVal(panel, PANEL_WS_NUMERIC_HIGH, &pSet->high);
+        GetCtrlVal(panel, PANEL_WS_NUMERIC_LOW, &pSet->low);
+        GetCtrlVal(panel, PANEL_WS_NUMERIC_CH1OFFSET, &pSet->offset1);
+        GetCtrlVal(panel, PANEL_WS_NUMERIC_CH2OFFSET, &pSet->offset2);
+    }
+    break;
     }
     return 0;
 }
