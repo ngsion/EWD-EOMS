@@ -28,7 +28,7 @@
 static int Init(Setting *pSet)
 {
 	LCRSetting * pLCRset = (LCRSetting*) pSet;
-	pLCRset->MInterval = 0.1;
+	pLCRset->MInterval = 0.5;
 	pLCRset->VMax = 30;
 	pLCRset->VMin = 0;
 	pLCRset->VSpan = 2;

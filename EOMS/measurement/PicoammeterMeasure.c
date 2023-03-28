@@ -84,7 +84,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	Measurement *pMeasure = (Measurement *)functionData;
 	Device *pMeter = pMeasure->pDev;
 	PicoSetting *pSet = (PicoSetting *)pMeasure->pSet;
-	Excel *pExcel = DataMgr.GetOneWithInfo(pSet->setting.batchNo);
+	Excel *pExcel = DataMgr.GetOneWithInfo("pico",pSet->setting.batchNo);
 	if (!pExcel || !pMeter->pInstr)
 	{
 		LOG_ERROR("Picoammeter ThreadFunction failed null %d ", NULL == pMeter->pInstr);

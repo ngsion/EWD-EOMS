@@ -23,9 +23,9 @@ extern "C"
 #include "cvidef.h"
 #include "Map.h"
 
-#define COLUMN_START_POS 2
+#define COLUMN_START_POS 3
 #define ROW_START_POS 3
-#define MAX_SYNC_COUNT 50
+#define MAX_COLUMN_COUNT 50
 #define EXCEL_INFO_LEN  64
 #define COLUMN_RECORD_SPAN 3
 
@@ -40,6 +40,7 @@ extern "C"
 
         Map * columnMap;
         unsigned int currentColumnMax;
+        unsigned int currentRowMax;
         unsigned int curretnStartRow;
         unsigned int recordCount;    
         char excelInfo[EXCEL_INFO_LEN];

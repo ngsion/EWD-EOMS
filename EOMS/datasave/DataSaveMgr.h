@@ -29,7 +29,7 @@ extern "C"
 
     typedef struct DataSaveMgr
     {
-        Excel * (*GetOneWithInfo)(const char * info);
+        Excel * (*GetOneWithInfo)(const char *flag, const char * info);
         int (*Start)(int x);
         int (*Stop)(int x);
         int (*Sync)(Excel * pfile);

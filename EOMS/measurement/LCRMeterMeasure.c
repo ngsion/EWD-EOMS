@@ -105,7 +105,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 	Measurement *pMeasure = (Measurement *)functionData;
 	Device *pMeter = pMeasure->pDev;
 	LCRSetting *pSet = (LCRSetting *)pMeasure->pSet;
-	Excel *pExcel = DataMgr.GetOneWithInfo(pSet->setting.batchNo);
+	Excel *pExcel = DataMgr.GetOneWithInfo("lcr",pSet->setting.batchNo);
 	if (!pExcel || !pMeter->pInstr)
 	{
 		LOG_ERROR("LCRammeter ThreadFunction failed null %d ", NULL == pMeter->pInstr);
@@ -173,8 +173,9 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		LOG_INFO("LCRMeter ThreadFunction end");
 	}
 	DataMgr.Stop(0);
-	pMeasure->Stop(0);
-	pMeter->Stop(0);
+	pMeasure->Stop(pMeasure);
+	pMeter->Stop(pMeter);
+	return 0;
 }
 static int Start(Measurement *pMea)
 {

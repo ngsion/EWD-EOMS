@@ -71,7 +71,7 @@ int CVICALLBACK OnStartCVBtn(int panel, int control, int event,
 	case EVENT_COMMIT:
 
 //		if (true == System.isWorking)
-			return 0;
+			//return 0;
 
 	//	SetPlotAttribute(panel, PANEL_GRAPH,  ATTR_LINE_STYLE, VAL_SOLID);  
 		

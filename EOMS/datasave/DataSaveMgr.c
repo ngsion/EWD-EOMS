@@ -29,7 +29,7 @@ static int Start(int x)
 
 	return 0;
 }
-static Excel *GetOneWithInfo(const char *info)
+static Excel *GetOneWithInfo(const char *flag, const char *info)
 {
 	if (!info)
 	{
@@ -37,11 +37,16 @@ static Excel *GetOneWithInfo(const char *info)
 		return NULL;
 	}
 
-	int index = 0;
+	char excelInfo[EXCEL_INFO_LEN];
+	memset(excelInfo, 0, EXCEL_INFO_LEN);
+	memcpy(excelInfo, flag, strlen(flag));
+	strcat(excelInfo, "-");
+	strcat(excelInfo, info);
 
+	int index = 0;
 	for (index = 0; index < MAX_FILE_COUNT; index++)
 	{
-		if (NULL != fileArray[index] && 0 == strcmp(info, fileArray[index]->excelInfo))
+		if (NULL != fileArray[index] && 0 == strcmp(excelInfo, fileArray[index]->excelInfo))
 		{
 			return fileArray[index];
 		}
@@ -51,7 +56,7 @@ static Excel *GetOneWithInfo(const char *info)
 	{
 		if (NULL == fileArray[index])
 		{
-			fileArray[index] = ExcelAllocInit(info);
+			fileArray[index] = ExcelAllocInit(excelInfo);
 			return fileArray[index];
 		}
 	}

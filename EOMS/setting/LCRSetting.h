@@ -30,7 +30,7 @@
 typedef struct LCRSetting
 {
     Setting setting;
-     double VMax;
+    double VMax;
     double VMin;
     double VSpan;
     double MInterval;

@@ -74,13 +74,13 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 	{
 
 		int index = Instrument_Picoammeter;
-		for (; index < Instrument_WaveformGenerator; index++)
+		for (; index <= Instrument_WaveformGenerator; index++)
 		{
 			Setting *pSet = SetMgr.FindWithInstrFlag(index);
 			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_SRC + index - Instrument_Picoammeter, &pSet->isSignal);
 		}
 
-		for (index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
+		for (index = Instrument_Picoammeter; index <= Instrument_LCRMeter; index++)
 		{
 			Setting *pSet = SetMgr.FindWithInstrFlag(index);
 			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, &pSet->isCollector);
@@ -182,13 +182,13 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 			updateStrings(panel);
 
 			int index = Instrument_Picoammeter;
-			for (; index < Instrument_WaveformGenerator; index++)
+			for (; index <= Instrument_WaveformGenerator; index++)
 			{
 				Setting *pSet = SetMgr.FindWithInstrFlag(index);
 				SetCtrlVal(panel, PANEL_CHECKBOX_PICO_SRC + index - Instrument_Picoammeter, pSet->isSignal);
 			}
 
-			for (index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
+			for (index = Instrument_Picoammeter; index <= Instrument_LCRMeter; index++)
 			{
 				Setting *pSet = SetMgr.FindWithInstrFlag(index);
 				SetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, pSet->isCollector);

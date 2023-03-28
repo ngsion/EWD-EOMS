@@ -73,7 +73,7 @@ void SettingInit(Setting *pSet)
 	pSet->lastInstrIndex = 0;
 
 	memset(pSet->batchNo, 0, BATCH_NO_LENGTH);
-	get_rand_str(pSet->batchNo, 8);
+	get_rand_str(pSet->batchNo, 6);
 }
 void SettingDeinit(Setting *pSet)
 {
