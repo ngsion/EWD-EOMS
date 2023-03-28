@@ -137,7 +137,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 		StackDelloc(pCurrentStack);
 	}
 
-	DataMgr.Sync(pExcel);
+	DataMgr.Stop(0);
 	pMeasure->Stop(pMeasure);
 	pMeter->Stop(pMeter);
 	return 0;

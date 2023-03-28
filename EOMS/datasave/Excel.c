@@ -29,6 +29,9 @@
 // Static functions
 static int Save(struct Excel *excel)
 {
+    char index[8] = {0};
+    sprintf(index, "%c%d", 64 + 1, 1);
+    ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataInt, excel->currentColumnMax);
 
     HRESULT result = ExcelRpt_WorkbookSave(excel->workbookHandle, excel->excelFileName, ExRConst_DefaultFileFormat);
     return (result < 0) ? -1 : 0;
@@ -36,9 +39,9 @@ static int Save(struct Excel *excel)
 
 static int Jump(struct Excel *excel)
 {
-   excel->currentColumnMax += COLUMN_RECOR_SPAN;
-  
-    return  0;
+    excel->currentColumnMax += COLUMN_RECORD_SPAN;
+
+    return 0;
 }
 
 /// 获取key这列数据最新的位置，若没有这个key，则添加之
@@ -48,8 +51,8 @@ static int GetIndex(struct Excel *excel, char *key, unsigned int *cvalue, unsign
 
     if (-1 == excel->columnMap->GetValue(excel->columnMap, key, cvalue, rvalue))
     {
-        excel->columnMap->SetMap(excel->columnMap, key, excel->currentColumnMax, ROW_START_POS);
-        sprintf(index, "%c%d", 64 + excel->currentColumnMax, ROW_START_POS);
+        excel->columnMap->SetMap(excel->columnMap, key, excel->currentColumnMax, excel->curretnStartRow);
+        sprintf(index, "%c%d", 64 + excel->currentColumnMax, excel->curretnStartRow);
         ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataString, key);
         ++excel->currentColumnMax;
     }
@@ -74,8 +77,8 @@ static int SetCellInt(struct Excel *excel, char *key, int value)
         excel->columnMap->SetMap(excel->columnMap, key, column, row);
         sprintf(index, "%c%d", 64 + column, row);
         ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataInt, value);
-        //if (++excel->recordCount > MAX_SYNC_COUNT)
-          //  excel->Save(excel);
+        // if (++excel->recordCount > MAX_SYNC_COUNT)
+        //   excel->Save(excel);
     }
     else
     {
@@ -95,8 +98,8 @@ static int SetCellDouble(struct Excel *excel, char *key, double value)
         excel->columnMap->SetMap(excel->columnMap, key, column, row);
         sprintf(index, "%c%d", 64 + column, row);
         ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataDouble, value);
-       // if (++excel->recordCount > MAX_SYNC_COUNT)
-          //  excel->Save(excel);
+        // if (++excel->recordCount > MAX_SYNC_COUNT)
+        //  excel->Save(excel);
     }
     else
     {
@@ -115,8 +118,8 @@ static int SetCellStr(struct Excel *excel, char *key, char *value)
         excel->columnMap->SetMap(excel->columnMap, key, column, row);
         sprintf(index, "%c%d", 65 + column, row);
         ExcelRpt_SetCellValue(excel->worksheetHandle, index, ExRConst_dataString, value);
-       // if (++excel->recordCount > MAX_SYNC_COUNT)
-           // excel->Save(excel);
+        // if (++excel->recordCount > MAX_SYNC_COUNT)
+        // excel->Save(excel);
     }
     else
     {
@@ -161,6 +164,7 @@ Excel *ExcelAllocInit(const char *info)
         excel->SetCellDouble = SetCellDouble;
         excel->columnMap = MapAllocInit();
         excel->currentColumnMax = COLUMN_START_POS;
+        excel->curretnStartRow = ROW_START_POS;
         excel->recordCount = 0;
 
         HRESULT result = ExcelRpt_ApplicationNew(0, &(excel->applicationHandle));
@@ -170,19 +174,29 @@ Excel *ExcelAllocInit(const char *info)
             LOG_ERROR("ExcelRpt_ApplicationNew failed");
             return NULL;
         }
-       
+
         result = ExcelRpt_WorkbookOpen(excel->applicationHandle, excel->excelFileName, &excel->workbookHandle);
         if (result < 0)
         {
-             result = ExcelRpt_WorkbookNew(excel->applicationHandle, &excel->workbookHandle);
-        }
-        result = ExcelRpt_GetWorksheetFromName(excel->workbookHandle, "Sheet1", &(excel->worksheetHandle));
-        result = ExcelRpt_ActivateWorksheet(excel->worksheetHandle);
+            result = ExcelRpt_WorkbookNew(excel->applicationHandle, &excel->workbookHandle);
 
+            result = ExcelRpt_GetWorksheetFromName(excel->workbookHandle, "Sheet1", &(excel->worksheetHandle));
+            result = ExcelRpt_ActivateWorksheet(excel->worksheetHandle);
+        }
+        else
+        {
+            result = ExcelRpt_GetWorksheetFromName(excel->workbookHandle, "Sheet1", &(excel->worksheetHandle));
+            result = ExcelRpt_ActivateWorksheet(excel->worksheetHandle);
+            
+            char index[8] = {0};
+            sprintf(index, "%c%d", 64 + 1, 1);
+            ExcelRpt_GetCellValue(excel->worksheetHandle, index, ExRConst_dataInt, &excel->currentColumnMax);
+            Jump(excel);
+        }
 
         char timestamp[32] = {0};
-        sprintf(timestamp, "%02d:%02d:%02d",Now->tm_hour, Now->tm_min, Now->tm_sec);
-        excel->SetCellStr(excel,"timestamp",timestamp); //记录时间戳
+        sprintf(timestamp, "%02d:%02d:%02d", Now->tm_hour, Now->tm_min, Now->tm_sec);
+        SetCell(excel, timestamp); // 记录时间戳
     }
     return excel;
 }

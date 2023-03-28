@@ -85,7 +85,7 @@ int CVICALLBACK OnOkBtn(int panel, int control, int event,
 			Setting *pSet = SetMgr.FindWithInstrFlag(index);
 			GetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, &pSet->isCollector);
 		}
-
+		firstGetFoucus = false;
 		UI.ShowGraph(0);
 	}
 
@@ -174,10 +174,13 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	{
 		if (!firstGetFoucus)
 		{
-			//InstrMgr.Scan(0);
-			//updateRingControls(panel);
 
 			firstGetFoucus = true;
+
+			updateRingControls(panel);
+			updateLED(panel);
+			updateStrings(panel);
+
 			int index = Instrument_Picoammeter;
 			for (; index < Instrument_WaveformGenerator; index++)
 			{

@@ -51,7 +51,7 @@ void setupLogger()
 // Static functions
 static int Init(int x)
 {
-	DataMgr.Init(0); 
+	 
 	setupLogger();
 	InstrMgr.Init(x);
 	DevMgr.Init(x);
@@ -78,7 +78,7 @@ static int Shutdown(int x)
 	MeasureMgr.Shutdown(x);
 	InstrMgr.Shutdown(x);
 	SetMgr.Shutdown(x);
-		DataMgr.Shutdown(x); 
+	DataMgr.Stop(x); 
 	logger_flush();
 	return 0;
 }
@@ -89,7 +89,7 @@ static int Stop(int x)
 	MeasureMgr.Stop(x);
 	DevMgr.Reset(x);
 	DevMgr.Stop(x);
-	DataMgr.Shutdown(x);
+	DataMgr.Stop(x);
 
 	return 0;
 }
@@ -205,6 +205,7 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 */
 static int Start(int x)
 {
+	DataMgr.Start(0);
     DevMgr.Start(x);
 	DevMgr.Reset(x);
 	
