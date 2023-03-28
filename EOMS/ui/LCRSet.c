@@ -16,6 +16,7 @@
 #include "LCRSet.h"
 #include "SettingMgr.h"
 #include "LCRSetting.h"
+#include <stdbool.h>
 //==============================================================================
 // Constants
 
@@ -27,7 +28,7 @@
 
 //==============================================================================
 // Static functions
-
+static bool firstGetFoucus = false;
 //==============================================================================
 // Global variables
 
@@ -47,6 +48,7 @@ int CVICALLBACK OnLCRSaveBtn(int panel, int control, int event,
 		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRSTEP, &pSet->VSpan);
 		GetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRINTERVAL, &pSet->MInterval);
 		GetCtrlVal(panel, PANEL_LCRS_STRING_LCRBATCH, pSet->setting.batchNo);
+		DiscardPanel(panel);
 	}
 	break;
 	}
@@ -59,14 +61,28 @@ int CVICALLBACK OnPanelLCRSet(int panel, int event, void *callbackData,
 	switch (event)
 	{
 	case EVENT_GOT_FOCUS:
-
-		break;
+	{
+		if (!firstGetFoucus)
+		{
+			firstGetFoucus = true;
+			LCRSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_LCRMeter);
+			SetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRMAX, pSet->VMax);
+			SetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRMIN, pSet->VMin);
+			SetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRSTEP, pSet->VSpan);
+			SetCtrlVal(panel, PANEL_LCRS_NUMERIC_LCRINTERVAL, pSet->MInterval);
+			SetCtrlVal(panel, PANEL_LCRS_STRING_LCRBATCH, pSet->setting.batchNo);
+		}
+	}
+	break;
 	case EVENT_LOST_FOCUS:
 
 		break;
 	case EVENT_CLOSE:
+	{
+		firstGetFoucus = false;
 		DiscardPanel(panel);
-		break;
+	}
+	break;
 	}
 	return 0;
 }

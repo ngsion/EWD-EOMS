@@ -31,6 +31,7 @@ static int Init(Setting *pSet)
 	pLCRset->MInterval = 0.1;
 	pLCRset->VMax = 30;
 	pLCRset->VMin = 0;
+	pLCRset->VSpan = 2;
 	LOG_INFO("Setting Init");
 	return 0;
 }

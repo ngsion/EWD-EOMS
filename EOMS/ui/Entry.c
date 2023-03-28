@@ -29,11 +29,12 @@
 
 //==============================================================================
 // Static global variables
+static bool firstGetFoucus = false;
 
 //==============================================================================
 // Static functions
-int updateStrings(int panel);
-int updateLED(int panel);
+static int updateStrings(int panel);
+static int updateLED(int panel);
 
 //==============================================================================
 // Global variables
@@ -171,13 +172,32 @@ int CVICALLBACK OnPanel(int panel, int event, void *callbackData,
 	{
 	case EVENT_GOT_FOCUS:
 	{
-	}
+		if (!firstGetFoucus)
+		{
+			//InstrMgr.Scan(0);
+			//updateRingControls(panel);
 
+			firstGetFoucus = true;
+			int index = Instrument_Picoammeter;
+			for (; index < Instrument_WaveformGenerator; index++)
+			{
+				Setting *pSet = SetMgr.FindWithInstrFlag(index);
+				SetCtrlVal(panel, PANEL_CHECKBOX_PICO_SRC + index - Instrument_Picoammeter, pSet->isSignal);
+			}
+
+			for (index = Instrument_Picoammeter; index < Instrument_LCRMeter; index++)
+			{
+				Setting *pSet = SetMgr.FindWithInstrFlag(index);
+				SetCtrlVal(panel, PANEL_CHECKBOX_PICO_DATA + index - Instrument_Picoammeter, pSet->isCollector);
+			}
+		}
+	}
 	break;
 
 	case EVENT_CLOSE:
 	{
-		//if (true == System.isWorking)
+		firstGetFoucus = false;
+		// if (true == System.isWorking)
 		{
 			System.Stop(0);
 		}
@@ -199,6 +219,7 @@ int CVICALLBACK OnRefreshBtn(int panel, int control, int event,
 	case EVENT_COMMIT:
 		InstrMgr.Scan(0);
 		updateRingControls(panel);
+		updateLED(panel);
 		break;
 	}
 	return 0;

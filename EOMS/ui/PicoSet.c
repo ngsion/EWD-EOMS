@@ -24,7 +24,7 @@
 
 //==============================================================================
 // Static global variables
-
+static bool firstGetFoucus = false;
 //==============================================================================
 // Static functions
 
@@ -47,6 +47,7 @@ int CVICALLBACK OnNextBtn(int panel, int control, int event,
 		GetCtrlVal(panel, PANEL_PSET_NUMERIC_VSPAN, &pSet->VSpan);
 		GetCtrlVal(panel, PANEL_PSET_NUMERIC_INTERVAL, &pSet->MInterval);
 		GetCtrlVal(panel, PANEL_PSET_STRING_BATCH, pSet->setting.batchNo);
+		 DiscardPanel(panel);
 	}
 	break;
 	}
@@ -60,14 +61,29 @@ int CVICALLBACK OnPanelPicoSet(int panel, int event, void *callbackData,
 	switch (event)
 	{
 	case EVENT_GOT_FOCUS:
+	{
+		if (!firstGetFoucus)
+		{
+			firstGetFoucus = true;
+			PicoSetting *pSet = SetMgr.FindWithInstrFlag(Instrument_Picoammeter);
+			SetCtrlVal(panel, PANEL_PSET_NUMERIC_VMAX, pSet->VMax);
+			SetCtrlVal(panel, PANEL_PSET_NUMERIC_VMIN, pSet->VMin);
+			SetCtrlVal(panel, PANEL_PSET_NUMERIC_VSPAN, pSet->VSpan);
+			SetCtrlVal(panel, PANEL_PSET_NUMERIC_INTERVAL, pSet->MInterval);
+			SetCtrlVal(panel, PANEL_PSET_STRING_BATCH, pSet->setting.batchNo);
+		}
+	}
 
-		break;
+	break;
 	case EVENT_LOST_FOCUS:
 
 		break;
 	case EVENT_CLOSE:
+	{
+		firstGetFoucus = false;
 		DiscardPanel(panel);
-		break;
+	}
+	break;
 	}
 	return 0;
 }
