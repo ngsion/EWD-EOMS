@@ -206,8 +206,8 @@ static int CVICALLBACK ThreadFunction(void *functionData)
 static int Start(int x)
 {
 	DataMgr.Start(0);
-    DevMgr.Start(x);
-	DevMgr.Reset(x);
+    DevMgr.Reset(x);
+	DevMgr.Start(x);
 	
     MeasureMgr.Start(0);
 
