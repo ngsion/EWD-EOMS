@@ -17,6 +17,7 @@
 #include "LCRSetting.h"
 #include "WaveformSetting.h"
 #include "AdmesySetting.h"
+#include "Korad.h"
 
 //==============================================================================
 // Constants
@@ -49,6 +50,9 @@ static int Init(int x)
 
 	defaultSettingArray[3] = (Setting *)malloc(sizeof(AdmesySetting));
 	AdmesySettingInit((AdmesySetting *)defaultSettingArray[3]);
+	
+	defaultSettingArray[4] = (Setting *)malloc(sizeof(KoradSetting));
+	KoradSettingInit((KoradSetting *)defaultSettingArray[4]);
 
 	for (i = 0; i < SETTING_MAX_NUM; i++)
 	{

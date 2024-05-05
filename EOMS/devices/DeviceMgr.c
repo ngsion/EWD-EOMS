@@ -19,6 +19,7 @@
 #include "logger.h"
 #include "LCRMeter.h"
 #include "Admesy.h"
+#include "Korad.h"
 
 //==============================================================================
 // Constants
@@ -50,6 +51,9 @@ static int Init(int x)
 
 	defaultDeviceArray[3] = (Device *)malloc(sizeof(Admesy));
 	AdmesyInit((Admesy *)defaultDeviceArray[3]);
+	
+	defaultDeviceArray[4] = (Device *)malloc(sizeof(Korad));
+	AdmesyInit((Korad *)defaultDeviceArray[4]);
 
 	return 0;
 }
