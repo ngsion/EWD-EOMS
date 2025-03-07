@@ -17,7 +17,7 @@
 #include "LCRSetting.h"
 #include "WaveformSetting.h"
 #include "AdmesySetting.h"
-#include "Korad.h"
+#include "KoradSetting.h"
 
 //==============================================================================
 // Constants

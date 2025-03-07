@@ -53,7 +53,7 @@ static int Init(int x)
 	AdmesyInit((Admesy *)defaultDeviceArray[3]);
 	
 	defaultDeviceArray[4] = (Device *)malloc(sizeof(Korad));
-	AdmesyInit((Korad *)defaultDeviceArray[4]);
+	KoradInit((Korad *)defaultDeviceArray[4]);
 
 	return 0;
 }

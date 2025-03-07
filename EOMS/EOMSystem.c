@@ -58,7 +58,7 @@ static int Init(int x)
 	MeasureMgr.Init(x);
 	SetMgr.Init(x);
 
-	for (int index = Instrument_Picoammeter; index < Instrument_Admesy; index++)
+	for (int index = Instrument_Picoammeter; index < Instrument_Korad; index++)
 	{
 		Setting *pSet = SetMgr.FindWithInstrFlag(index);
 		Device *pDevice = DevMgr.FindWithInstrFlag(index);

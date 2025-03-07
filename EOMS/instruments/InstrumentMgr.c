@@ -87,7 +87,7 @@ static int sFindResource()
 			}
 		}
 
-		--i;
+		--i;   
 	}
 
 	return 0;
